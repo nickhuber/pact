@@ -1,0 +1,24 @@
+{
+  "name": "combat_tracker",
+  "version": "0.0.0",
+  "authors": [
+    "Nick Huber <nicholashuber@gmail.com>"
+  ],
+  "description": "Track d20 based combat encounters",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "nickhuber.ca/combat_tracker",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "angularjs": "~1.4.0",
+    "angular-resource": "~1.4.0",
+    "angular-route": "~1.4.0"
+  }
+}

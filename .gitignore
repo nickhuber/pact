@@ -1,0 +1,13 @@
+# Frontend
+bower_components
+node_modules
+app
+build
+frontent/build
+frontent/app
+
+# Backend
+*.pyc
+db.sqlite3
+.virtualenv
+__pycache__

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" ng-app="combatTracker">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/combat_tracker.js"></script>
+    <link href="css/combat_tracker.css" rel="stylesheet">
+</head>
+<body>
+    <div class="title">
+        <h1>Combat Tracker</h1>
+        <h7>v2.0</h7>       
+    </div>
+
+    <div class="main">
+        <nav class="sidebar" ng-controller="NavigationCtrl">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation" ng-class="{ active: isActive('/')}">
+                    <a href="#/">Home</a>
+                </li>
+                <li role="presentation" ng-class="{ active: isActive('/players')}">
+                    <a href="#/players">Players</a>
+                </li>
+                <li role="presentation">
+                    <a href="#/">NPCs</a>
+                </li>
+                <li role="presentation">
+                    <a href="#/">Encounters</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <div ng-view>
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
