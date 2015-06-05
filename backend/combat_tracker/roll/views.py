@@ -7,10 +7,10 @@ from pyparsing import ParseException
 import dice
 
 
-@api_view(http_method_names=['GET'])
+@api_view(http_method_names=['POST'])
 def roll(request):
     try:
-        results = dice.roll(request.query_params['query'])
+        results = dice.roll(request.data['query'])
     except (ParseException, KeyError):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 

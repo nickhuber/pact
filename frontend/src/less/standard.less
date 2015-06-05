@@ -1,7 +1,9 @@
 @import "../../bower_components/bootstrap/less/bootstrap.less";
+@import "../../bower_components/bootstrap-theme-supervillain/less/variables.less";
+
 
 div.title {
-    text-align: center;
+    .text-center();
     .jumbotron;
 }
 
@@ -9,11 +11,15 @@ div.title {
 div.main {
     .make-row();
     .sidebar {
-        .make-md-column(1);
+        .make-md-column(2);
     }
 
     .main-content {
-        .make-md-column(9);
+        .make-md-column(10);
     }
 }
 
+
+.roll-result {
+    .text-center();
+}

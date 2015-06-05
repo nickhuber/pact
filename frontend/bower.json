@@ -19,6 +19,10 @@
     "bootstrap": "~3.3.4",
     "angularjs": "~1.4.0",
     "angular-resource": "~1.4.0",
-    "angular-route": "~1.4.0"
+    "angular-route": "~1.4.0",
+    "bootstrap-theme-supervillain": "~0.0.3"
+  },
+  "resolutions": {
+    "bootstrap": "~3.3.4"
   }
 }

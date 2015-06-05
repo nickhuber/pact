@@ -7,31 +7,49 @@
 </head>
 <body>
     <div class="title">
-        <h1>Combat Tracker</h1>
-        <h7>v2.0</h7>       
+        <div class="page-header">
+            <h1>Combat Tracker <small>v2.0</small></h1>
+        </div>
     </div>
 
-    <div class="main">
-        <nav class="sidebar" ng-controller="NavigationCtrl">
-            <ul class="nav nav-pills nav-stacked">
-                <li role="presentation" ng-class="{ active: isActive('/')}">
-                    <a href="#/">Home</a>
-                </li>
-                <li role="presentation" ng-class="{ active: isActive('/players')}">
-                    <a href="#/players">Players</a>
-                </li>
-                <li role="presentation">
-                    <a href="#/">NPCs</a>
-                </li>
-                <li role="presentation">
-                    <a href="#/">Encounters</a>
-                </li>
-            </ul>
-        </nav>
+    <div class="container-fluid">
+        <div class="main">
+            <div class="sidebar" ng-controller="NavigationCtrl">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation" ng-class="{ active: isActive('/') }">
+                        <a href="#/">Home</a>
+                    </li>
+                    <li ng-class="{ active: isActive('/players') }">
+                        <a href="#/players">Players</a>
+                    </li>
+                    <li ng-class="{ active: isActive('/npcs') }">
+                        <a href="#/npcs">NPCs</a>
+                    </li>
+                    <li ng-class="{ active: isActive('/encounters') }">
+                        <a href="#/">Encounters</a>
+                    </li>
+                </ul>
 
-        <div class="main-content">
-            <div ng-view>
-                
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Dice roller
+                    </div>
+                    <form class="form-horizontal navbar-form" ng-submit="rollDice()">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control" type="text" placeholder="ex. 3d6 + 4" name="name" ng-model="rollQuery">
+                        </div>
+                        <input class="btn btn-default btn-sm" type="submit" value="Roll" />
+                    </form>
+                    <div ng-show="rollResult">
+                        <div class="roll-result">
+                            <span ng-bind="rollResult"></span>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div ng-view></div>
             </div>
         </div>
     </div>

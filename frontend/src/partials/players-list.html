@@ -1,10 +1,7 @@
 <h1>Players</h1>
+<a href="#/players/add">Add</a> a new player.
 <div>
-    <ul>
-        <li ng-repeat="player in players">
-            <span>
-                <a href="#/players/{{ player.id }}">{{ player.name }}</a>
-            </span>
-        </li>
-    </ul>
+    <div class="list-group">
+        <a ng-repeat="player in players" class="list-group-item" href="#/players/{{ player.id }}">{{ player.name }}</a>
+    </div>
 </div>
