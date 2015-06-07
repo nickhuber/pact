@@ -1,0 +1,7 @@
+<div>
+    <h1>Encounters</h1>
+    <a href="#/encounters/create">Create</a> a new encounter.
+    <div class="list-group">
+        <a ng-repeat="encounter in encounters" class="list-group-item" href="#/encounters/{{ encounter.id }}">{{ encounter.name }} </a>
+    </div>
+</div>

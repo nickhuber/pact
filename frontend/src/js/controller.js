@@ -1,18 +1,18 @@
 var combatTrackerControllers = angular.module('combatTrackerControllers', []);
 
-// Player controllers
-combatTrackerControllers.controller('PlayerListCtrl', ['$scope', 'Player', 
-    function ($scope, Player) {
-        $scope.players = Player.query();
+// Character controllers
+combatTrackerControllers.controller('CharacterListCtrl', ['$scope', 'Character', 
+    function ($scope, Character) {
+        $scope.characters = Character.query();
     }
 ]);
 
-combatTrackerControllers.controller('PlayerDetailCtrl', ['$scope', '$routeParams', 'Player', 
-    function ($scope, $routeParams, Player) {
-        $scope.player = Player.get($routeParams);
+combatTrackerControllers.controller('CharacterDetailCtrl', ['$scope', '$location', '$routeParams', 'Character', 
+    function ($scope, $location, $routeParams, Character) {
+        $scope.character = Character.get($routeParams);
         $scope.delete = function() {
-            $scope.player.$delete({}, function() {
-                $location.path('/players/');
+            $scope.character.$delete({}, function() {
+                $location.path('/characters/');
             }, function(response) {
                 // TODO: show error
             });
@@ -20,12 +20,49 @@ combatTrackerControllers.controller('PlayerDetailCtrl', ['$scope', '$routeParams
     }
 ]);
 
-combatTrackerControllers.controller('PlayerAddCtrl', ['$scope', '$location', 'Player', 
-    function ($scope, $location, Player) {
-        $scope.player = new Player();
-        $scope.addPlayer = function() {
-            $scope.player.$save(function(newPlayer) {
-                $location.path('/players/' + newPlayer['id']);
+combatTrackerControllers.controller('CharacterCreateCtrl', ['$scope', '$location', 'Character', 
+    function ($scope, $location, Character) {
+        $scope.character = new Character();
+        $scope.errors = {};
+        $scope.create = function() {
+            $scope.character.$save(
+                function(newCharacter) {
+                    $location.path('/characters/' + newCharacter['id']);
+                },
+                function(errorResponse) {
+                    $scope.errors = errorResponse.data;
+                }
+            );
+        };
+    }
+]);
+
+// Encounter controllers
+combatTrackerControllers.controller('EncounterListCtrl', ['$scope', 'Encounter', 
+    function($scope, Encounter) {
+        $scope.encounters = Encounter.query();
+    }
+]);
+
+combatTrackerControllers.controller('EncounterDetailCtrl', ['$scope', '$location', '$routeParams', 'Encounter', 
+    function ($scope, $location, $routeParams, Encounter) {
+        $scope.encounter = Encounter.get($routeParams);
+        $scope.delete = function() {
+            $scope.encounter.$delete({}, function() {
+                $location.path('/encounters/');
+            }, function(response) {
+                // TODO: show error
+            });
+        };
+    }
+]);
+
+combatTrackerControllers.controller('EncounterCreateCtrl', ['$scope', '$location', 'Encounter', 
+    function ($scope, $location, Encounter) {
+        $scope.encounter = new Encounter();
+        $scope.create = function() {
+            $scope.encounter.$save(function(newEncounter) {
+                $location.path('/encounters/' + newEncounter['id']);
             },
             function(response) {
                 // TODO: show these errors
@@ -34,39 +71,6 @@ combatTrackerControllers.controller('PlayerAddCtrl', ['$scope', '$location', 'Pl
     }
 ]);
 
-// NPC controllers
-combatTrackerControllers.controller('NPCListCtrl', ['$scope', 'NPC', 
-    function ($scope, NPC) {
-        $scope.npcs = NPC.query();
-    }
-]);
-
-combatTrackerControllers.controller('NPCDetailCtrl', ['$scope', '$location', '$routeParams', 'NPC', 
-    function ($scope, $location, $routeParams, NPC) {
-        $scope.npc = NPC.get($routeParams);
-        $scope.delete = function() {
-            $scope.npc.$delete({}, function() {
-                $location.path('/npcs/');
-            }, function(response) {
-                // TODO: show error
-            });
-        };
-    }
-]);
-
-combatTrackerControllers.controller('NPCAddCtrl', ['$scope', '$location', 'NPC', 
-    function ($scope, $location, NPC) {
-        $scope.npc = new NPC();
-        $scope.addNPC = function() {
-            $scope.npc.$save(function(newNPC) {
-                $location.path('/npcs/' + newNPC['id']);
-            },
-            function(response) {
-                // TODO: show these errors
-            });
-        };
-    }
-]);
 
 // Misc controllers
 combatTrackerControllers.controller('NavigationCtrl', ['$scope', '$http', '$location', 

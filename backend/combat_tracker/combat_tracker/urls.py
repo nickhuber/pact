@@ -7,8 +7,7 @@ from manager import views as manager_views
 
 
 router = DefaultRouter(trailing_slash=False)
-router.register('^players', manager_views.PlayerCharacterViewSet)
-router.register('^npc_templates', manager_views.NPCTemplateViewSet)
+router.register('^characters', manager_views.CharacterViewSet)
 router.register('^encounters', manager_views.EncounterViewSet)
 
 urlpatterns = [

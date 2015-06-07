@@ -1,0 +1,14 @@
+<div>
+    <h1>Characters</h1>
+    <a href="#/characters/create">Create</a> a new Character.
+
+    <h2>Players</h2>
+    <div class="list-group">
+        <a ng-repeat="player in characters | players" class="list-group-item" href="#/characters/{{ player.id }}">{{ player.name }} </a>
+    </div>
+
+    <h2>NPCs</h2>
+    <div class="list-group">
+        <a ng-repeat="npc in characters | npcs" class="list-group-item" href="#/characters/{{ npc.id }}">{{ npc.name }} </a>
+    </div>
+</div>

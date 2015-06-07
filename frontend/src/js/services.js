@@ -1,9 +1,9 @@
 var combatTrackerServices = angular.module('combatTrackerServices', ['ngResource']);
 
-combatTrackerServices.factory('Player', ['$resource', function($resource) {
-    return $resource('api/players/:playerID', {playerID: '@id'});
+combatTrackerServices.factory('Character', ['$resource', function($resource) {
+    return $resource('api/characters/:characterID', {characterID: '@id'});
 }]);
 
-combatTrackerServices.factory('NPC', ['$resource', function($resource) {
-    return $resource('api/npc_templates/:NPCID', {NPCID: '@id'});
+combatTrackerServices.factory('Encounter', ['$resource', function($resource) {
+    return $resource('api/encounters/:encounterID', {encounterID: '@id'})
 }]);

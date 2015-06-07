@@ -1,7 +1,8 @@
 var app = angular.module('combatTracker', [
     'ngRoute',
     'combatTrackerControllers',
-    'combatTrackerServices'
+    'combatTrackerServices',
+    'combatTrackerFilters'
 ]);
 
 
@@ -13,31 +14,31 @@ app.config(['$routeProvider',
             }).
 
 
-            when('/players', {
-                templateUrl: 'partials/players-list.html',
-                controller: 'PlayerListCtrl'
+            when('/characters', {
+                templateUrl: 'partials/characters-list.html',
+                controller: 'CharacterListCtrl'
             }).
-            when('/players/add', {
-                templateUrl: 'partials/players-add.html',
-                controller: 'PlayerAddCtrl'
+            when('/characters/create', {
+                templateUrl: 'partials/characters-create.html',
+                controller: 'CharacterCreateCtrl'
             }).
-            when('/players/:playerID', {
-                templateUrl: 'partials/players-detail.html',
-                controller: 'PlayerDetailCtrl'
+            when('/characters/:characterID', {
+                templateUrl: 'partials/characters-detail.html',
+                controller: 'CharacterDetailCtrl'
             }).
 
 
-            when('/npcs', {
-                templateUrl: 'partials/npcs-list.html',
-                controller: 'NPCListCtrl'
+            when('/encounters', {
+                templateUrl: 'partials/encounters-list.html',
+                controller: 'EncounterListCtrl'
             }).
-            when('/npcs/add', {
-                templateUrl: 'partials/npcs-add.html',
-                controller: 'NPCAddCtrl'
+            when('/encounters/create', {
+                templateUrl: 'partials/encounters-create.html',
+                controller: 'EncounterCreateCtrl'
             }).
-            when('/npcs/:NPCID', {
-                templateUrl: 'partials/npcs-detail.html',
-                controller: 'NPCDetailCtrl'
+            when('/encounters/:encounterID', {
+                templateUrl: 'partials/encounters-detail.html',
+                controller: 'EncounterDetailCtrl'
             }).
 
 

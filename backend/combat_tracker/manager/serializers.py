@@ -3,21 +3,17 @@ from rest_framework import serializers
 from manager import models
 
 
-class PlayerCharacterSerializer(serializers.ModelSerializer):
+class CharacterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.PlayerCharacter
-
-
-class NPCTemplateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.NPCTemplate
+        model = models.Character
 
 
 class EncounterSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Encounter
+        depth = 1
 
 
-class EncounterNPCSerializer(serializers.ModelSerializer):
+class EncounterCharacterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.EncounterNPC
+        model = models.EncounterCharacter

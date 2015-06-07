@@ -1,0 +1,10 @@
+<h1>{{ character.name }} <small ng-show="character.is_player">(player)</small></h1>
+
+<dl>
+    <dt>Description</dt>
+    <dd>{{ character.description }}</dd>
+    <dt>Max HP</dt>
+    <dd>{{ character.max_hp }}</dd>
+</dl>
+
+<button ng-click="delete()" class="btn btn-danger">Delete this character</button>

@@ -1,0 +1,15 @@
+<h1>{{ encounter.name }}</h1>
+
+<h2>Paritipants</h2>
+
+<h3>Players</h3>
+<div class="list-group">
+    <a ng-repeat="player in characters | players" class="list-group-item" href="#/characters/{{ player.id }}">{{ player.name }} </a>
+</div>
+
+<h3>NPCs</h3>
+<div class="list-group">
+    <a ng-repeat="npc in characters | npcs" class="list-group-item" href="#/characters/{{ npc.id }}">{{ npc.name }} </a>
+</div>
+
+<button ng-click="delete()" class="btn btn-danger">Delete this encounter</button>
