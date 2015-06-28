@@ -22,7 +22,7 @@ app.config(['$routeProvider',
                 templateUrl: 'partials/characters-create.html',
                 controller: 'CharacterCreateCtrl'
             }).
-            when('/characters/:characterID', {
+            when('/characters/:id', {
                 templateUrl: 'partials/characters-detail.html',
                 controller: 'CharacterDetailCtrl'
             }).
@@ -36,7 +36,7 @@ app.config(['$routeProvider',
                 templateUrl: 'partials/encounters-create.html',
                 controller: 'EncounterCreateCtrl'
             }).
-            when('/encounters/:encounterID', {
+            when('/encounters/:id', {
                 templateUrl: 'partials/encounters-detail.html',
                 controller: 'EncounterDetailCtrl'
             }).

@@ -14,10 +14,10 @@
     </div>
 </div>
 
-<div class="form-group input-group-md" ng-class="{ 'has-error': errors.max_hp }">
-    <label class="control-label" for="max_hp">Max HP</label>
-    <input class="form-control" type="number" name="max_hp" ng-model="character.max_hp">
-    <div ng-repeat="error in errors.max_hp">
+<div class="form-group input-group-md" ng-class="{ 'has-error': errors.hit_dice }">
+    <label class="control-label" for="hit_dice">Hit dice</label>
+    <input class="form-control" name="hit_dice" ng-model="character.hit_dice">
+    <div ng-repeat="error in errors.hit_dice">
         <span class="help-inline">{{ error }}</span>
     </div>
 </div>
@@ -31,5 +31,5 @@
 </div>
 
 <div class="form-group">
-    <input class="btn btn-default" type="submit" value="Save" />
+    <input class="btn btn-primary" type="submit" value="Save" />
 </div>

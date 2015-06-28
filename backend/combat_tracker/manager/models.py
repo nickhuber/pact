@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 
+import dice
+
 
 class ArchiveModelManager(models.Manager):
     def get_queryset(self):
@@ -22,28 +24,29 @@ class ArchiveModel(models.Model):
 class Character(ArchiveModel):
     name = models.CharField(max_length=128, unique=True)
     description = models.TextField(max_length=8192, default='')
-    max_hp = models.IntegerField(null=True, validators=[MinValueValidator(1)])
+    hit_dice = models.CharField(max_length=128, null=True)
     is_player = models.BooleanField(default=False, db_index=True)
 
 
 class Encounter(ArchiveModel):
+    name = models.CharField(max_length=256)
     characters = models.ManyToManyField(Character, through='EncounterCharacter')
     current_initiative = models.IntegerField(null=True)
     current_round = models.IntegerField(default=0)
 
     def advance_init(self):
         if self.current_initiative is None:
-            self.current_initiative = self.characters.order_by('-initiative').first().initiative
+            self.current_initiative = self.encountercharacter_set.order_by('initiative').first().initiative
             self.current_round += 1
         else:
             try:
-                self.current_initiative = self.characters\
+                self.current_initiative = self.encountercharacter_set\
                     .filter(initiative__gt=self.current_initiative)\
-                    .order_by('-initiative')\
+                    .order_by('initiative')\
                     .first()\
                     .initiative
-            except EncounterCharacter.DoesNotExist:
-                self.current_initiative = self.characters.order_by('-initiative').first().initiative
+            except (AttributeError, EncounterCharacter.DoesNotExist):
+                self.current_initiative = self.encountercharacter_set.order_by('initiative').first().initiative
                 self.current_round += 1
         self.save()   
 
@@ -52,10 +55,24 @@ class EncounterCharacter(ArchiveModel):
     character = models.ForeignKey(Character)
     encounter = models.ForeignKey(Encounter)
     initiative = models.IntegerField(null=True)
+    max_hp = models.IntegerField(null=True)
     current_hp = models.IntegerField(null=True)
 
     def save(self, *args, **kwargs):
-        if self.current_hp is None:
-            self.current_hp = self.character.max_hp
+        # Probably nicer to do this with a signal or something
+        if not self.character.is_player:
+            # TODO: abstract this part away
+            if self.max_hp is None:
+                results = dice.roll(self.character.hit_dice)
+                try:
+                    # For some reason dice.roll will give us a list of the dice rolls
+                    # if asking for a single type, like "3d6" instead of "3d6 + 1"
+                    results = sum(results)
+                except TypeError:
+                    pass
+                self.max_hp = results
+
+            if self.current_hp is None:
+                self.current_hp = self.max_hp
 
         super(EncounterCharacter, self).save(*args, **kwargs)

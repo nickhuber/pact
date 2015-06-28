@@ -1,15 +1,52 @@
 <h1>{{ encounter.name }}</h1>
 
 <h2>Paritipants</h2>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Add a new character
+    </div>
+    <div class="panel-body">
+        <form class="form-inline" role="form" ng-submit="addCharacter()">
+            <div class="form-group input-group-md">
+                <label class="control-label" for="initiative">Initiatve</label>
+                <input class="form-control" type="number" required name="initiative" ng-model="newCharacter.initiative">
+                <div ng-repeat="error in errors.name">
+                    <span class="help-inline">{{ error }}</span>
+                </div>
+            </div>
 
-<h3>Players</h3>
-<div class="list-group">
-    <a ng-repeat="player in characters | players" class="list-group-item" href="#/characters/{{ player.id }}">{{ player.name }} </a>
+            <div class="form-group input-group-md">
+                <label class="control-label" for="add_character">Character</label>
+                <select class="form-group" name="add_character" ng-model="newCharacter.url" ng-options="character.url as character.name for character in characters track by character.url"></select>
+            </div>
+
+            <div class="form-group">
+                <input class="btn btn-primary btn-sm" type="submit" value="Add" />
+            </div>
+        </form>
+    </div>
 </div>
 
-<h3>NPCs</h3>
+<h2>Characters</h2>
 <div class="list-group">
-    <a ng-repeat="npc in characters | npcs" class="list-group-item" href="#/characters/{{ npc.id }}">{{ npc.name }} </a>
+    <a ng-repeat="character in encounter.characters" class="list-group-item" href="#/characters/{{ character.id }}">{{ character.name }} </a>
+</div>
+
+<h2>Encounter</h2>
+<div>
+    <div class="row" ng-repeat="character in encounter.characters | orderBy:'initiative' track by character.id">
+        <div class="col-md-2">
+            {{ character.name }}
+        </div>
+        <div class="col-md-2">
+            {{ character.initiative }}
+        </div>
+        <div class="col-md-2">
+            <span ng-if="!character.is_player">
+                {{ character.max_hp / character.current_hp * 100 }}%
+            </span>
+        </div>
+    </div>
 </div>
 
 <button ng-click="delete()" class="btn btn-danger">Delete this encounter</button>
