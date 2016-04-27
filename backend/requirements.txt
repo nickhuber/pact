@@ -1,4 +1,4 @@
-django<1.9
-djangorestframework<3.2
+django<2.0
+djangorestframework<3.4
 django-extensions
 dice==1.0.2

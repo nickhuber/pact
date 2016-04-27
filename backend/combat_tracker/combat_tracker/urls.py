@@ -12,7 +12,6 @@ router.register('encounters', manager_views.EncounterViewSet)
 router.register('encounter_characters', manager_views.EncounterCharacterViewSet)
 
 
-print router.urls
 urlpatterns = [
     url(r'^api/roll$', roll_views.roll),
     url(r'^api/', include(router.urls)),

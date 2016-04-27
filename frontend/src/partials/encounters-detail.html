@@ -1,6 +1,5 @@
 <h1>{{ encounter.name }}</h1>
 
-<h2>Paritipants</h2>
 <div class="panel panel-default">
     <div class="panel-heading">
         Add a new character
@@ -17,36 +16,57 @@
 
             <div class="form-group input-group-md">
                 <label class="control-label" for="add_character">Character</label>
-                <select class="form-group" name="add_character" ng-model="newCharacter.url" ng-options="character.url as character.name for character in characters track by character.url"></select>
+                <select class="form-control" name="add_character" ng-model="newCharacter.url" ng-options="character.url as character.name for character in characters track by character.url"></select>
             </div>
 
             <div class="form-group">
-                <input class="btn btn-primary btn-sm" type="submit" value="Add" />
+                <input class="btn btn-primary" type="submit" value="Add" />
             </div>
         </form>
     </div>
 </div>
 
-<h2>Characters</h2>
-<div class="list-group">
-    <a ng-repeat="character in encounter.characters" class="list-group-item" href="#/characters/{{ character.id }}">{{ character.name }} </a>
-</div>
-
-<h2>Encounter</h2>
-<div>
-    <div class="row" ng-repeat="character in encounter.characters | orderBy:'initiative' track by character.id">
-        <div class="col-md-2">
-            {{ character.name }}
-        </div>
-        <div class="col-md-2">
-            {{ character.initiative }}
-        </div>
-        <div class="col-md-2">
-            <span ng-if="!character.is_player">
-                {{ character.max_hp / character.current_hp * 100 }}%
-            </span>
-        </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <button ng-click="advanceInit()" class="btn btn-info btn-sm">Advance</button>
+        <span ng-show="encounter.current_round">
+            round {{ encounter.current_round }}    
+        </span>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Initiative</th>
+                    <th>HP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-class="{info: character.initiative == encounter.current_initiative}" ng-repeat="character in encounter.characters | orderBy:'initiative' track by character.id">
+                    <td>
+                        {{ character.name }}
+                    </td>
+                    <td>
+                        <button class="btn btn-default btn-sm" ng-click="decreaseInitiative(character)"><i class="fa fa-minus"></i></button>
+                        {{ character.initiative }}
+                        <button class="btn btn-default btn-sm" ng-click="increaseInitiative(character)"><i class="fa fa-plus"></i></button>
+                    </td>
+                    <td>
+                        <span ng-if="!character.is_player">
+                            {{ character.max_hp / character.current_hp * 100 }}%
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<button ng-click="delete()" class="btn btn-danger">Delete this encounter</button>
+
+<div class="row">
+    <div class="col-sm-12">
+        <button ng-click="end()" class="btn btn-danger">End this encounter</button>        
+    </div>
+</div>
+

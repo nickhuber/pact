@@ -9,6 +9,13 @@ class CharacterSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Character
 
+    def validate(self, data):
+        if not data.get('is_player') and not data.get('hit_dice'):
+            raise serializers.ValidationError({'hit_dice': 'Hit dice required for NPCs.'})
+        return data
+
+    # TODO: validate hit dice
+
 
 class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.IntegerField(read_only=True)

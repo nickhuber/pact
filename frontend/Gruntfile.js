@@ -17,6 +17,10 @@ module.exports = function(grunt) {
       less: {
         files: ['src/less/*.less'],
         tasks: ['less', 'concat']
+      },
+      fonts: {
+        files: ['bower_components/components-font-awesome/fonts/*'],
+        tasks: ['copy']
       }
     },
     less: {
@@ -47,7 +51,8 @@ module.exports = function(grunt) {
     },
     copy: {
       main: {src: ['src/index.html'], dest: 'app/index.html'},
-      partials: {src: ['src/partials/*.html'], dest: 'app/partials/', flatten: true, expand: true}
+      partials: {src: ['src/partials/*.html'], dest: 'app/partials/', flatten: true, expand: true},
+      fonts: {src: ['bower_components/components-font-awesome/fonts/*'], dest: 'app/fonts/', flatten: true, expand: true}
     }
   });
   // Load plugins here

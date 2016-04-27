@@ -11,9 +11,9 @@ combatTrackerControllers.controller('CharacterDetailCtrl', ['$scope', '$location
     function ($scope, $location, $routeParams, Character) {
         $scope.character = Character.get($routeParams);
         $scope.delete = function() {
-            $scope.character.$delete({}, function() {
+            $scope.character.$delete().then(function() {
                 $location.path('/characters/');
-            }, function(response) {
+            }).catch(function(response) {
                 // TODO: show delete error
             });
         };
@@ -25,14 +25,11 @@ combatTrackerControllers.controller('CharacterCreateCtrl', ['$scope', '$location
         $scope.character = new Character();
         $scope.errors = {};
         $scope.create = function() {
-            $scope.character.$save(
-                function(newCharacter) {
-                    $location.path('/characters/' + newCharacter.id);
-                },
-                function(errorResponse) {
-                    $scope.errors = errorResponse.data;
-                }
-            );
+            $scope.character.$save().then(function(newCharacter) {
+                $location.path('/characters/' + newCharacter.id);
+            }).catch(function(errorResponse) {
+                $scope.errors = errorResponse.data;
+            });
         };
     }
 ]);
@@ -44,43 +41,49 @@ combatTrackerControllers.controller('EncounterListCtrl', ['$scope', 'Encounter',
     }
 ]);
 
+
 combatTrackerControllers.controller('EncounterDetailCtrl', ['$scope', '$location', '$routeParams', 'Encounter', 'Character', 'EncounterCharacter',
     function ($scope, $location, $routeParams, Encounter, Character, EncounterCharacter) {
         $scope.encounter = Encounter.get($routeParams);
         $scope.characters = Character.query();
         $scope.newCharacter = {};
-        $scope.delete = function() {
-            $scope.encounter.$delete({}, function() {
+        $scope.end = function() {
+            $scope.encounter.$delete().then(function() {
                 $location.path('/encounters/');
-            }, function(response) {
-                // TODO: show delete error
-            });
+            })
+        };
+        $scope.advanceInit = function() {
+            $scope.encounter.$advance_initiative();
         };
         $scope.addCharacter = function() {
             var ec = new EncounterCharacter();
             ec.encounter = $scope.encounter.url;
             ec.character = $scope.newCharacter.url;
             ec.initiative = $scope.newCharacter.initiative;
-            console.log($scope.newCharacter);
-            console.log(ec);
-            ec.$save(
-                function(newEncounterCharacter) {
-                    $scope.encounter.characters.push(newEncounterCharacter);
-                }
-            );
+            ec.$save(function(newEncounterCharacter) {
+                $scope.encounter.characters.push(newEncounterCharacter);
+            });
+        };
+        $scope.increaseInitiative = function(character) {
+            EncounterCharacter.update({id: character.id}, {initiative: character.initiative + 1});
+            character.initiative += 1;
+        };
+        $scope.decreaseInitiative = function(character) {
+            EncounterCharacter.update({id: character.id}, {initiative: character.initiative - 1});
+            character.initiative -= 1;
         };
     }
 ]);
+
 
 combatTrackerControllers.controller('EncounterCreateCtrl', ['$scope', '$location', 'Encounter',
     function ($scope, $location, Encounter) {
         $scope.encounter = new Encounter();
         $scope.errors = {};
         $scope.create = function() {
-            $scope.encounter.$save(function(newEncounter) {
+            $scope.encounter.$save().then(function(newEncounter) {
                 $location.path('/encounters/' + newEncounter.id);
-            },
-            function(response) {
+            }).catch(function(response) {
                 $scope.errors = response.data;
             });
         };
@@ -101,8 +104,8 @@ combatTrackerControllers.controller('NavigationCtrl', ['$scope', '$http', '$loca
                 '/api/roll',
                 {query: $scope.rollQuery}
             )
-            .success(function(results) {
-                $scope.rollResult = results.total;
+            .then(function(response) {
+                $scope.rollResult = response.data.total;
             });
         };
     }

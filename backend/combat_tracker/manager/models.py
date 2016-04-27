@@ -6,7 +6,7 @@ import dice
 
 class ArchiveModelManager(models.Manager):
     def get_queryset(self):
-        return super(ArchiveModelManager, self).get_queryset().exclude(archived=True)
+        return super().get_queryset().exclude(archived=True)
 
 
 class ArchiveModel(models.Model):
@@ -27,6 +27,10 @@ class Character(ArchiveModel):
     hit_dice = models.CharField(max_length=128, null=True)
     is_player = models.BooleanField(default=False, db_index=True)
 
+    def clean(self):
+        if self.is_player and not self.hit_dice:
+            raise ValidationError({'hit_dice': 'Hit dice required for NPCs.'})
+
 
 class Encounter(ArchiveModel):
     name = models.CharField(max_length=256)
@@ -34,7 +38,7 @@ class Encounter(ArchiveModel):
     current_initiative = models.IntegerField(null=True)
     current_round = models.IntegerField(default=0)
 
-    def advance_init(self):
+    def advance_initiative(self):
         if self.current_initiative is None:
             self.current_initiative = self.encountercharacter_set.order_by('initiative').first().initiative
             self.current_round += 1
@@ -75,4 +79,4 @@ class EncounterCharacter(ArchiveModel):
             if self.current_hp is None:
                 self.current_hp = self.max_hp
 
-        super(EncounterCharacter, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
