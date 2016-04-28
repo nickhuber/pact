@@ -17,10 +17,11 @@
   ],
   "dependencies": {
     "bootstrap": "~3.3.6",
+    "bootswatch": "~3.3.6",
     "angularjs": "~1.5.5",
     "angular-resource": "~1.5.5",
     "angular-route": "~1.5.5",
-    "bootswatch": "~3.3.6",
+    "angular-xeditable": "^0.1.12",
     "components-font-awesome": "^4.5.0",
     "underscore": "^1.8.3"
   }

@@ -1,11 +1,17 @@
-var combatTrackerControllers = angular.module('combatTrackerControllers', []);
+var combatTrackerControllers = angular.module('combatTrackerControllers', ['xeditable']);
 
-// Character controllers
+
+combatTrackerControllers.run(function(editableOptions) {
+  editableOptions.theme = 'bs3';
+});
+
+
 combatTrackerControllers.controller('CharacterListCtrl', ['$scope', 'Character',
     function ($scope, Character) {
         $scope.characters = Character.query();
     }
 ]);
+
 
 combatTrackerControllers.controller('CharacterDetailCtrl', ['$scope', '$location', '$routeParams', 'Character',
     function ($scope, $location, $routeParams, Character) {
@@ -20,6 +26,7 @@ combatTrackerControllers.controller('CharacterDetailCtrl', ['$scope', '$location
         };
     }
 ]);
+
 
 combatTrackerControllers.controller('CharacterCreateCtrl', ['$scope', '$location', 'Character',
     function ($scope, $location, Character) {
@@ -36,7 +43,7 @@ combatTrackerControllers.controller('CharacterCreateCtrl', ['$scope', '$location
     }
 ]);
 
-// Encounter controllers
+
 combatTrackerControllers.controller('EncounterListCtrl', ['$scope', 'Encounter',
     function($scope, Encounter) {
         $scope.encounters = Encounter.query();
@@ -53,7 +60,7 @@ combatTrackerControllers.controller('EncounterDetailCtrl', ['$scope', '$location
         $scope.end = function() {
             $scope.encounter.$delete().then(function() {
                 $location.path('/encounters/');
-            })
+            });
         };
 
         $scope.advanceInit = function() {
@@ -68,15 +75,19 @@ combatTrackerControllers.controller('EncounterDetailCtrl', ['$scope', '$location
             ec.notes = $scope.newCharacter.notes;
             ec.$save().then(function(newEncounterCharacter) {
                 $scope.encounter.characters.push(newEncounterCharacter);
-            }).catch(function(response) {
-                $scope.errors = response.data;
+            }).catch(function(errorResponse) {
+                $scope.errors = errorResponse.data;
             });
         };
 
         $scope.removeCharacter = function(character) {
             EncounterCharacter.delete({id: character.id});
             $scope.encounter.characters = _.without($scope.encounter.characters, character);
-        }
+        };
+
+        $scope.updateCharacter = function(character) {
+            EncounterCharacter.update({id: character.id}, character);
+        };
 
         $scope.increaseInitiative = function(character) {
             EncounterCharacter.update({id: character.id}, {initiative: character.initiative + 1});
@@ -99,15 +110,14 @@ combatTrackerControllers.controller('EncounterCreateCtrl', ['$scope', '$location
         $scope.create = function() {
             $scope.encounter.$save().then(function(newEncounter) {
                 $location.path('/encounters/' + newEncounter.id);
-            }).catch(function(response) {
-                $scope.errors = response.data;
+            }).catch(function(errorResponse) {
+                $scope.errors = errorResponse.data;
             });
         };
     }
 ]);
 
 
-// Misc controllers
 combatTrackerControllers.controller('NavigationCtrl', ['$scope', '$http', '$location',
     function ($scope, $http, $location)  {
         $scope.rollQuery = '';

@@ -15,18 +15,19 @@ module.exports = function(grunt) {
         tasks: ['copy']
       },
       less: {
-        files: ['src/less/*.less'],
+        files: ['src/less/*.less', 'bower_components/angular-xeditable/dist/css/xeditable.css'],
         tasks: ['less', 'concat']
       },
       fonts: {
-        files: ['bower_components/components-font-awesome/fonts/*'],
+        files: ['bower_components/components-font-awesome/fonts/*', 'bower_components/bootstrap/fonts/*'],
         tasks: ['copy']
       }
     },
     less: {
       development: {
         files: {
-          'build/css/standard.css': 'src/less/standard.less'
+          'build/css/standard.css': 'src/less/standard.less',
+          'build/css/xeditable.css': 'bower_components/angular-xeditable/dist/css/xeditable.css'
         }
       }
     },
@@ -36,11 +37,12 @@ module.exports = function(grunt) {
           separator: ';\n'
         },
         src: [
+          'bower_components/jquery/dist/jquery.js',
+          'bower_components/underscore/underscore.js',
           'bower_components/angularjs/angular.js',
           'bower_components/angular-resource/angular-resource.js',
           'bower_components/angular-route/angular-route.js',
-          'bower_components/jquery/dist/jquery.js',
-          'bower_components/underscore/underscore.js',
+          'bower_components/angular-xeditable/dist/js/xeditable.js',
           'src/js/*.js'
         ],
         dest: 'app/js/combat_tracker.js',
@@ -53,7 +55,7 @@ module.exports = function(grunt) {
     copy: {
       main: {src: ['src/index.html'], dest: 'app/index.html'},
       partials: {src: ['src/partials/*.html'], dest: 'app/partials/', flatten: true, expand: true},
-      fonts: {src: ['bower_components/components-font-awesome/fonts/*'], dest: 'app/fonts/', flatten: true, expand: true}
+      fonts: {src: ['bower_components/components-font-awesome/fonts/*', 'bower_components/bootstrap/fonts/*'], dest: 'app/fonts/', flatten: true, expand: true}
     }
   });
 

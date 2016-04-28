@@ -40,8 +40,10 @@
             round {{ encounter.current_round }}
         </span>
     </div>
-    <div class="panel-body">
-        <table class="table table-bordered">
+    <div class="panel-body" ng-hide="encounter.characters.length > 0">
+        No characters <i class="fa fa-frown-o"></i>
+    </div>
+        <table class="table table-bordered table-striped" ng-show="encounter.characters.length > 0">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -54,33 +56,38 @@
             <tbody>
                 <tr
                     ng-class="{info: character.initiative === encounter.current_initiative}"
-                    ng-repeat="character in encounter.characters | orderBy:'initiative' track by character.id"
+                    ng-repeat="character in encounter.characters | orderBy : 'initiative' track by character.id"
                 >
                     <td>
                         {{ character.name }}
                     </td>
                     <td>
-                        {{ character.notes }}
+                        <span ng-hide="character.is_player">
+                            <a href editable-text="character.notes" onbeforesave="updateCharacter(character)">{{character.notes || '...' }}</a>
+                        </span>
                     </td>
                     <td>
-                        <button class="btn btn-default btn-xs" ng-click="decreaseInitiative(character)"><i class="fa fa-minus"></i></button>
                         {{ character.initiative }}
-                        <button class="btn btn-default btn-xs" ng-click="increaseInitiative(character)"><i class="fa fa-plus"></i></button>
+                        <div class="pull-right">
+                            <button class="btn btn-default btn-xs" ng-click="increaseInitiative(character)"><i class="fa fa-arrow-up"></i></button>
+                            <button class="btn btn-default btn-xs" ng-click="decreaseInitiative(character)"><i class="fa fa-arrow-down"></i></button>
+                        </div>
+                    </div>
                     </td>
                     <td>
                         <span ng-if="!character.is_player">
                             <div class="fraction">
                                 <span class="fraction-numerator">
-                                    {{ character.max_hp }}
+                                    {{ character.current_hp }}
                                 </span>
                                 <span class="fraction-bar">
                                     /
                                 </span>
                                 <span class="fraction-denominator">
-                                    {{character.current_hp}}
+                                    {{ character.max_hp }}
                                 </span>
                             </div>
-                            <small>{{ character.max_hp / character.current_hp * 100 }}%</small>
+                            <small>{{ character.current_hp / character.max_hp * 100 | number : 1 }}%</small>
                         </span>
                     </td>
                     <td>
