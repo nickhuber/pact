@@ -36,10 +36,11 @@ module.exports = function(grunt) {
           separator: ';\n'
         },
         src: [
-          'bower_components/angularjs/angular.min.js',
-          'bower_components/angular-resource/angular-resource.min.js',
-          'bower_components/angular-route/angular-route.min.js',
-          'bower_components/jquery/dist/jquery.min.js',
+          'bower_components/angularjs/angular.js',
+          'bower_components/angular-resource/angular-resource.js',
+          'bower_components/angular-route/angular-route.js',
+          'bower_components/jquery/dist/jquery.js',
+          'bower_components/underscore/underscore.js',
           'src/js/*.js'
         ],
         dest: 'app/js/combat_tracker.js',
@@ -55,6 +56,7 @@ module.exports = function(grunt) {
       fonts: {src: ['bower_components/components-font-awesome/fonts/*'], dest: 'app/fonts/', flatten: true, expand: true}
     }
   });
+
   // Load plugins here
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-concat');

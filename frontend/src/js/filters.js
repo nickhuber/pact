@@ -1,5 +1,6 @@
 var combatTrackerFilters = angular.module('combatTrackerFilters', []);
 
+
 combatTrackerFilters.filter('players', function() {
   return function(input) {
     var players = [];
@@ -12,6 +13,7 @@ combatTrackerFilters.filter('players', function() {
   };
 });
 
+
 combatTrackerFilters.filter('npcs', function() {
   return function(input) {
     var npcs = [];
@@ -23,6 +25,7 @@ combatTrackerFilters.filter('npcs', function() {
     return npcs;
   };
 });
+
 
 combatTrackerFilters.filter('emptyToEnd', function () {
     return function (array, key) {

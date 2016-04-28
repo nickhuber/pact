@@ -2,21 +2,28 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        Add a new character
+        Add a character
     </div>
     <div class="panel-body">
         <form class="form-inline" role="form" ng-submit="addCharacter()">
-            <div class="form-group input-group-md">
+            <div class="form-group input-group-md" ng-class="{ 'has-error': errors.name }">
                 <label class="control-label" for="initiative">Initiatve</label>
                 <input class="form-control" type="number" required name="initiative" ng-model="newCharacter.initiative">
-                <div ng-repeat="error in errors.name">
-                    <span class="help-inline">{{ error }}</span>
-                </div>
             </div>
 
-            <div class="form-group input-group-md">
+            <div class="form-group input-group-md" ng-class="{ 'has-error': errors.notes }">
+                <label class="control-label" for="notes">Notes</label>
+                <input class="form-control" type="text" name="notes" ng-model="newCharacter.notes">
+            </div>
+
+            <div class="form-group input-group-md" ng-class="{ 'has-error': errors.character }">
                 <label class="control-label" for="add_character">Character</label>
-                <select class="form-control" name="add_character" ng-model="newCharacter.url" ng-options="character.url as character.name for character in characters track by character.url"></select>
+                <select
+                    class="form-control"
+                    name="add_character"
+                    ng-model="newCharacter.url"
+                    ng-options="character.url as character.name for character in characters track by character.url"
+                ></select>
             </div>
 
             <div class="form-group">
@@ -28,9 +35,9 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <button ng-click="advanceInit()" class="btn btn-info btn-sm">Advance</button>
+        <button ng-click="advanceInit()" class="btn btn-info btn-sm">Advance initiative</button>
         <span ng-show="encounter.current_round">
-            round {{ encounter.current_round }}    
+            round {{ encounter.current_round }}
         </span>
     </div>
     <div class="panel-body">
@@ -38,24 +45,46 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Notes</th>
                     <th>Initiative</th>
                     <th>HP</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-class="{info: character.initiative == encounter.current_initiative}" ng-repeat="character in encounter.characters | orderBy:'initiative' track by character.id">
+                <tr
+                    ng-class="{info: character.initiative === encounter.current_initiative}"
+                    ng-repeat="character in encounter.characters | orderBy:'initiative' track by character.id"
+                >
                     <td>
                         {{ character.name }}
                     </td>
                     <td>
-                        <button class="btn btn-default btn-sm" ng-click="decreaseInitiative(character)"><i class="fa fa-minus"></i></button>
+                        {{ character.notes }}
+                    </td>
+                    <td>
+                        <button class="btn btn-default btn-xs" ng-click="decreaseInitiative(character)"><i class="fa fa-minus"></i></button>
                         {{ character.initiative }}
-                        <button class="btn btn-default btn-sm" ng-click="increaseInitiative(character)"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-default btn-xs" ng-click="increaseInitiative(character)"><i class="fa fa-plus"></i></button>
                     </td>
                     <td>
                         <span ng-if="!character.is_player">
-                            {{ character.max_hp / character.current_hp * 100 }}%
+                            <div class="fraction">
+                                <span class="fraction-numerator">
+                                    {{ character.max_hp }}
+                                </span>
+                                <span class="fraction-bar">
+                                    /
+                                </span>
+                                <span class="fraction-denominator">
+                                    {{character.current_hp}}
+                                </span>
+                            </div>
+                            <small>{{ character.max_hp / character.current_hp * 100 }}%</small>
                         </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" ng-click="removeCharacter(character)">Remove</button>
                     </td>
                 </tr>
             </tbody>

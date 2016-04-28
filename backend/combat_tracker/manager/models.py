@@ -61,6 +61,7 @@ class EncounterCharacter(ArchiveModel):
     initiative = models.IntegerField(null=True)
     max_hp = models.IntegerField(null=True)
     current_hp = models.IntegerField(null=True)
+    notes = models.CharField(max_length=128, default='')
 
     def save(self, *args, **kwargs):
         # Probably nicer to do this with a signal or something

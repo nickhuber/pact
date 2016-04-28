@@ -1,7 +1,9 @@
-@import "../../bower_components/bootstrap/less/bootstrap.less";
-@import "../../bower_components/bootswatch/cerulean/variables.less";
-
 @import "../../bower_components/components-font-awesome/less/font-awesome.less";
+
+@import "../../bower_components/bootstrap/less/bootstrap.less";
+
+@import "../../bower_components/bootswatch/sandstone/bootswatch.less";
+@import "../../bower_components/bootswatch/sandstone/variables.less";
 
 
 div.title {
@@ -24,4 +26,24 @@ div.main {
 
 .roll-result {
     .text-center();
+}
+
+
+.fraction {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    letter-spacing: 0.001em;
+    text-align: center;
+    font-size: 12px;
+    > span {
+        display: block;
+        padding: 0.1em;
+    }
+    span.fraction-denominator {
+            border-top: thin solid black;
+    }
+    span.fraction-bar {
+            display: none;
+    }
 }
