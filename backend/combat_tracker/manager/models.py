@@ -39,6 +39,9 @@ class Encounter(ArchiveModel):
     current_round = models.IntegerField(default=0)
 
     def advance_initiative(self):
+        if self.encountercharacter_set.all().count() == 0:
+            return
+
         if self.current_initiative is None:
             self.current_initiative = self.encountercharacter_set.order_by('initiative').first().initiative
             self.current_round += 1
@@ -52,7 +55,7 @@ class Encounter(ArchiveModel):
             except (AttributeError, EncounterCharacter.DoesNotExist):
                 self.current_initiative = self.encountercharacter_set.order_by('initiative').first().initiative
                 self.current_round += 1
-        self.save()   
+        self.save()
 
 
 class EncounterCharacter(ArchiveModel):

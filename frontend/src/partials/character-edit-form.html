@@ -1,35 +1,59 @@
-<div class="form-group input-group-md" ng-class="{ 'has-error': errors.name }">
-    <label class="control-label" for="name">Name</label>
-    <input class="form-control" type="text" required name="name" ng-model="character.name">
-    <div ng-repeat="error in errors.name">
-        <span class="help-inline">{{ error }}</span>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group" ng-class="{ 'has-error': errors.name }">
+            <label class="control-label" for="name">Name</label>
+            <input class="form-control" type="text" required name="name" ng-model="character.name">
+            <div ng-repeat="error in errors.name">
+                <span class="help-inline">{{ error }}</span>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="form-group input-group-md" ng-class="{ 'has-error': errors.description }">
-    <label class="control-label" for="description">Description</label>
-    <textarea class="form-control" name="description" ng-model="character.description"></textarea>
-    <div ng-repeat="error in errors.description">
-        <span class="help-inline">{{ error }}</span>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group" ng-class="{ 'has-error': errors.description }">
+            <label class="control-label" for="description">Description</label>
+            <textarea class="form-control" name="description" ng-model="character.description"></textarea>
+            <div ng-repeat="error in errors.description">
+                <span class="help-inline">{{ error }}</span>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="form-group input-group-md" ng-class="{ 'has-error': errors.hit_dice }">
-    <label class="control-label" for="hit_dice">Hit dice</label>
-    <input class="form-control" name="hit_dice" ng-model="character.hit_dice">
-    <div ng-repeat="error in errors.hit_dice">
-        <span class="help-inline">{{ error }}</span>
+<div class="row">
+    <div class="col-sm-6">
+        <fieldset class="form-group" ng-class="{ 'has-error': errors.hit_dice }">
+            <label class="control-label" for="hit_dice">Hit dice</label>
+            <input class="form-control" name="hit_dice" ng-model="character.hit_dice">
+            <div ng-repeat="error in errors.hit_dice">
+                <span class="help-inline">{{ error }}</span>
+            </div>
+        </fieldset>
     </div>
 </div>
 
-<div class="form-group input-group-md" ng-class="{ 'has-error': errors.is_player }">
-    <label class="control-label" for="is_player">Player</label>
-    <input class="form-control" type="checkbox" ame="is_player" ng-model="character.is_player">
-    <div ng-repeat="error in errors.is_player">
-        <span class="help-inline">{{ error }}</span>
+
+<div class="row">
+    <div class="col-sm-6">
+        <fieldset class="form-group" ng-class="{ 'has-error': errors.is_player }">
+            <label class="checkbox-oinline" for="is_player">
+                <input type="checkbox" ame="is_player" ng-model="character.is_player">
+                Player
+            </label>
+            <div ng-repeat="error in errors.is_player">
+                <span class="help-inline">{{ error }}</span>
+            </div>
+        </fieldset>
     </div>
 </div>
 
-<div class="form-group">
-    <input class="btn btn-primary" type="submit" value="Save" />
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Save" />
+        </div>
+    </div>
 </div>

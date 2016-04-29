@@ -14,18 +14,24 @@ div.title {
 
 div.main {
     .make-row();
+
     .sidebar {
-        .make-md-column(2);
+        .make-sm-column(2);
     }
 
     .main-content {
-        .make-md-column(10);
+        .make-sm-column(10);
     }
 }
 
 
 .roll-result {
     .text-center();
+}
+
+
+.inline {
+    display: inline;
 }
 
 
@@ -46,4 +52,18 @@ div.main {
     span.fraction-bar {
             display: none;
     }
+}
+
+
+/* Hide spinners for Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+/* Hide spinners for Chrome */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

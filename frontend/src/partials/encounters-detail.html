@@ -33,76 +33,97 @@
     </div>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-default" ng-show="encounter.characters.length > 0">
     <div class="panel-heading">
         <button ng-click="advanceInit()" class="btn btn-info btn-sm">Advance initiative</button>
-        <span ng-show="encounter.current_round">
-            round {{ encounter.current_round }}
-        </span>
+        round {{ encounter.current_round }}
     </div>
-    <div class="panel-body" ng-hide="encounter.characters.length > 0">
-        No characters <i class="fa fa-frown-o"></i>
-    </div>
-        <table class="table table-bordered table-striped" ng-show="encounter.characters.length > 0">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Notes</th>
-                    <th>Initiative</th>
-                    <th>HP</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr
-                    ng-class="{info: character.initiative === encounter.current_initiative}"
-                    ng-repeat="character in encounter.characters | orderBy : 'initiative' track by character.id"
-                >
-                    <td>
+    <table class="table table-bordered table-striped" ng-show="encounter.characters.length > 0">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Notes</th>
+                <th>Initiative</th>
+                <th>HP</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                ng-class="{info: character.initiative === encounter.current_initiative}"
+                ng-repeat="character in encounter.characters | orderBy : 'initiative' track by character.id"
+            >
+                <td>
+                    <span ng-if="character.is_player || character.description.length == 0">
                         {{ character.name }}
-                    </td>
-                    <td>
-                        <span ng-hide="character.is_player">
-                            <a href editable-text="character.notes" onbeforesave="updateCharacter(character)">{{character.notes || '...' }}</a>
-                        </span>
-                    </td>
-                    <td>
-                        {{ character.initiative }}
-                        <div class="pull-right">
-                            <button class="btn btn-default btn-xs" ng-click="increaseInitiative(character)"><i class="fa fa-arrow-up"></i></button>
-                            <button class="btn btn-default btn-xs" ng-click="decreaseInitiative(character)"><i class="fa fa-arrow-down"></i></button>
-                        </div>
+                    </span>
+                    <span ng-if="!character.is_player && character.description.length > 0">
+                        <a href ng-click="showCharacter(character)">{{ character.name }}</a>
+                    </span>
+                </td>
+                <td>
+                    <span ng-hide="character.is_player">
+                        <a href editable-text="character.notes" onbeforesave="updateCharacter(character)">{{character.notes || '...' }}</a>
+                    </span>
+                </td>
+                <td>
+                    {{ character.initiative }}
+                    <div class="pull-right">
+                        <button class="btn btn-default btn-xs" ng-click="increaseInitiative(character)"><i class="fa fa-arrow-up"></i></button>
+                        <button class="btn btn-default btn-xs" ng-click="decreaseInitiative(character)"><i class="fa fa-arrow-down"></i></button>
                     </div>
-                    </td>
-                    <td>
-                        <span ng-if="!character.is_player">
-                            <div class="fraction">
-                                <span class="fraction-numerator">
-                                    {{ character.current_hp }}
-                                </span>
-                                <span class="fraction-bar">
-                                    /
-                                </span>
-                                <span class="fraction-denominator">
-                                    {{ character.max_hp }}
-                                </span>
+                </div>
+                </td>
+                <td>
+                    <span ng-if="!character.is_player">
+                        <div class="fraction">
+                            <span class="fraction-numerator">
+                                {{ character.current_hp }}
+                            </span>
+                            <span class="fraction-bar">
+                                /
+                            </span>
+                            <span class="fraction-denominator">
+                                {{ character.max_hp }}
+                            </span>
+                        </div>
+                        <form class="form-inline inline">
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-warning" ng-click="hurtCharacter(character)">Hurt</button>
+                                </div>
+                                <input class="form-control" type="number" ng-model="character.hp_change_value">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success" ng-click="healCharacter(character)">Heal</button>
+                                </div>
                             </div>
-                            <small>{{ character.current_hp / character.max_hp * 100 | number : 1 }}%</small>
-                        </span>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" ng-click="removeCharacter(character)">Remove</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                        </form>
+                    </span>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm" ng-click="removeCharacter(character)">Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 
 <div class="row">
     <div class="col-sm-12">
-        <button ng-click="end()" class="btn btn-danger">End this encounter</button>        
+        <button ng-click="end()" class="btn btn-danger">End this encounter</button>
     </div>
 </div>
 
+
+<script type="text/ng-template" id="characterDetailsModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">{{ character.name }}</h3>
+    </div>
+    <div class="modal-body">
+        {{ character.description }}
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    </div>
+</script>

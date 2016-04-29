@@ -1,8 +1,8 @@
-var combatTrackerControllers = angular.module('combatTrackerControllers', ['xeditable']);
+var combatTrackerControllers = angular.module('combatTrackerControllers', ['xeditable', 'ui.bootstrap']);
 
 
 combatTrackerControllers.run(function(editableOptions) {
-  editableOptions.theme = 'bs3';
+    editableOptions.theme = 'bs3';
 });
 
 
@@ -51,9 +51,9 @@ combatTrackerControllers.controller('EncounterListCtrl', ['$scope', 'Encounter',
 ]);
 
 
-combatTrackerControllers.controller('EncounterDetailCtrl', ['$scope', '$location', '$routeParams', 'Encounter', 'Character', 'EncounterCharacter',
-    function ($scope, $location, $routeParams, Encounter, Character, EncounterCharacter) {
-        $scope.encounter = Encounter.get($routeParams);
+combatTrackerControllers.controller('EncounterDetailCtrl', ['$scope', '$location', '$routeParams', '$uibModal', 'Encounter', 'Character', 'EncounterCharacter',
+    function ($scope, $location, $routeParams, $uibModal, Encounter, Character, EncounterCharacter) {
+        $scope.encounter = Encounter.get($routeParams)
         $scope.characters = Character.query();
         $scope.newCharacter = {};
 
@@ -90,16 +90,59 @@ combatTrackerControllers.controller('EncounterDetailCtrl', ['$scope', '$location
         };
 
         $scope.increaseInitiative = function(character) {
-            EncounterCharacter.update({id: character.id}, {initiative: character.initiative + 1});
             character.initiative += 1;
+            EncounterCharacter.update({id: character.id}, {initiative: character.initiative});
         };
 
         $scope.decreaseInitiative = function(character) {
-            EncounterCharacter.update({id: character.id}, {initiative: character.initiative - 1});
             character.initiative -= 1;
+            EncounterCharacter.update({id: character.id}, {initiative: character.initiative});
+        };
+
+        $scope.hurtCharacter = function(character) {
+            if (!_.isNumber(character.hp_change_value)) {
+                return;
+            }
+            character.current_hp -= character.hp_change_value;
+            EncounterCharacter.update({id: character.id}, {current_hp: character.current_hp});
+            character.hp_change_value = null;
+        };
+
+        $scope.healCharacter = function(character) {
+            if (!_.isNumber(character.hp_change_value)) {
+                return;
+            }
+            character.current_hp += character.hp_change_value;
+            if (character.current_hp > character.max_hp) {
+                character.current_hp = character.max_hp;
+            }
+            EncounterCharacter.update({id: character.id}, {current_hp: character.current_hp});
+            character.hp_change_value = null;
+        };
+
+        $scope.showCharacter = function(character) {
+            $uibModal.open({
+                templateUrl: 'characterDetailsModal.html',
+                controller: 'CharacterInfoModalCtrl',
+                size: 'lg',
+                resolve: {
+                    character: function () {
+                        return character;
+                    }
+                }
+            });
         };
     }
 ]);
+
+
+combatTrackerControllers.controller('CharacterInfoModalCtrl', function ($scope, $uibModalInstance, character) {
+    $scope.character = character;
+
+    $scope.ok = function () {
+        $uibModalInstance.close();
+    };
+});
 
 
 combatTrackerControllers.controller('EncounterCreateCtrl', ['$scope', '$location', 'Encounter',

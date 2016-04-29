@@ -43,6 +43,7 @@ module.exports = function(grunt) {
           'bower_components/angular-resource/angular-resource.js',
           'bower_components/angular-route/angular-route.js',
           'bower_components/angular-xeditable/dist/js/xeditable.js',
+          'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
           'src/js/*.js'
         ],
         dest: 'app/js/combat_tracker.js',
