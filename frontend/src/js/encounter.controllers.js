@@ -1,4 +1,4 @@
-var encounterControllers = angular.module('encounterControllers', ['xeditable', 'ui.bootstrap']);
+var encounterControllers = angular.module('encounterControllers', ['xeditable', 'ui.bootstrap', 'hc.marked']);
 
 
 encounterControllers.run(function(editableOptions) {

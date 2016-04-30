@@ -1,4 +1,4 @@
-var characterControllers = angular.module('characterControllers', []);
+var characterControllers = angular.module('characterControllers', ['hc.marked']);
 
 
 characterControllers.controller('CharacterListCtrl', function ($scope, characters) {

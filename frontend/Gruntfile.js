@@ -34,6 +34,7 @@ module.exports = function(grunt) {
                 },
                 src: [
                     'bower_components/jquery/dist/jquery.min.js',
+                    'bower_components/marked/lib/marked.js',
                     'bower_components/bootstrap/dist/js/bootstrap.min.js',
                     'bower_components/underscore/underscore-min.js',
                     'bower_components/angularjs/angular.min.js',
@@ -41,6 +42,7 @@ module.exports = function(grunt) {
                     'bower_components/angular-route/angular-route.min.js',
                     'bower_components/angular-xeditable/dist/js/xeditable.min.js',
                     'bower_components/angular-loading-bar/build/loading-bar.min.js',
+                    'bower_components/angular-marked/dist/angular-marked.min.js',
                     'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                     'src/js/*.js',
                     'build/js/templates.js',

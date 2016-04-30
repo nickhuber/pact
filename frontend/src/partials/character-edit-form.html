@@ -14,7 +14,17 @@
     <div class="col-sm-6">
         <div class="form-group" ng-class="{ 'has-error': errors.description }">
             <label class="control-label" for="description">Description</label>
-            <textarea class="form-control" name="description" ng-model="character.description"></textarea>
+            <div class="help-block">
+                Format using markdown
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <textarea class="form-control" name="description" ng-model="character.description"></textarea>
+                </div>
+                <div class="col-sm-6">
+                    <div marked="character.description" compile="true"></div>
+                </div>
+            </div>
             <div ng-repeat="error in errors.description">
                 <span class="help-block">{{ error }}</span>
             </div>
