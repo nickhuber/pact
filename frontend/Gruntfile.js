@@ -3,15 +3,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
       javascript: {
-        files: ['src/js/*.js'],
-        tasks: ['concat']
+        files: ['src/js/*.js', 'src/partials/*.html'],
+        tasks: ['ngtemplates', 'concat']
       },
       main: {
         files: ['src/index.html'],
-        tasks: ['copy']
-      },
-      partials: {
-        files: ['src/partials/*.html'],
         tasks: ['copy']
       },
       less: {
@@ -46,7 +42,8 @@ module.exports = function(grunt) {
           'bower_components/angular-xeditable/dist/js/xeditable.js',
           'bower_components/angular-loading-bar/build/loading-bar.js',
           'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-          'src/js/*.js'
+          'src/js/*.js',
+          'build/js/templates.js',
         ],
         dest: 'app/js/combat_tracker.js',
       },
@@ -57,8 +54,14 @@ module.exports = function(grunt) {
     },
     copy: {
       main: {src: ['src/index.html'], dest: 'app/index.html'},
-      partials: {src: ['src/partials/*.html'], dest: 'app/partials/', flatten: true, expand: true},
       fonts: {src: ['bower_components/bootstrap/fonts/*'], dest: 'app/fonts/', flatten: true, expand: true}
+    },
+    ngtemplates: {
+        combatTracker: {
+            cwd: 'src',
+            src: 'partials/*.html',
+            dest: 'build/js/templates.js'
+        }
     }
 
   });
@@ -68,9 +71,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-angular-templates');
 
   grunt.registerTask('default',
     [
+      'ngtemplates',
       'less',
       'concat',
       'copy',
