@@ -1,10 +1,10 @@
-<h1>Create a new encounter</h1>
+<h1>Create encounter</h1>
 <form class="form-horizontal" role="form" ng-submit="create()">
     <div class="form-group input-group-md" ng-class="{ 'has-error': errors.name }">
         <label class="control-label" for="name">Name</label>
         <input class="form-control" type="text" required name="name" ng-model="encounter.name">
         <div ng-repeat="error in errors.name">
-            <span class="help-inline">{{ error }}</span>
+            <span class="help-block">{{ error }}</span>
         </div>
     </div>
 

@@ -1,5 +1,3 @@
-@import "../../bower_components/components-font-awesome/less/font-awesome.less";
-
 @import "../../bower_components/bootstrap/less/bootstrap.less";
 
 @import "../../bower_components/bootswatch/sandstone/bootswatch.less";
@@ -41,10 +39,9 @@ div.main {
     vertical-align: middle;
     letter-spacing: 0.001em;
     text-align: center;
-    font-size: 12px;
+    font-size: 1.5em;
     > span {
         display: block;
-        padding: 0.1em;
     }
     span.fraction-denominator {
             border-top: thin solid black;
@@ -66,4 +63,14 @@ input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+
+/*
+  Allow angular.js to be loaded in body, hiding cloaked elements until
+  templates compile.  The !important is important given that there may be
+  other selectors that are more specific or come later and might alter display.
+ */
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
 }

@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     watch: {
       javascript: {
         files: ['src/js/*.js'],
-        tasks: ['concat']
+        tasks: ['concat', 'uglify']
       },
       main: {
         files: ['src/index.html'],
@@ -16,10 +16,10 @@ module.exports = function(grunt) {
       },
       less: {
         files: ['src/less/*.less', 'bower_components/angular-xeditable/dist/css/xeditable.css'],
-        tasks: ['less', 'concat']
+        tasks: ['less', 'concat', 'cssmin']
       },
       fonts: {
-        files: ['bower_components/components-font-awesome/fonts/*', 'bower_components/bootstrap/fonts/*'],
+        files: ['bower_components/bootstrap/fonts/*'],
         tasks: ['copy']
       }
     },
@@ -56,8 +56,26 @@ module.exports = function(grunt) {
     copy: {
       main: {src: ['src/index.html'], dest: 'app/index.html'},
       partials: {src: ['src/partials/*.html'], dest: 'app/partials/', flatten: true, expand: true},
-      fonts: {src: ['bower_components/components-font-awesome/fonts/*', 'bower_components/bootstrap/fonts/*'], dest: 'app/fonts/', flatten: true, expand: true}
+      fonts: {src: ['bower_components/bootstrap/fonts/*'], dest: 'app/fonts/', flatten: true, expand: true}
+    },
+    uglify: {
+      options: {
+        mangle: false
+      },
+      main: {
+        files: {
+            'app/js/combat_tracker.min.js': ['app/js/combat_tracker.js']
+        }
+      }
+    },
+    cssmin: {
+      main: {
+        files: {
+          'app/css/combat_tracker.min.css': ['app/css/combat_tracker.css']
+        }
+      }
     }
+
   });
 
   // Load plugins here
@@ -65,12 +83,16 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   grunt.registerTask('default',
     [
       'less',
       'concat',
-      'copy'
+      'copy',
+      'cssmin',
+      'uglify',
     ]
   );
 }

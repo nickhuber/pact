@@ -17,6 +17,12 @@ combatTrackerControllers.controller('CharacterDetailCtrl', ['$scope', '$location
     function ($scope, $location, $routeParams, Character) {
         $scope.character = Character.get($routeParams);
 
+        $scope.update = function() {
+            $scope.character.$update().catch(function(response) {
+                $scope.errors = response.data;
+            });
+        }
+
         $scope.delete = function() {
             $scope.character.$delete().then(function() {
                 $location.path('/characters/');
@@ -53,7 +59,8 @@ combatTrackerControllers.controller('EncounterListCtrl', ['$scope', 'Encounter',
 
 combatTrackerControllers.controller('EncounterDetailCtrl', ['$scope', '$location', '$routeParams', '$uibModal', 'Encounter', 'Character', 'EncounterCharacter',
     function ($scope, $location, $routeParams, $uibModal, Encounter, Character, EncounterCharacter) {
-        $scope.encounter = Encounter.get($routeParams)
+
+        $scope.encounter = Encounter.get($routeParams);
         $scope.characters = Character.query();
         $scope.newCharacter = {};
 

@@ -1,5 +1,8 @@
 from rest_framework import serializers
 
+import dice
+from pyparsing import ParseException
+
 from manager import models
 
 
@@ -12,32 +15,27 @@ class CharacterSerializer(serializers.HyperlinkedModelSerializer):
     def validate(self, data):
         if not data.get('is_player') and not data.get('hit_dice'):
             raise serializers.ValidationError({'hit_dice': 'Hit dice required for NPCs.'})
+        if data.get('is_player') and data.get('hit_dice'):
+            raise serializers.ValidationError({'hit_dice': 'Hit dice cannot be used for players.'})
         return data
 
-    # TODO: validate hit dice
+    def validate_hit_dice(self, value):
+        try:
+            results = dice.roll(value)
+        except (ParseException, KeyError):
+            raise serializers.ValidationError('Invalid hit dice')
+        return value
 
 
 class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    name = serializers.SerializerMethodField()
-    description = serializers.SerializerMethodField()
-    hit_dice = serializers.SerializerMethodField()
-    is_player = serializers.SerializerMethodField()
+    name = serializers.CharField(source='character.name', read_only=True)
+    description = serializers.CharField(source='character.description', read_only=True)
+    hit_dice = serializers.CharField(source='character.hit_dice', read_only=True)
+    is_player = serializers.BooleanField(source='character.is_player', read_only=True)
 
     class Meta:
         model = models.EncounterCharacter
-
-    def get_name(self, obj):
-        return obj.character.name
-
-    def get_description(self, obj):
-        return obj.character.description
-
-    def get_hit_dice(self, obj):
-        return obj.character.hit_dice
-
-    def get_is_player(self, obj):
-        return obj.character.is_player
 
 
 class EncounterSerializer(serializers.HyperlinkedModelSerializer):

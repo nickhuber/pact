@@ -23,7 +23,7 @@ class ArchiveModel(models.Model):
 
 class Character(ArchiveModel):
     name = models.CharField(max_length=128, unique=True)
-    description = models.TextField(max_length=8192, default='')
+    description = models.TextField(max_length=8192, default='', blank=True)
     hit_dice = models.CharField(max_length=128, null=True)
     is_player = models.BooleanField(default=False, db_index=True)
 
