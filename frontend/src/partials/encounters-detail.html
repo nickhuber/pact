@@ -1,4 +1,4 @@
-<h1>{{ encounter.name }}</h1>
+<h1>{{ ::encounter.name }}</h1>
 
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -55,7 +55,7 @@
             >
                 <td>
                     <span ng-if="character.is_player || character.description.length == 0">
-                        {{ character.name }}
+                        {{ ::character.name }}
                     </span>
                     <span ng-if="!character.is_player && character.description.length > 0">
                         <a href ng-click="showCharacter(character)">{{ character.name }}</a>

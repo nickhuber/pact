@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     watch: {
       javascript: {
         files: ['src/js/*.js'],
-        tasks: ['concat', 'uglify']
+        tasks: ['concat']
       },
       main: {
         files: ['src/index.html'],
@@ -16,7 +16,7 @@ module.exports = function(grunt) {
       },
       less: {
         files: ['src/less/*.less', 'bower_components/angular-xeditable/dist/css/xeditable.css'],
-        tasks: ['less', 'concat', 'cssmin']
+        tasks: ['less', 'concat']
       },
       fonts: {
         files: ['bower_components/bootstrap/fonts/*'],
@@ -27,7 +27,8 @@ module.exports = function(grunt) {
       development: {
         files: {
           'build/css/standard.css': 'src/less/standard.less',
-          'build/css/xeditable.css': 'bower_components/angular-xeditable/dist/css/xeditable.css'
+          'build/css/xeditable.css': 'bower_components/angular-xeditable/dist/css/xeditable.css',
+          'build/css/loading-bar.css': 'bower_components/angular-loading-bar/build/loading-bar.css',
         }
       }
     },
@@ -43,6 +44,7 @@ module.exports = function(grunt) {
           'bower_components/angular-resource/angular-resource.js',
           'bower_components/angular-route/angular-route.js',
           'bower_components/angular-xeditable/dist/js/xeditable.js',
+          'bower_components/angular-loading-bar/build/loading-bar.js',
           'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
           'src/js/*.js'
         ],
@@ -57,23 +59,6 @@ module.exports = function(grunt) {
       main: {src: ['src/index.html'], dest: 'app/index.html'},
       partials: {src: ['src/partials/*.html'], dest: 'app/partials/', flatten: true, expand: true},
       fonts: {src: ['bower_components/bootstrap/fonts/*'], dest: 'app/fonts/', flatten: true, expand: true}
-    },
-    uglify: {
-      options: {
-        mangle: false
-      },
-      main: {
-        files: {
-            'app/js/combat_tracker.min.js': ['app/js/combat_tracker.js']
-        }
-      }
-    },
-    cssmin: {
-      main: {
-        files: {
-          'app/css/combat_tracker.min.css': ['app/css/combat_tracker.css']
-        }
-      }
     }
 
   });
@@ -83,16 +68,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   grunt.registerTask('default',
     [
       'less',
       'concat',
       'copy',
-      'cssmin',
-      'uglify',
     ]
   );
 }
