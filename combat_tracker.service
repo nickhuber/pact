@@ -5,9 +5,9 @@ After=nginx.service
 [Service]
 Type=simple
 User=combat_tracker
-Group=combat_tracker
+Group=www-data
 WorkingDirectory=/opt/combat_tracker
-ExecStart=/opt/combat_tracker/.venv/bin/uwsgi --ini /opt/combat_tracker/uwsgi.ini
+ExecStart=/usr/bin/uwsgi --ini /opt/combat_tracker/uwsgi.ini
 Restart=always
 
 [Install]
