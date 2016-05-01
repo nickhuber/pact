@@ -3,19 +3,19 @@ module.exports = function(grunt) {
         watch: {
             javascript: {
                 files: ['src/js/*.js'],
-                tasks: ['concat']
+                tasks: ['concat', 'cachebreaker']
             },
             templates: {
                 files: ['src/partials/*.html'],
-                tasks: ['ngtemplates', 'concat']
+                tasks: ['ngtemplates', 'concat', 'cachebreaker']
             },
             main: {
                 files: ['src/index.html'],
-                tasks: ['copy']
+                tasks: ['copy', 'cachebreaker',]
             },
             less: {
                 files: ['src/less/*.less'],
-                tasks: ['less', 'cssmin']
+                tasks: ['less', 'cssmin', 'cachebreaker']
             },
         },
         less: {
@@ -68,6 +68,22 @@ module.exports = function(grunt) {
                 src: 'partials/*.html',
                 dest: 'build/js/templates.js'
             }
+        },
+        cachebreaker: {
+            dev: {
+                options: {
+                    match: [
+                        {
+                            'combat_tracker.js': 'app/js/combat_tracker.js',
+                            'combat_tracker.css': 'app/css/combat_tracker.css',
+                        }
+                    ],
+                    replacement: 'md5',
+                },
+                files: {
+                    src: ['app/index.html']
+                }
+            }
         }
 
     });
@@ -79,6 +95,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-cache-breaker');
 
     grunt.registerTask('default', [
         'ngtemplates',
@@ -86,5 +103,6 @@ module.exports = function(grunt) {
         'cssmin',
         'concat',
         'copy',
+        'cachebreaker',
     ]);
 };
