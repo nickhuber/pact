@@ -22,7 +22,7 @@ class ArchiveModel(models.Model):
 
 
 class Character(ArchiveModel):
-    name = models.CharField(max_length=128, unique=True)
+    name = models.CharField(max_length=128)
     description = models.TextField(max_length=8192, default='', blank=True)
     hit_dice = models.CharField(max_length=128, null=True)
     is_player = models.BooleanField(default=False, db_index=True)
@@ -39,21 +39,22 @@ class Encounter(ArchiveModel):
     current_round = models.IntegerField(default=0)
 
     def advance_initiative(self):
-        if self.encountercharacter_set.all().count() == 0:
+        if not self.encountercharacter_set.all().exists():
             return
 
         if self.current_initiative is None:
-            self.current_initiative = self.encountercharacter_set.order_by('initiative').first().initiative
+            self.current_initiative = self.encountercharacter_set.exclude(initiative=None).order_by('-initiative').first().initiative
             self.current_round += 1
         else:
             try:
                 self.current_initiative = self.encountercharacter_set\
-                    .filter(initiative__gt=self.current_initiative)\
-                    .order_by('initiative')\
+                    .filter(initiative__lt=self.current_initiative)\
+                    .exclude(initiative=None)\
+                    .order_by('-initiative')\
                     .first()\
                     .initiative
             except (AttributeError, EncounterCharacter.DoesNotExist):
-                self.current_initiative = self.encountercharacter_set.order_by('initiative').first().initiative
+                self.current_initiative = self.encountercharacter_set.exclude(initiative=None).order_by('-initiative').first().initiative
                 self.current_round += 1
         self.save()
 

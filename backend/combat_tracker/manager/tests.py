@@ -25,35 +25,31 @@ class EncounterCharacterTestCase(TestCase):
         self.assertEqual(ec.max_hp, ec.current_hp)
 
 
-class EncounterTestCase(TestCase):
+class EncounterInitiativeTestCase(TestCase):
     def setUp(self):
         self.encounter = models.Encounter(name='test_encounter')
         self.encounter.save()
-        character1 = models.Character(name='test1', is_player=True)
-        character1.save()
-        character2 = models.Character(name='test2', is_player=True)
-        character2.save()
-        self.ec1 = models.EncounterCharacter(character=character1, encounter=self.encounter)
-        self.ec2 = models.EncounterCharacter(character=character2, encounter=self.encounter)
+        pending_character = models.Character.objects.create(name='test0', is_player=True)
+        character1 = models.Character.objects.create(name='test1', is_player=True)
+        character2 = models.Character.objects.create(name='test2', is_player=True)
+        character3 = models.Character.objects.create(name='test3', is_player=True)
+        self.ecpending = models.EncounterCharacter.objects.create(character=pending_character, encounter=self.encounter)
+        self.ec1 = models.EncounterCharacter.objects.create(character=character1, encounter=self.encounter, initiative=1)
+        self.ec2 = models.EncounterCharacter.objects.create(character=character2, encounter=self.encounter, initiative=2)
+        self.ec3 = models.EncounterCharacter.objects.create(character=character3, encounter=self.encounter, initiative=3)
 
-    def test_advance_init_starts_lowest_init(self):
-        self.ec1.initiative = 1
-        self.ec1.save()
-        self.ec2.initiative = 2
-        self.ec2.save()
-
+    def test_advance_init_starts_highest_init(self):
         self.assertIsNone(self.encounter.current_initiative)
-        self.encounter.advance_init()
-        self.assertEqual(self.encounter.current_initiative, self.ec1.initiative)
+        self.encounter.advance_initiative()
+        self.assertEqual(self.encounter.current_initiative, self.ec3.initiative)
 
-    def test_advance_init_rolls_over_at_highest_init(self):
-        self.ec1.initiative = 1
-        self.ec1.save()
-        self.ec2.initiative = 2
-        self.ec2.save()
+    def test_advance_init_increases_normally(self):
+        self.encounter.current_initiative = self.ec3.initiative
+        self.encounter.advance_initiative()
+        self.assertEqual(self.encounter.current_initiative, self.ec2.initiative)
 
-        self.encounter.current_initiative = 2
-        self.encounter.save()
+    def test_advance_init_rolls_over_at_lowest_init(self):
+        self.encounter.current_initiative = self.ec1.initiative
 
-        self.encounter.advance_init()
-        self.assertEqual(self.encounter.current_initiative, self.ec1.initiative)
+        self.encounter.advance_initiative()
+        self.assertEqual(self.encounter.current_initiative, self.ec3.initiative)
