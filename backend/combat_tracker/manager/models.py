@@ -35,7 +35,7 @@ class Character(ArchiveModel):
 class Encounter(ArchiveModel):
     name = models.CharField(max_length=256)
     characters = models.ManyToManyField(Character, through='EncounterCharacter')
-    current_initiative = models.IntegerField(null=True)
+    current_initiative = models.IntegerField(null=True, blank=True)
     current_round = models.IntegerField(default=0)
 
     def advance_initiative(self):
@@ -64,7 +64,7 @@ class EncounterCharacter(ArchiveModel):
     initiative = models.IntegerField(null=True)
     max_hp = models.IntegerField(null=True)
     current_hp = models.IntegerField(null=True)
-    notes = models.CharField(max_length=128, default='')
+    notes = models.CharField(max_length=128, default='', blank=True)
 
     def save(self, *args, **kwargs):
         # Probably nicer to do this with a signal or something

@@ -48,8 +48,8 @@
 <div class="row">
     <div class="col-sm-6">
         <fieldset class="form-group" ng-class="{ 'has-error': errors.is_player }">
-            <label class="checkbox-block" for="is_player">
-                <input type="checkbox" name="is_player" ng-model="character.is_player">
+            <label>
+                <input type="checkbox" ng-model="character.is_player">
                 Player
             </label>
             <div ng-repeat="error in errors.is_player">

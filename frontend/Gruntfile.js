@@ -21,7 +21,7 @@ module.exports = function(grunt) {
         less: {
             development: {
                 files: {
-                    'build/css/standard.css': 'src/less/standard.less',
+                    'build/css/standard.css': 'src/less/*.less',
                     'build/css/xeditable.css': 'bower_components/angular-xeditable/dist/css/xeditable.css',
                     'build/css/loading-bar.css': 'bower_components/angular-loading-bar/build/loading-bar.css',
                 }
@@ -40,6 +40,7 @@ module.exports = function(grunt) {
                     'bower_components/angularjs/angular.min.js',
                     'bower_components/angular-resource/angular-resource.min.js',
                     'bower_components/angular-route/angular-route.min.js',
+                    'bower_components/angular-animate/angular-animate.min.js',
                     'bower_components/angular-xeditable/dist/js/xeditable.min.js',
                     'bower_components/angular-loading-bar/build/loading-bar.min.js',
                     'bower_components/angular-marked/dist/angular-marked.min.js',

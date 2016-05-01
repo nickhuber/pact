@@ -54,6 +54,28 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $locati
         });
     };
 
+    $scope.addToInitiative = function(character) {
+        if (!_.isNumber(character._initiative)) {
+            // TODO: show an error here, or use a form and submit properly.
+            return;
+        }
+        character.initiative = character._initiative;
+        delete character._initiative;
+        EncounterCharacter.update({id: character.id}, character);
+    }
+
+    $scope.pendingCharacters = function() {
+        return _.filter($scope.encounter.characters, function(character) {
+            return character.initiative === null;
+        });
+    }
+
+    $scope.activeCharacters = function() {
+        return _.filter($scope.encounter.characters, function(character) {
+            return character.initiative !== null;
+        });
+    }
+
     $scope.removeCharacter = function(character) {
         EncounterCharacter.delete({id: character.id});
         $scope.encounter.characters = _.without($scope.encounter.characters, character);

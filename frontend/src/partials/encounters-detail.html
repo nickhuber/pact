@@ -5,10 +5,13 @@
         Add a character
     </div>
     <div class="panel-body">
+        <div class="help-block">
+            Leave initiative blank to prepare this character but not add to the encounter
+        </div>
         <form class="form-inline" role="form" ng-submit="addCharacter()">
             <div class="form-group input-group-md" ng-class="{ 'has-error': errors.name }">
                 <label class="control-label" for="initiative">Initiatve</label>
-                <input class="form-control" type="number" required name="initiative" ng-model="newCharacter.initiative">
+                <input class="form-control" type="number" name="initiative" ng-model="newCharacter.initiative">
             </div>
 
             <div class="form-group input-group-md" ng-class="{ 'has-error': errors.notes }">
@@ -33,7 +36,45 @@
     </div>
 </div>
 
-<div class="panel panel-default" ng-show="encounter.characters.length > 0">
+<div class="panel panel-default" ng-show="pendingCharacters().length > 0">
+    <div class="panel-heading">
+        Pending characters
+    </div>
+    <table class="table table-bordered table-striped" ng-show="encounter.characters.length > 0">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Notes</th>
+                <th>Initiative</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                ng-repeat="character in pendingCharacters() track by character.id"
+            >
+                <td>
+                    <span ng-if="::character.is_player || character.description.length == 0">
+                        {{:: character.name }}
+                    </span>
+                    <span ng-if="::!character.is_player && character.description.length > 0">
+                        <a href ng-click="showCharacter(character)">{{:: character.name }}</a>
+                    </span>
+                </td>
+                <td>
+                    <a href editable-text="character.notes" onbeforesave="updateCharacter(character)">{{ character.notes || '...' }}</a>
+                </td>
+                <td>
+                    <input class="form-control" type="number" ng-model="character._initiative">
+                </td>
+                <td>
+                    <button class="btn btn-primary" ng-click="addToInitiative(character)">Add</button>
+                </td>
+            </tr>
+    </table>
+</div>
+
+<div class="panel panel-default" ng-show="activeCharacters().length > 0">
     <div class="panel-heading">
         <button ng-click="advanceInit()" class="btn btn-info btn-sm">Advance initiative</button>
         round {{ encounter.current_round }}
@@ -50,8 +91,9 @@
         </thead>
         <tbody>
             <tr
+                class="animate-repeat"
                 ng-class="{info: character.initiative === encounter.current_initiative}"
-                ng-repeat="character in encounter.characters | orderBy : 'initiative' track by character.id"
+                ng-repeat="character in activeCharacters() | orderBy : '-   initiative' track by character.id"
             >
                 <td>
                     <span ng-if="::character.is_player || character.description.length == 0">
