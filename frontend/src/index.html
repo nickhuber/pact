@@ -6,16 +6,17 @@
     <link href="css/combat_tracker.css" rel="stylesheet">
     <title>d20 combat tracker</title>
 </head>
-<body>
+<body ng-controller="ApplicationCtrl">
     <div class="title">
         <div class="page-header">
             <h1>Combat Tracker <small>v2.0</small></h1>
         </div>
+        <button class="btn btn-default pull-left" ng-click="toggleSidebar()">{{ action }} sidebar</button>
     </div>
 
     <div class="container-fluid" ng-cloak>
         <div class="main">
-            <div class="sidebar" ng-controller="NavigationCtrl">
+            <div class="sidebar" ng-show="show" ng-controller="NavigationCtrl">
                 <ul class="nav nav-pills nav-stacked">
                     <li role="presentation" ng-class="{ active: isActive('/') }">
                         <a href="#/">Home</a>
@@ -46,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="main-content">
+            <div ng-class="{'main-content': show, 'full-content': !show}">
                 <div ng-view></div>
             </div>
         </div>

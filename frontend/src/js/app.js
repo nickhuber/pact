@@ -5,6 +5,8 @@ var app = angular.module('combatTracker', [
 
     'angular-loading-bar',
 
+    'applicationControllers',
+
     'navigationControllers',
 
     'characterControllers',
@@ -71,7 +73,18 @@ app.config(['$routeProvider', function($routeProvider) {
                 }
             }
         }).
-
+        when('/encounters/:id/mobile', {
+            templateUrl: 'partials/encounter-initiative.html',
+            controller: 'EncounterDetailCtrl',
+            resolve: {
+                encounter: function($route, Encounter) {
+                    return Encounter.get($route.current.params).$promise;
+                },
+                characters: function(Character) {
+                    return Character.query().$promise;
+                }
+            }
+        }).
 
         otherwise({
             redirectTo: '/'
