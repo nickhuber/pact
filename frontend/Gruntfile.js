@@ -3,19 +3,19 @@ module.exports = function(grunt) {
         watch: {
             javascript: {
                 files: ['src/js/*.js'],
-                tasks: ['concat', 'cachebreaker']
+                tasks: ['concat', 'clean:js', 'cacheBust']
             },
             templates: {
                 files: ['src/partials/*.html'],
-                tasks: ['ngtemplates', 'concat', 'cachebreaker']
+                tasks: ['ngtemplates', 'concat', 'clean:js', 'cacheBust']
             },
             main: {
                 files: ['src/index.html'],
-                tasks: ['copy', 'cachebreaker',]
+                tasks: ['copy:main', 'clean:js', 'cacheBust',]
             },
             less: {
                 files: ['src/less/*.less'],
-                tasks: ['less', 'cssmin', 'cachebreaker']
+                tasks: ['less', 'cssmin', 'clean:css', 'cacheBust']
             },
         },
         less: {
@@ -69,23 +69,23 @@ module.exports = function(grunt) {
                 dest: 'build/js/templates.js'
             }
         },
-        cachebreaker: {
-            dev: {
-                options: {
-                    match: [
-                        {
-                            'combat_tracker.js': 'app/js/combat_tracker.js',
-                            'combat_tracker.css': 'app/css/combat_tracker.css',
-                        }
-                    ],
-                    replacement: 'md5',
-                },
-                files: {
-                    src: ['app/index.html']
-                }
+        clean: {
+            js: ['app/js/*.js', '!app/js/combat_tracker.js'],
+            css: ['app/css/*.css', '!app/css/combat_tracker.css']
+        },
+        cacheBust: {
+            options: {
+                assets: ['css/combat_tracker.css', 'js/combat_tracker.js'],
+                baseDir: 'app/'
+            },
+            main: {
+                files: [{
+                    expand: true,
+                    cwd: 'app/',
+                    src: ['index.html']
+                }]
             }
         }
-
     });
 
     // Load plugins here
@@ -94,8 +94,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-angular-templates');
-    grunt.loadNpmTasks('grunt-cache-breaker');
+    grunt.loadNpmTasks('grunt-cache-bust');
 
     grunt.registerTask('default', [
         'ngtemplates',
@@ -103,6 +104,7 @@ module.exports = function(grunt) {
         'cssmin',
         'concat',
         'copy',
-        'cachebreaker',
+        'clean',
+        'cacheBust',
     ]);
 };
