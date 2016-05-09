@@ -7,6 +7,7 @@ Type=simple
 User=combat_tracker
 Group=www-data
 WorkingDirectory=/opt/combat_tracker
+ExecStartPre=/opt/combat_tracker/.venv/bin/pip install -r /opt/combat_tracker/backend/requirements.txt --upgrade
 ExecStartPre=/opt/combat_tracker/.venv/bin/python /opt/combat_tracker/backend/combat_tracker/manage.py migrate
 ExecStartPre=/bin/bash -c 'cd frontend && npm install'
 ExecStartPre=/bin/bash -c 'cd frontend && ./node_modules/.bin/bower install'

@@ -17,6 +17,11 @@ var app = angular.module('combatTracker', [
 ]);
 
 
+app.config(['$compileProvider', function ($compileProvider) {
+    $compileProvider.debugInfoEnabled(false);
+}]);
+
+
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
         when('/', {
