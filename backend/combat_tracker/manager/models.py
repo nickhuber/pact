@@ -24,7 +24,7 @@ class ArchiveModel(models.Model):
 class Character(ArchiveModel):
     name = models.CharField(max_length=128)
     description = models.TextField(max_length=8192, default='', blank=True)
-    hit_dice = models.CharField(max_length=128, null=True)
+    hit_dice = models.CharField(max_length=128, default='', blank=True)
     is_player = models.BooleanField(default=False, db_index=True)
 
     def clean(self):
@@ -47,6 +47,7 @@ class Encounter(ArchiveModel):
             self.current_round += 1
         else:
             try:
+                # Find the next character
                 self.current_initiative = self.encountercharacter_set\
                     .filter(initiative__lt=self.current_initiative)\
                     .exclude(initiative=None)\
@@ -54,8 +55,12 @@ class Encounter(ArchiveModel):
                     .first()\
                     .initiative
             except (AttributeError, EncounterCharacter.DoesNotExist):
+                # Rolled over, back to the first
                 self.current_initiative = self.encountercharacter_set.exclude(initiative=None).order_by('-initiative').first().initiative
                 self.current_round += 1
+        for ec in self.encountercharacter_set.filter(initiative=self.current_initiative):
+            for status in ec.statuseffect_set.all():
+                status.reduce()
         self.save()
 
 
@@ -85,3 +90,16 @@ class EncounterCharacter(ArchiveModel):
                 self.current_hp = self.max_hp
 
         super().save(*args, **kwargs)
+
+
+class StatusEffect(models.Model):
+    name = models.CharField(max_length=64)
+    remaining_duration = models.IntegerField()
+    character = models.ForeignKey(EncounterCharacter)
+
+    def reduce(self):
+        self.remaining_duration -= 1
+        if self.remaining_duration <= 0:
+            self.delete()
+        else:
+            self.save()

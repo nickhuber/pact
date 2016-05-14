@@ -25,7 +25,7 @@ encounterControllers.controller('EncounterListCtrl', function($scope, encounters
 });
 
 
-encounterControllers.controller('EncounterDetailCtrl', function ($scope, $location, $uibModal, EncounterCharacter, encounter, characters) {
+encounterControllers.controller('EncounterDetailCtrl', function ($scope, $location, $uibModal, EncounterCharacter, StatusEffect, encounter, characters) {
     $scope.encounter = encounter;
     $scope.characters = characters;
 
@@ -116,7 +116,7 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $locati
         character.hp_change_value = null;
     };
 
-    $scope.showCharacter = function(character) {
+    $scope.showCharacterModal = function(character) {
         $uibModal.open({
             templateUrl: 'characterDetailsModal.html',
             controller: 'CharacterInfoModalCtrl',
@@ -128,6 +128,28 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $locati
             }
         });
     };
+
+    $scope.showAddStatusModal = function(character) {
+        status_effect = new StatusEffect();
+        status_effect.character = character.url;
+        var modalInstance = $uibModal.open({
+            templateUrl: 'addStatusEffect.html',
+            controller: 'addStatusEffectModalCtrl',
+            size: 'lg',
+            resolve: {
+                status_effect: function () {
+                    return status_effect;
+                },
+                character: function () {
+                    return character;
+                }
+            }
+        });
+        modalInstance.result.then(function(newStatusEffect) {
+            character.status_effects.push(newStatusEffect);
+        });
+    };
+
 });
 
 
@@ -137,6 +159,22 @@ encounterControllers.controller('CharacterInfoModalCtrl', function ($scope, $uib
     $scope.ok = function () {
         $uibModalInstance.close();
     };
+});
+
+
+encounterControllers.controller('addStatusEffectModalCtrl', function ($scope, $uibModalInstance, status_effect, character) {
+    $scope.status_effect = status_effect;
+    $scope.character = character;
+
+    $scope.add = function () {
+        status_effect.$save().then(function(newStatusEffect) {
+            $uibModalInstance.close(newStatusEffect);
+        });
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss();
+    }
 });
 
 

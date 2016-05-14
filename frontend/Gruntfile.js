@@ -3,19 +3,19 @@ module.exports = function(grunt) {
         watch: {
             javascript: {
                 files: ['src/js/*.js'],
-                tasks: ['concat', 'clean:js', 'cacheBust']
+                tasks: ['concat', 'clean:js', 'copy', 'cacheBust']
             },
             templates: {
                 files: ['src/partials/*.html'],
-                tasks: ['ngtemplates', 'concat', 'clean:js', 'cacheBust']
+                tasks: ['ngtemplates', 'concat', 'clean:js', 'copy', 'cacheBust']
             },
             main: {
                 files: ['src/index.html'],
-                tasks: ['copy:main', 'clean:js', 'cacheBust',]
+                tasks: ['copy:main', 'clean:js', 'copy', 'cacheBust',]
             },
             less: {
                 files: ['src/less/*.less'],
-                tasks: ['less', 'cssmin', 'clean:css', 'cacheBust']
+                tasks: ['less', 'cssmin', 'clean:css', 'copy', 'cacheBust']
             },
         },
         less: {

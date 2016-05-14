@@ -27,3 +27,8 @@ class EncounterViewSet(viewsets.ModelViewSet):
 class EncounterCharacterViewSet(viewsets.ModelViewSet):
     queryset = models.EncounterCharacter.objects.all()
     serializer_class = serializers.EncounterCharacterSerializer
+
+
+class StatusEffectViewSet(viewsets.ModelViewSet):
+    queryset = models.StatusEffect.objects.all()
+    serializer_class = serializers.StatusEffectSerializer

@@ -10,6 +10,7 @@ router = SimpleRouter(trailing_slash=False)
 router.register('characters', manager_views.CharacterViewSet)
 router.register('encounters', manager_views.EncounterViewSet)
 router.register('encounter_characters', manager_views.EncounterCharacterViewSet)
+router.register('status_effects', manager_views.StatusEffectViewSet)
 
 
 urlpatterns = [

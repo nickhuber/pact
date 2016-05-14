@@ -15,9 +15,12 @@ characterControllers.controller('CharacterListCtrl', function ($scope, character
 
 characterControllers.controller('CharacterDetailCtrl', function ($scope, $location, character) {
     $scope.character = character;
+    $scope.errors = {};
 
     $scope.update = function() {
-        $scope.character.$update().catch(function(response) {
+        $scope.character.$update().then(function(response) {
+            $scope.errors = {};
+        }).catch(function(response) {
             $scope.errors = response.data;
         });
     }

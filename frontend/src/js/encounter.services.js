@@ -21,3 +21,11 @@ encounterServices.factory('EncounterCharacter', ['$resource', function($resource
         }
     );
 }]);
+
+
+encounterServices.factory('StatusEffect', ['$resource', function($resource) {
+    return $resource(
+        'api/status_effects/:id/',
+        {id: '@id'}
+    );
+}]);
