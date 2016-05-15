@@ -58,7 +58,7 @@
                         {{:: character.name }}
                     </span>
                     <span ng-if="::!character.is_player && character.description.length > 0">
-                        <a href ng-click="showCharacter(character)">{{:: character.name }}</a>
+                        <a href ng-click="showCharacterModal(character)">{{:: character.name }}</a>
                     </span>
                 </td>
                 <td>
