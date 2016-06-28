@@ -17,20 +17,15 @@ var app = angular.module('combatTracker', [
 ]);
 
 
-app.config(['$compileProvider', function ($compileProvider) {
-    $compileProvider.debugInfoEnabled(false);
-}]);
-
-
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
         when('/', {
-            templateUrl: 'partials/home.html'
+            templateUrl: 'templates/home.html'
         }).
 
 
         when('/characters', {
-            templateUrl: 'partials/characters-list.html',
+            templateUrl: 'templates/characters-list.html',
             controller: 'CharacterListCtrl',
             resolve: {
                 characters: function(Character) {
@@ -39,11 +34,11 @@ app.config(['$routeProvider', function($routeProvider) {
             }
         }).
         when('/characters/create', {
-            templateUrl: 'partials/characters-create.html',
+            templateUrl: 'templates/characters-create.html',
             controller: 'CharacterCreateCtrl'
         }).
         when('/characters/:id', {
-            templateUrl: 'partials/characters-detail.html',
+            templateUrl: 'templates/characters-detail.html',
             controller: 'CharacterDetailCtrl',
             resolve: {
                 character: function($route, Character) {
@@ -54,7 +49,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
 
         when('/encounters', {
-            templateUrl: 'partials/encounters-list.html',
+            templateUrl: 'templates/encounters-list.html',
             controller: 'EncounterListCtrl',
             resolve: {
                 encounters: function(Encounter) {
@@ -63,11 +58,11 @@ app.config(['$routeProvider', function($routeProvider) {
             }
         }).
         when('/encounters/create', {
-            templateUrl: 'partials/encounters-create.html',
+            templateUrl: 'templates/encounters-create.html',
             controller: 'EncounterCreateCtrl'
         }).
         when('/encounters/:id', {
-            templateUrl: 'partials/encounters-detail.html',
+            templateUrl: 'templates/encounters-detail.html',
             controller: 'EncounterDetailCtrl',
             resolve: {
                 encounter: function($route, Encounter) {
@@ -79,7 +74,7 @@ app.config(['$routeProvider', function($routeProvider) {
             }
         }).
         when('/encounters/:id/mobile', {
-            templateUrl: 'partials/encounter-initiative.html',
+            templateUrl: 'templates/encounter-initiative.html',
             controller: 'EncounterDetailCtrl',
             resolve: {
                 encounter: function($route, Encounter) {

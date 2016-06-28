@@ -6,7 +6,7 @@ module.exports = function(grunt) {
                 tasks: ['concat', 'clean:js', 'copy', 'cacheBust']
             },
             templates: {
-                files: ['src/partials/*.html'],
+                files: ['src/templates/*.html'],
                 tasks: ['ngtemplates', 'concat', 'clean:js', 'copy', 'cacheBust']
             },
             main: {
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
         ngtemplates: {
             combatTracker: {
                 cwd: 'src',
-                src: 'partials/*.html',
+                src: 'templates/*.html',
                 dest: 'build/js/templates.js'
             }
         },
