@@ -1,13 +1,11 @@
 # Frontend
 bower_components
 node_modules
-app
 build
-frontent/build
-frontent/app
+app
 
 # Backend
 *.pyc
-db.sqlite3
+*.sqlite3
 .virtualenv
 __pycache__
