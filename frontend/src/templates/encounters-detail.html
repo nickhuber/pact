@@ -1,4 +1,4 @@
-<h1>{{:: encounter.name }}</h1>
+<h1>{{ encounter.name }}</h1>
 
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -54,11 +54,11 @@
                 ng-repeat="character in pendingCharacters() track by character.id"
             >
                 <td>
-                    <span ng-if="::character.is_player || character.description.length == 0">
-                        {{:: character.name }}
+                    <span ng-if="character.is_player || character.description.length == 0">
+                        {{ character.name }}
                     </span>
-                    <span ng-if="::!character.is_player && character.description.length > 0">
-                        <a href ng-click="showCharacterModal(character)">{{:: character.name }}</a>
+                    <span ng-if="!character.is_player && character.description.length > 0">
+                        <a href ng-click="showCharacterModal(character)">{{ character.name }}</a>
                     </span>
                 </td>
                 <td>
@@ -98,15 +98,15 @@
                 ng-repeat="character in activeCharacters() | orderBy : '-   initiative' track by character.id"
             >
                 <td>
-                    <span ng-if="::character.is_player || character.description.length == 0">
-                        {{:: character.name }}
+                    <span ng-if="character.is_player || character.description.length == 0">
+                        {{ character.name }}
                     </span>
-                    <span ng-if="::!character.is_player && character.description.length > 0">
-                        <a href ng-click="showCharacterModal(character)">{{:: character.name }}</a>
+                    <span ng-if="!character.is_player && character.description.length > 0">
+                        <a href ng-click="showCharacterModal(character)">{{ character.name }}</a>
                     </span>
                 </td>
                 <td>
-                    <span ng-hide="::character.is_player">
+                    <span ng-hide="character.is_player">
                         <a href editable-text="character.notes" onbeforesave="updateCharacter(character)">{{ character.notes || '...' }}</a>
                     </span>
                 </td>
@@ -118,7 +118,7 @@
                     </div>
                 </td>
                 <td>
-                    <span ng-if="::!character.is_player">
+                    <span ng-if="!character.is_player">
                         <div class="fraction">
                             <span class="fraction-numerator">
                                 {{ character.current_hp }}
@@ -127,7 +127,7 @@
                                 /
                             </span>
                             <span class="fraction-denominator">
-                                {{:: character.max_hp }}
+                                {{ character.max_hp }}
                             </span>
                         </div>
                         <form class="form-inline inline">
@@ -144,12 +144,12 @@
                     </span>
                 </td>
                 <td>
-                    <ul class="list-group" ng-show="character.status_effects.length > 0">
-                        <li  class="list-group-item" ng-repeat="status in character.status_effects">
-                            {{:: status.name }}, {{ status.remaining_duration }} turns remaining <button class="btn btn-danger btn-sm" ng-click="removeStatus(status)"><i class=" glyphicon glyphicon-remove"></i></button>
+                    <button class="btn btn-default" ng-click="showAddStatusModal(character)">Add status effect</button>
+                    <ul class="list-group status-effects" ng-show="character.status_effects.length > 0">
+                        <li  class="list-group-item status-effect" ng-repeat="status in character.status_effects">
+                            {{ status.name }}, {{ status.remaining_duration }} turns remaining <button class="btn btn-danger btn-sm" ng-click="removeStatus(status)"><i class=" glyphicon glyphicon-remove"></i></button>
                         </li>
                     </ul>
-                    <button class="btn btn-default" ng-click="showAddStatusModal(character)">Add status effect</button>
                 </td>
                 <td>
                     <button class="btn btn-danger" ng-click="removeCharacter(character)">Remove</button>
@@ -169,10 +169,10 @@
 
 <script type="text/ng-template" id="characterDetailsModal.html">
     <div class="modal-header">
-        <h3 class="modal-title">{{:: character.name }}</h3>
+        <h3 class="modal-title">{{ character.name }}</h3>
     </div>
     <div class="modal-body">
-        <div marked="::character.description" compile="true"></div>
+        <div marked="character.description" compile="true"></div>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
@@ -182,7 +182,7 @@
 
 <script type="text/ng-template" id="addStatusEffect.html">
     <div class="modal-header">
-        <h3 class="modal-title">Add status to {{:: character.name }}</h3>
+        <h3 class="modal-title">Add status to {{ character.name }}</h3>
     </div>
     <div class="modal-body">
         <form class="form" role="form" ng-submit="add()">
