@@ -12,15 +12,44 @@ var app = angular.module('combatTracker', [
     'characterControllers',
     'characterServices',
 
+    'userControllers',
+
+    'authInterceptor',
+
     'encounterControllers',
     'encounterServices',
 ]);
 
 
-app.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+    $httpProvider.interceptors.push('authenticationChecker');
+
     $routeProvider.
         when('/', {
-            templateUrl: 'templates/home.html'
+            templateUrl: 'templates/characters-list.html',
+            controller: 'CharacterListCtrl',
+            resolve: {
+                characters: function(Character) {
+                    return Character.query().$promise;
+                }
+            }
+        }).
+
+
+        when('/login', {
+            templateUrl: 'templates/login.html',
+            controller: 'LoginCtrl',
+        }).
+
+
+        when('/register', {
+            templateUrl: 'templates/register.html',
+            controller: 'RegisterCtrl',
+        }).
+
+
+        when('/registered', {
+            templateUrl: 'templates/registered.html',
         }).
 
 

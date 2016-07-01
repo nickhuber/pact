@@ -1,0 +1,39 @@
+<h1>Login</h1>
+
+<form class="form-horizontal" role="form" ng-submit="login()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group has-error" ng-if="error">
+                <span class="help-block">{{ error }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group" ng-class="{ 'has-error': error }">
+                <label class="control-label" for="name">Username</label>
+                <input class="form-control" type="text" required name="username" ng-model="username">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group" ng-class="{ 'has-error': error }">
+                <label class="control-label" for="name">Password</label>
+                <input class="form-control" type="password" required name="password" ng-model="password">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Login" />
+            </div>
+        </div>
+    </div>
+</form>
+
+or <a href="/#/register">register</a> if you don't have an account.

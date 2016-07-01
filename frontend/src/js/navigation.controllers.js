@@ -11,7 +11,7 @@ navigationControllers.controller('NavigationCtrl', function ($scope, $http, $loc
 
     $scope.rollDice = function() {
         $http.post(
-            '/api/roll',
+            '/api/roll/',
             {query: $scope.rollQuery}
         )
         .then(function(response) {

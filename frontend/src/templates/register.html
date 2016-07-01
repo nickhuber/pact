@@ -1,0 +1,45 @@
+<form class="form-horizontal" role="form" ng-submit="register()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group" ng-class="{ 'has-error': errors.username }">
+                <label class="control-label" for="name">Username</label>
+                <input class="form-control" type="text" required name="username" ng-model="username">
+                <div ng-repeat="error in errors.username">
+                    <span class="help-block">{{ error }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group" ng-class="{ 'has-error': errors.email }">
+                <label class="control-label" for="name">Email</label>
+                <input class="form-control" type="email" required name="email" ng-model="email">
+                <div ng-repeat="error in errors.email">
+                    <span class="help-block">{{ error }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group" ng-class="{ 'has-error': errors.password }">
+                <label class="control-label" for="name">Password</label>
+                <input class="form-control" type="password" required name="password" ng-model="password">
+                <div ng-repeat="error in errors.password">
+                    <span class="help-block">{{ error }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Register" />
+            </div>
+        </div>
+    </div>
+</form>

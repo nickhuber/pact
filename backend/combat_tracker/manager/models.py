@@ -27,6 +27,9 @@ class Character(ArchiveModel):
     hit_dice = models.CharField(max_length=128, default='', blank=True)
     is_player = models.BooleanField(default=False, db_index=True)
 
+    def __str__(self):
+        return self.name
+
     def clean(self):
         if self.is_player and not self.hit_dice:
             raise ValidationError({'hit_dice': 'Hit dice required for NPCs.'})
@@ -37,6 +40,9 @@ class Encounter(ArchiveModel):
     characters = models.ManyToManyField(Character, through='EncounterCharacter')
     current_initiative = models.IntegerField(null=True, blank=True)
     current_round = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
 
     def advance_initiative(self):
         if not self.encountercharacter_set.all().exists():
@@ -72,6 +78,13 @@ class EncounterCharacter(ArchiveModel):
     current_hp = models.IntegerField(null=True)
     notes = models.CharField(max_length=128, default='', blank=True)
 
+    def __str__(self):
+        return '{}: {}'.format(self.encounter.name, self.name)
+
+    @property
+    def name(self):
+        return self.character.name
+
     def save(self, *args, **kwargs):
         # Probably nicer to do this with a signal or something
         if not self.character.is_player:
@@ -96,6 +109,9 @@ class StatusEffect(models.Model):
     name = models.CharField(max_length=64)
     remaining_duration = models.IntegerField()
     character = models.ForeignKey(EncounterCharacter)
+
+    def __str__(self):
+        return '{}: {}'.format(self.character.name, self.name)
 
     def reduce(self):
         self.remaining_duration -= 1
