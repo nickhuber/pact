@@ -24,7 +24,11 @@ APPEND_SLASH = False
 SECRET_KEY = '4^cbt37u-*^%j3&mqu4^p*_5c_b5)ubkv@yo&543^jrdj@vwy-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+import sys
+if 'runserver' in sys.argv or 'runserver_plus' in sys.argv:
+    DEBUG = True
 
 ALLOWED_HOSTS = []
 
