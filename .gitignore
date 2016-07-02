@@ -1,11 +1,13 @@
 # Frontend
-bower_components
-node_modules
-build
-app
+frontend/bower_components
+frontend/node_modules
+frontend/build
+frontend/app
 
 # Backend
 *.pyc
 *.sqlite3
 .virtualenv
+.venv
 __pycache__
+backend/staticfiles
