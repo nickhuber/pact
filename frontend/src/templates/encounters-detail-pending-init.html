@@ -1,0 +1,38 @@
+<div class="panel panel-default" ng-show="pendingCharacters().length > 0">
+    <div class="panel-heading">
+        Pending characters
+    </div>
+    <table class="table table-bordered table-striped" ng-show="encounter.characters.length > 0">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Notes</th>
+                <th>Initiative</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                ng-repeat="character in pendingCharacters() track by character.id"
+            >
+                <td>
+                    <span ng-if="character.is_player || character.description.length == 0">
+                        {{ character.name }}
+                    </span>
+                    <span ng-if="!character.is_player && character.description.length > 0">
+                        <a href ng-click="showCharacterModal(character)">{{ character.name }}</a>
+                    </span>
+                </td>
+                <td>
+                    <a href editable-text="character.notes" onbeforesave="updateCharacter(character)" ng-if="!character.is_player">{{ character.notes || '...' }}</a>
+                </td>
+                <td>
+                    <input class="form-control" type="number" ng-model="character._initiative">
+                </td>
+                <td>
+                    <button class="btn btn-primary" ng-click="addToInitiative(character)">Add</button>
+                    <button class="btn btn-danger" ng-click="removeCharacter(character)">Remove</button>
+                </td>
+            </tr>
+    </table>
+</div>

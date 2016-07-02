@@ -1,15 +1,9 @@
 var characterControllers = angular.module('characterControllers', ['hc.marked']);
 
 
-characterControllers.controller('CharacterListCtrl', function ($scope, characters) {
-    $scope.characters = characters;
-    $scope.players = _.filter(characters, function(character) {
-        return character.is_player;
-    });
-
-    $scope.npcs = _.filter(characters, function(character) {
-        return !character.is_player;
-    })
+characterControllers.controller('CharacterListCtrl', function ($scope, players, npcs) {
+    $scope.players = players;
+    $scope.npcs = npcs;
 });
 
 

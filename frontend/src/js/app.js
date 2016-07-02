@@ -23,6 +23,8 @@ var app = angular.module('combatTracker', [
 
 app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $httpProvider.interceptors.push('authenticationChecker');
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 
     $routeProvider.
         when('/', {
@@ -57,8 +59,11 @@ app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpPro
             templateUrl: 'templates/characters-list.html',
             controller: 'CharacterListCtrl',
             resolve: {
-                characters: function(Character) {
-                    return Character.query().$promise;
+                players: function(PlayerCharacter) {
+                    return PlayerCharacter.query().$promise;
+                },
+                npcs: function(NonPlayerCharacter) {
+                    return NonPlayerCharacter.query().$promise;
                 }
             }
         }).
@@ -97,8 +102,11 @@ app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpPro
                 encounter: function($route, Encounter) {
                     return Encounter.get($route.current.params).$promise;
                 },
-                characters: function(Character) {
-                    return Character.query().$promise;
+                players: function(PlayerCharacter) {
+                    return PlayerCharacter.query().$promise;
+                },
+                npcs: function(NonPlayerCharacter) {
+                    return NonPlayerCharacter.query().$promise;
                 }
             }
         }).

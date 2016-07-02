@@ -1,3 +1,4 @@
+from rest_framework import filters
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
@@ -10,6 +11,8 @@ from manager import serializers
 class CharacterViewSet(viewsets.ModelViewSet):
     queryset = models.Character.objects.all()
     serializer_class = serializers.CharacterSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('is_player', )
 
 
 class EncounterViewSet(viewsets.ModelViewSet):

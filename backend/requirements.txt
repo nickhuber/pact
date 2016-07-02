@@ -2,3 +2,4 @@ django<2.0
 djangorestframework<3.4
 django-extensions
 dice==1.0.2
+django-filter
