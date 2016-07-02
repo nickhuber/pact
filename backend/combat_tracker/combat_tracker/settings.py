@@ -30,7 +30,7 @@ import sys
 if 'runserver' in sys.argv or 'runserver_plus' in sys.argv:
     DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
