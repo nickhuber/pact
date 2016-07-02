@@ -108,7 +108,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/opt/combat_tracker/backend/staticfiles'
+STATIC_ROOT = '/opt/combat_tracker/backend/staticfiles/static'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
