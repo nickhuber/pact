@@ -23,7 +23,8 @@ class CharacterSerializer(serializers.HyperlinkedModelSerializer):
         if value is None or value == '':
             return ''
         try:
-            results = dice.roll(value)
+            # We don't care what we get, just make sure it is valid
+            dice.roll(value)
         except (ParseException, KeyError):
             raise serializers.ValidationError('Invalid hit dice')
         return value

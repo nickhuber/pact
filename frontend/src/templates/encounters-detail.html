@@ -75,12 +75,12 @@
                     <button class="btn btn-default" ng-click="showAddStatusModal(character)">Add status effect</button>
                     <ul class="list-group status-effects" ng-show="character.status_effects.length > 0">
                         <li  class="list-group-item status-effect" ng-repeat="status in character.status_effects">
-                            {{ status.name }}, {{ status.remaining_duration }} turns remaining <button class="btn btn-danger btn-sm" ng-click="removeStatus(status)"><i class=" glyphicon glyphicon-remove"></i></button>
+                            {{ status.name }}, {{ status.remaining_duration }} turns remaining <button class="btn btn-danger btn-sm" nh-confirm-click="removeStatus(status)"><i class=" glyphicon glyphicon-remove"></i></button>
                         </li>
                     </ul>
                 </td>
                 <td>
-                    <button class="btn btn-danger" ng-click="removeCharacter(character)">Remove</button>
+                    <button class="btn btn-danger" nh-confirm-click="removeCharacter(character)">Remove</button>
                 </td>
             </tr>
         </tbody>
@@ -90,7 +90,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <button ng-click="end()" class="btn btn-danger">End this encounter</button>
+        <button nh-confirm-click="end()" class="btn btn-danger">End this encounter</button>
     </div>
 </div>
 

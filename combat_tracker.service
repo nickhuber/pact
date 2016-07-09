@@ -11,6 +11,7 @@ ExecStartPre=/opt/combat_tracker/.venv/bin/pip install -r /opt/combat_tracker/ba
 ExecStartPre=/opt/combat_tracker/.venv/bin/python /opt/combat_tracker/backend/combat_tracker/manage.py migrate
 ExecStartPre=/opt/combat_tracker/.venv/bin/python /opt/combat_tracker/backend/combat_tracker/manage.py collectstatic --clear --noinput
 ExecStartPre=/bin/bash -c 'cd frontend && npm install'
+ExecStartPre=/bin/bash -c 'cd frontend && npm update'
 ExecStartPre=/bin/bash -c 'cd frontend && ./node_modules/.bin/bower install'
 ExecStartPre=/bin/bash -c 'cd frontend && npm run grunt'
 ExecStart=/usr/bin/uwsgi --ini /opt/combat_tracker/uwsgi.ini

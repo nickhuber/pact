@@ -11,13 +11,18 @@ from manager import serializers
 class CharacterViewSet(viewsets.ModelViewSet):
     queryset = models.Character.objects.all()
     serializer_class = serializers.CharacterSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
+    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('is_player', )
+    ordering_fields = ('name', )
+    ordering = ('name', )
 
 
 class EncounterViewSet(viewsets.ModelViewSet):
     queryset = models.Encounter.objects.all()
     serializer_class = serializers.EncounterSerializer
+    filter_backends = (filters.OrderingFilter, )
+    ordering_fields = ('id', )
+    ordering = ('id', )
 
     @detail_route(methods=['post'])
     def advance_initiative(self, request, pk=None):

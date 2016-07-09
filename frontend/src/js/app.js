@@ -18,6 +18,8 @@ var app = angular.module('combatTracker', [
 
     'encounterControllers',
     'encounterServices',
+
+    'directives',
 ]);
 
 
@@ -28,13 +30,7 @@ app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpPro
 
     $routeProvider.
         when('/', {
-            templateUrl: 'templates/characters-list.html',
-            controller: 'CharacterListCtrl',
-            resolve: {
-                characters: function(Character) {
-                    return Character.query().$promise;
-                }
-            }
+            redirectTo: '/characters'
         }).
 
 
