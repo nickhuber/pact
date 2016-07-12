@@ -25,7 +25,7 @@ encounterControllers.controller('EncounterListCtrl', function($scope, encounters
 });
 
 
-encounterControllers.controller('EncounterDetailCtrl', function ($scope, $location, $uibModal, EncounterCharacter, StatusEffect, encounter, players, npcs) {
+encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $location, $uibModal, EncounterCharacter, StatusEffect, encounter, players, npcs) {
     $scope.encounter = encounter;
     $scope.players = players;
     $scope.npcs = npcs;
@@ -33,7 +33,20 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $locati
     $scope.addPlayer = false;
     $scope.addNPC = false;
 
-    $scope.newCharacter = {};
+    $scope.newCharacterErrors = {};
+    $scope.newCharacter = {
+        quantity: 1
+    };
+
+    $scope.resetNewCharacter = function() {
+        $scope.addPlayer = false;
+        $scope.addNPC = false;
+
+        $scope.newCharacterErrors = {};
+        $scope.newCharacter = {
+            quantity: 1
+        };
+    }
 
     $scope.addNewPlayerCharacter = function() {
         $scope.addPlayer = true;
@@ -44,9 +57,7 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $locati
     }
 
     $scope.cancelAddCharacter = function() {
-        $scope.addPlayer = false;
-        $scope.addNPC = false;
-        $scope.newCharacter = {};
+        $scope.resetNewCharacter();
     }
 
     $scope.end = function() {
@@ -60,23 +71,24 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $locati
     };
 
     $scope.addCharacter = function() {
-        var ec = new EncounterCharacter();
-        ec.encounter = $scope.encounter.url;
-        ec.character = $scope.newCharacter.url;
-        ec.initiative = $scope.newCharacter.initiative;
-        ec.notes = $scope.newCharacter.notes;
-        ec.$save().then(function(newEncounterCharacter) {
-            $scope.encounter.characters.push(newEncounterCharacter);
-            $scope.addPlayer = false;
-            $scope.addNPC = false;
-            $scope.newCharacter = {};
-        }).catch(function(errorResponse) {
-            $scope.errors = errorResponse.data;
-            $scope.addPlayer = false;
-            $scope.addNPC = false;
-            $scope.newCharacter = {};
-        });
-
+        var promises = [];
+        for (var i = 0; i < $scope.newCharacter.quantity; i++) {
+            var ec = new EncounterCharacter();
+            ec.encounter = $scope.encounter.url;
+            ec.character = $scope.newCharacter.url;
+            ec.initiative = $scope.newCharacter.initiative;
+            ec.notes = $scope.newCharacter.notes;
+            promises.push(
+                ec.$save().then(function(newEncounterCharacter) {
+                    $scope.encounter.characters.push(newEncounterCharacter);
+                }).catch(function(errorResponse) {
+                    $scope.newCharacterErrors = errorResponse.data;
+                })
+            );
+        }
+        $q.all(promises).finally(function() {
+            $scope.resetNewCharacter();
+        })
     };
 
     $scope.addToInitiative = function(character) {

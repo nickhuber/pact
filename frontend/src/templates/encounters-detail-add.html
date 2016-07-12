@@ -12,7 +12,7 @@
             Leave initiative blank to prepare this character but not add to the encounter
         </div>
         <form class="form-inline" role="form" ng-submit="addCharacter()" ng-show="addPlayer">
-            <div class="form-group input-group-md" ng-class="{ 'has-error': errors.character }">
+            <div class="form-group input-group-md" ng-class="{ 'has-error': newCharacterErrors.character }">
                 <label class="control-label" for="add_character">Player</label>
                 <select
                     class="form-control"
@@ -21,7 +21,7 @@
                     ng-options="character.url as character.name for character in players track by character.url"
                 ></select>
             </div>
-            <div class="form-group input-group-md" ng-class="{ 'has-error': errors.name }">
+            <div class="form-group input-group-md" ng-class="{ 'has-error': newCharacterErrors.name }">
                 <label class="control-label" for="initiative">Initiatve</label>
                 <input class="form-control" type="number" name="initiative" ng-model="newCharacter.initiative">
             </div>
@@ -32,7 +32,7 @@
         </form>
         <br>
         <form class="form-inline" role="form" ng-submit="addCharacter()" ng-show="addNPC">
-            <div class="form-group input-group-md" ng-class="{ 'has-error': errors.character }">
+            <div class="form-group input-group-md" ng-class="{ 'has-error': newCharacterErrors.character }">
                 <label class="control-label" for="add_character">NPC</label>
                 <select
                     class="form-control"
@@ -41,14 +41,19 @@
                     ng-options="character.url as character.name for character in npcs track by character.url"
                 ></select>
             </div>
-            <div class="form-group input-group-md" ng-class="{ 'has-error': errors.name }">
+            <div class="form-group input-group-md" ng-class="{ 'has-error': newCharacterErrors.name }">
                 <label class="control-label" for="initiative">Initiatve</label>
                 <input class="form-control" type="number" name="initiative" ng-model="newCharacter.initiative">
             </div>
 
-            <div class="form-group input-group-md" ng-class="{ 'has-error': errors.notes }">
+            <div class="form-group input-group-md" ng-class="{ 'has-error': newCharacterErrors.notes }">
                 <label class="control-label" for="notes">Notes</label>
                 <input class="form-control" type="text" name="notes" ng-model="newCharacter.notes">
+            </div>
+
+            <div class="form-group input-group-md">
+                <label class="control-label" for="quantity">Quantity</label>
+                <input class="form-control" type="number" min="1" name="quantity" ng-model="newCharacter.quantity">
             </div>
 
             <div class="form-group">
