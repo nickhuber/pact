@@ -1,5 +1,5 @@
-django<2.0
-djangorestframework<3.4
-django-extensions
 dice==1.0.2
+django-extensions
 django-filter
+django<1.10
+djangorestframework<3.5
