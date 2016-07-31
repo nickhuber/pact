@@ -1,6 +1,43 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from manager import models
+
+
+class CharacterTestCase(TestCase):
+    def test_create_npc_no_hitdice_fails(self):
+        character = models.Character(
+            name='test',
+            is_player=False,
+            hit_dice=''
+        )
+        with self.assertRaises(ValidationError):
+            character.full_clean()
+
+    def test_create_npc_with_hitdice_succeeds(self):
+        character = models.Character(
+            name='test',
+            is_player=False,
+            hit_dice='1d6'
+        )
+        character.full_clean()
+
+    def test_create_player_with_hitdice_fails(self):
+        character = models.Character(
+            name='test',
+            is_player=True,
+            hit_dice='1d6'
+        )
+        with self.assertRaises(ValidationError):
+            character.full_clean()
+
+    def test_create_player_no_hitdice_succeeds(self):
+        character = models.Character(
+            name='test',
+            is_player=True,
+            hit_dice=''
+        )
+        character.full_clean()
 
 
 class CreateEncounterCharacterTestCase(TestCase):

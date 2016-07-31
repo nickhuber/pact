@@ -30,10 +30,18 @@ class Character(ArchiveModel):
     def __str__(self):
         return self.name
 
+    @property
+    def is_npc(self):
+        return not self.is_player
+
     def clean(self):
-        if self.is_player and not self.hit_dice:
+        if self.is_npc and not self.hit_dice:
             raise ValidationError(
                 {'hit_dice': 'Hit dice required for NPCs.'}
+            )
+        if self.is_player and self.hit_dice:
+            raise ValidationError(
+                {'hit_dice': 'Hit dice cannot be used for players.'}
             )
 
 
@@ -99,7 +107,7 @@ class EncounterCharacter(ArchiveModel):
 
     def save(self, *args, **kwargs):
         # Probably nicer to do this with a signal or something
-        if not self.character.is_player:
+        if self.character.is_npc:
             # TODO: abstract this part away
             if self.max_hp is None:
                 results = dice.roll(self.character.hit_dice)
