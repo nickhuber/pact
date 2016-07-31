@@ -1,11 +1,10 @@
+from django.contrib.auth import models, authenticate, login
+
 from rest_framework import status
 from rest_framework import views
 from rest_framework import viewsets
-from rest_framework.decorators import detail_route
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
-
-from django.contrib.auth import models, authenticate, login
 
 from combat_tracker import serializers
 
@@ -31,7 +30,10 @@ class LoginView(views.APIView):
             login(request, user)
             logged_in = True
         if not logged_in:
-            return Response({'error': 'Invalid username or password'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {'error': 'Invalid username or password'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         return Response(self.serializer_class(user).data)
 
 
@@ -41,8 +43,12 @@ class RegisterView(views.APIView):
     serializer_class = serializers.UserSerializer
 
     def post(self, request, *args, **kwargs):
-        taken_username = models.User.objects.filter(username=request.data['username']).exists()
-        taken_email = models.User.objects.filter(email=request.data['email']).exists()
+        taken_username = models.User.objects.filter(
+            username=request.data['username']
+        ).exists()
+        taken_email = models.User.objects.filter(
+            email=request.data['email']
+        ).exists()
         if taken_username or taken_email:
             errors = {}
             if taken_email:

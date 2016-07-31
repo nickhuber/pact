@@ -1,5 +1,5 @@
+from django.core.exceptions import ValidationError
 from django.db import models
-from django.core.validators import MinValueValidator
 
 import dice
 
@@ -32,12 +32,17 @@ class Character(ArchiveModel):
 
     def clean(self):
         if self.is_player and not self.hit_dice:
-            raise ValidationError({'hit_dice': 'Hit dice required for NPCs.'})
+            raise ValidationError(
+                {'hit_dice': 'Hit dice required for NPCs.'}
+            )
 
 
 class Encounter(ArchiveModel):
     name = models.CharField(max_length=256)
-    characters = models.ManyToManyField(Character, through='EncounterCharacter')
+    characters = models.ManyToManyField(
+        Character,
+        through='EncounterCharacter'
+    )
     current_initiative = models.IntegerField(null=True, blank=True)
     current_round = models.IntegerField(default=0)
 
@@ -49,7 +54,9 @@ class Encounter(ArchiveModel):
             return
 
         if self.current_initiative is None:
-            self.current_initiative = self.encountercharacter_set.exclude(initiative=None).order_by('-initiative').first().initiative
+            self.current_initiative = self.encountercharacter_set\
+                .exclude(initiative=None)\
+                .order_by('-initiative').first().initiative
             self.current_round += 1
         else:
             try:
@@ -62,9 +69,14 @@ class Encounter(ArchiveModel):
                     .initiative
             except (AttributeError, EncounterCharacter.DoesNotExist):
                 # Rolled over, back to the first
-                self.current_initiative = self.encountercharacter_set.exclude(initiative=None).order_by('-initiative').first().initiative
+                self.current_initiative = self.encountercharacter_set\
+                    .exclude(initiative=None)\
+                    .order_by('-initiative').first().initiative
                 self.current_round += 1
-        for ec in self.encountercharacter_set.filter(initiative=self.current_initiative):
+        encounter_characters = self.encountercharacter_set.filter(
+            initiative=self.current_initiative
+        )
+        for ec in encounter_characters:
             for status in ec.statuseffect_set.all():
                 status.reduce()
         self.save()
@@ -92,8 +104,9 @@ class EncounterCharacter(ArchiveModel):
             if self.max_hp is None:
                 results = dice.roll(self.character.hit_dice)
                 try:
-                    # For some reason dice.roll will give us a list of the dice rolls
-                    # if asking for a single type, like "3d6" instead of "3d6 + 1"
+                    # For some reason dice.roll will give us a list of the
+                    # dice rolls if asking for a single type, like "3d6"
+                    # instead of "3d6 + 1"
                     results = sum(results)
                 except TypeError:
                     pass

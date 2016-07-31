@@ -14,9 +14,13 @@ class CharacterSerializer(serializers.HyperlinkedModelSerializer):
 
     def validate(self, data):
         if not data.get('is_player') and not data.get('hit_dice'):
-            raise serializers.ValidationError({'hit_dice': 'Hit dice required for NPCs.'})
+            raise serializers.ValidationError(
+                {'hit_dice': 'Hit dice required for NPCs.'}
+            )
         if data.get('is_player') and data.get('hit_dice'):
-            raise serializers.ValidationError({'hit_dice': 'Hit dice cannot be used for players.'})
+            raise serializers.ValidationError(
+                {'hit_dice': 'Hit dice cannot be used for players.'}
+            )
         return data
 
     def validate_hit_dice(self, value):
@@ -39,10 +43,23 @@ class StatusEffectSerializer(serializers.HyperlinkedModelSerializer):
 
 class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    name = serializers.CharField(source='character.name', read_only=True)
-    description = serializers.CharField(source='character.description', read_only=True)
-    is_player = serializers.BooleanField(source='character.is_player', read_only=True)
-    status_effects = StatusEffectSerializer(source='statuseffect_set', many=True, required=False)
+    name = serializers.CharField(
+        source='character.name',
+        read_only=True
+    )
+    description = serializers.CharField(
+        source='character.description',
+        read_only=True
+    )
+    is_player = serializers.BooleanField(
+        source='character.is_player',
+        read_only=True
+    )
+    status_effects = StatusEffectSerializer(
+        source='statuseffect_set',
+        many=True,
+        required=False
+    )
 
     class Meta:
         model = models.EncounterCharacter
@@ -50,7 +67,11 @@ class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
 
 class EncounterSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    characters = EncounterCharacterSerializer(source='encountercharacter_set', many=True, required=False)
+    characters = EncounterCharacterSerializer(
+        source='encountercharacter_set',
+        many=True,
+        required=False
+    )
 
     class Meta:
         model = models.Encounter
