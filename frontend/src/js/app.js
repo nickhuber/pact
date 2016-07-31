@@ -67,7 +67,7 @@ app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpPro
             templateUrl: 'templates/characters-create.html',
             controller: 'CharacterCreateCtrl'
         }).
-        when('/characters/:id', {
+        when('/characters/:uuid', {
             templateUrl: 'templates/characters-detail.html',
             controller: 'CharacterDetailCtrl',
             resolve: {
@@ -91,7 +91,7 @@ app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpPro
             templateUrl: 'templates/encounters-create.html',
             controller: 'EncounterCreateCtrl'
         }).
-        when('/encounters/:id', {
+        when('/encounters/:uuid', {
             templateUrl: 'templates/encounters-detail.html',
             controller: 'EncounterDetailCtrl',
             resolve: {
@@ -103,18 +103,6 @@ app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpPro
                 },
                 npcs: function(NonPlayerCharacter) {
                     return NonPlayerCharacter.query().$promise;
-                }
-            }
-        }).
-        when('/encounters/:id/mobile', {
-            templateUrl: 'templates/encounter-initiative.html',
-            controller: 'EncounterDetailCtrl',
-            resolve: {
-                encounter: function($route, Encounter) {
-                    return Encounter.get($route.current.params).$promise;
-                },
-                characters: function(Character) {
-                    return Character.query().$promise;
                 }
             }
         }).

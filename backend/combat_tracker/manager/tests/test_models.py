@@ -97,7 +97,7 @@ def StatusEffectTestCase(TestCase):
         self.status.remaining_duration = 1
         self.status.reduce()
         self.assertFalse(
-            models.StatusEffect.objects.filter(id=self.status.id).exists()
+            models.StatusEffect.objects.filter(uuid=self.status.uuid).exists()
         )
 
 
@@ -190,5 +190,5 @@ class AdvanceInitiativeTestCase(TestCase):
         )
         self.encounter.advance_initiative()  # ec2's turn
         self.assertFalse(
-            models.StatusEffect.objects.filter(id=status.id).exists()
+            models.StatusEffect.objects.filter(uuid=status.uuid).exists()
         )

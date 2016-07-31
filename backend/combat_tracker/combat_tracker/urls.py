@@ -11,7 +11,7 @@ from roll import views as roll_views
 router = SimpleRouter(trailing_slash=False)
 router.register(
     r'characters/?',
-    manager_views.CharacterViewSet
+    manager_views.CharacterViewSet,
 )
 router.register(
     r'encounters/?',

@@ -8,6 +8,7 @@ from manager import serializers
 
 
 class CharacterViewSet(viewsets.ModelViewSet):
+    # lookup_field = 'uuid'
     queryset = models.Character.objects.all()
     serializer_class = serializers.CharacterSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
@@ -17,11 +18,12 @@ class CharacterViewSet(viewsets.ModelViewSet):
 
 
 class EncounterViewSet(viewsets.ModelViewSet):
+    # lookup_field = 'uuid'
     queryset = models.Encounter.objects.all()
     serializer_class = serializers.EncounterSerializer
     filter_backends = (filters.OrderingFilter, )
-    ordering_fields = ('id', )
-    ordering = ('id', )
+    ordering_fields = ('name', )
+    ordering = ('name', )
 
     @detail_route(methods=['post'])
     def advance_initiative(self, request, pk=None):
@@ -32,10 +34,12 @@ class EncounterViewSet(viewsets.ModelViewSet):
 
 
 class EncounterCharacterViewSet(viewsets.ModelViewSet):
+    # lookup_field = 'uuid'
     queryset = models.EncounterCharacter.objects.all()
     serializer_class = serializers.EncounterCharacterSerializer
 
 
 class StatusEffectViewSet(viewsets.ModelViewSet):
+    # lookup_field = 'uuid'
     queryset = models.StatusEffect.objects.all()
     serializer_class = serializers.StatusEffectSerializer

@@ -3,6 +3,20 @@ from django.db import models
 
 import dice
 
+import uuid
+
+
+class UUIDPrimaryKeyModel(models.Model):
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        primary_key=True,
+    )
+
+    class Meta:
+        abstract = True
+
 
 class ArchiveModelManager(models.Manager):
     def get_queryset(self):
@@ -21,7 +35,7 @@ class ArchiveModel(models.Model):
         self.save()
 
 
-class Character(ArchiveModel):
+class Character(ArchiveModel, UUIDPrimaryKeyModel):
     name = models.CharField(max_length=128)
     description = models.TextField(max_length=8192, default='', blank=True)
     hit_dice = models.CharField(max_length=128, default='', blank=True)
@@ -45,7 +59,7 @@ class Character(ArchiveModel):
             )
 
 
-class Encounter(ArchiveModel):
+class Encounter(ArchiveModel, UUIDPrimaryKeyModel):
     name = models.CharField(max_length=256)
     characters = models.ManyToManyField(
         Character,
@@ -90,7 +104,7 @@ class Encounter(ArchiveModel):
         self.save()
 
 
-class EncounterCharacter(ArchiveModel):
+class EncounterCharacter(ArchiveModel, UUIDPrimaryKeyModel):
     character = models.ForeignKey(Character)
     encounter = models.ForeignKey(Encounter)
     initiative = models.IntegerField(null=True)
@@ -126,7 +140,7 @@ class EncounterCharacter(ArchiveModel):
         super().save(*args, **kwargs)
 
 
-class StatusEffect(models.Model):
+class StatusEffect(UUIDPrimaryKeyModel):
     name = models.CharField(max_length=64)
     remaining_duration = models.IntegerField()
     character = models.ForeignKey(EncounterCharacter)

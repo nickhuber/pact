@@ -23,7 +23,7 @@
             <tr
                 class="animate-repeat"
                 ng-class="{info: character.initiative === encounter.current_initiative}"
-                ng-repeat="character in activeCharacters() | orderBy : '-   initiative' track by character.id"
+                ng-repeat="character in activeCharacters() | orderBy : '-   initiative' track by character.uuid"
             >
                 <td>
                     <span ng-if="character.is_player || character.description.length == 0">

@@ -12,7 +12,7 @@ encounterControllers.controller('CharacterCreateCtrl', function ($scope, $locati
 
     $scope.create = function() {
         $scope.character.$save().then(function(newCharacter) {
-            $location.path('/characters/' + newCharacter.id);
+            $location.path('/characters/' + newCharacter.uuid);
         }).catch(function(errorResponse) {
             $scope.errors = errorResponse.data;
         });
@@ -98,7 +98,7 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $lo
         }
         character.initiative = character._initiative;
         delete character._initiative;
-        EncounterCharacter.update({id: character.id}, character);
+        EncounterCharacter.update(character, character);
     }
 
     $scope.pendingCharacters = function() {
@@ -114,22 +114,22 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $lo
     }
 
     $scope.removeCharacter = function(character) {
-        EncounterCharacter.delete({id: character.id});
+        EncounterCharacter.delete(character);
         $scope.encounter.characters = _.without($scope.encounter.characters, character);
     };
 
     $scope.updateCharacter = function(character) {
-        EncounterCharacter.update({id: character.id}, character);
+        EncounterCharacter.update(character, character);
     };
 
     $scope.increaseInitiative = function(character) {
         character.initiative += 1;
-        EncounterCharacter.update({id: character.id}, {initiative: character.initiative});
+        EncounterCharacter.update(character, {initiative: character.initiative});
     };
 
     $scope.decreaseInitiative = function(character) {
         character.initiative -= 1;
-        EncounterCharacter.update({id: character.id}, {initiative: character.initiative});
+        EncounterCharacter.update(character, {initiative: character.initiative});
     };
 
     $scope.hurtCharacter = function(character) {
@@ -137,7 +137,7 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $lo
             return;
         }
         character.current_hp -= character.hp_change_value;
-        EncounterCharacter.update({id: character.id}, {current_hp: character.current_hp});
+        EncounterCharacter.update(character, {current_hp: character.current_hp});
         character.hp_change_value = null;
     };
 
@@ -149,7 +149,7 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $lo
         if (character.current_hp > character.max_hp) {
             character.current_hp = character.max_hp;
         }
-        EncounterCharacter.update({id: character.id}, {current_hp: character.current_hp});
+        EncounterCharacter.update(character, {current_hp: character.current_hp});
         character.hp_change_value = null;
     };
 
@@ -221,7 +221,7 @@ encounterControllers.controller('EncounterCreateCtrl', function ($scope, $locati
 
     $scope.create = function() {
         $scope.encounter.$save().then(function(newEncounter) {
-            $location.path('/encounters/' + newEncounter.id);
+            $location.path('/encounters/' + newEncounter.uuid);
         }).catch(function(errorResponse) {
             $scope.errors = errorResponse.data;
         });

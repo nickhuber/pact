@@ -7,10 +7,13 @@ from manager import models
 
 
 class CharacterSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField(read_only=True)
+    uuid = serializers.UUIDField(read_only=True)
 
     class Meta:
         model = models.Character
+        # extra_kwargs = {
+        #     'url': {'lookup_field': 'uuid'}
+        # }
 
     def validate(self, data):
         if not data.get('is_player') and not data.get('hit_dice'):
@@ -35,14 +38,18 @@ class CharacterSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class StatusEffectSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField(read_only=True)
+    uuid = serializers.UUIDField(read_only=True)
 
     class Meta:
         model = models.StatusEffect
+        # extra_kwargs = {
+        #     'url': {'lookup_field': 'uuid'}
+        # }
+        # exclude = ('character',)
 
 
 class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField(read_only=True)
+    uuid = serializers.UUIDField(read_only=True)
     name = serializers.CharField(
         source='character.name',
         read_only=True
@@ -60,19 +67,38 @@ class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
         many=True,
         required=False
     )
+    # character = serializers.HyperlinkedIdentityField(
+    #     view_name='character-detail',
+    #     lookup_field='uuid',
+    #     read_only=True
+    # )
+    # encounter = serializers.HyperlinkedIdentityField(
+    #     view_name='encounter-detail',
+    #     lookup_field='uuid',
+    #     read_only=True
+    # )
 
     class Meta:
         model = models.EncounterCharacter
+        # extra_kwargs = {
+        #     'url': {'lookup_field': 'uuid'}
+        # }
 
 
 class EncounterSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField(read_only=True)
-    characters = EncounterCharacterSerializer(
-        source='encountercharacter_set',
-        many=True,
-        required=False
-    )
+    uuid = serializers.UUIDField(read_only=True)
+    # characters = serializers.HyperlinkedRelatedField(
+    #     source='encountercharacter_set',
+    #     view_name='encountercharacter-detail',
+    #     read_only=True,
+    #     lookup_field='uuid',
+    #     many=True,
+    #     required=False,
+    # )
 
     class Meta:
         model = models.Encounter
+        # extra_kwargs = {
+        #     'url': {'lookup_field': 'uuid'}
+        # }
         depth = 1
