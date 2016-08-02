@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 cd /opt/combat_tracker
+
 sudo -u combat_tracker .venv/bin/pip install -r backend/requirements.txt --upgrade &&
 sudo -u combat_tracker .venv/bin/python backend/combat_tracker/manage.py migrate &&
 sudo -u combat_tracker .venv/bin/python backend/combat_tracker/manage.py collectstatic --clear --noinput &&

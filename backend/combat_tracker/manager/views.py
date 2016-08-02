@@ -1,5 +1,5 @@
 from rest_framework import filters
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
@@ -7,8 +7,15 @@ from manager import models
 from manager import serializers
 
 
+class NoListModelViewSet(
+        mixins.RetrieveModelMixin,
+        mixins.UpdateModelMixin,
+        mixins.DestroyModelMixin,
+        viewsets.GenericViewSet):
+    pass
+
+
 class CharacterViewSet(viewsets.ModelViewSet):
-    # lookup_field = 'uuid'
     queryset = models.Character.objects.all()
     serializer_class = serializers.CharacterSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
@@ -18,7 +25,6 @@ class CharacterViewSet(viewsets.ModelViewSet):
 
 
 class EncounterViewSet(viewsets.ModelViewSet):
-    # lookup_field = 'uuid'
     queryset = models.Encounter.objects.all()
     serializer_class = serializers.EncounterSerializer
     filter_backends = (filters.OrderingFilter, )
@@ -33,13 +39,11 @@ class EncounterViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class EncounterCharacterViewSet(viewsets.ModelViewSet):
-    # lookup_field = 'uuid'
+class EncounterCharacterViewSet(NoListModelViewSet):
     queryset = models.EncounterCharacter.objects.all()
     serializer_class = serializers.EncounterCharacterSerializer
 
 
-class StatusEffectViewSet(viewsets.ModelViewSet):
-    # lookup_field = 'uuid'
+class StatusEffectViewSet(NoListModelViewSet):
     queryset = models.StatusEffect.objects.all()
     serializer_class = serializers.StatusEffectSerializer

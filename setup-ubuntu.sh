@@ -1,4 +1,5 @@
 #!/bin/bash
+cd /opt/combat_tracker
 apt-get update && apt-get install $(cat ubuntu.depends) -y
 python3 -m venv .venv
 cp nginx.conf /etc/nginx/conf.d/d20.conf

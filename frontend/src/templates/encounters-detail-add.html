@@ -18,7 +18,7 @@
                     class="form-control"
                     name="add_character"
                     ng-model="newCharacter.url"
-                    ng-options="character.url as character.name for character in players track by character.url"
+                    ng-options="character.url as character.name for character in players track by $index"
                 ></select>
             </div>
             <div class="form-group input-group-md" ng-class="{ 'has-error': newCharacterErrors.name }">
@@ -38,7 +38,7 @@
                     class="form-control"
                     name="add_character"
                     ng-model="newCharacter.url"
-                    ng-options="character.url as character.name for character in npcs track by character.url"
+                    ng-options="character.url as character.name for character in npcs track by $index"
                 ></select>
             </div>
             <div class="form-group input-group-md" ng-class="{ 'has-error': newCharacterErrors.name }">

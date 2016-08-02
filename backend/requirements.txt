@@ -2,6 +2,6 @@ aiohttp
 dice==1.0.2
 django-extensions
 django-filter
-django<1.10
+django<1.11
 djangorestframework<3.5
 gunicorn

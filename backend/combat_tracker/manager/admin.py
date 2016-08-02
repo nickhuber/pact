@@ -1,8 +1,8 @@
 from django.contrib import admin
-from manager.models import Character, Encounter, EncounterCharacter, StatusEffect
+from manager import models
 
 
-admin.site.register(Character)
-admin.site.register(Encounter)
-admin.site.register(EncounterCharacter)
-admin.site.register(StatusEffect)
+admin.site.register(models.Character)
+admin.site.register(models.Encounter)
+admin.site.register(models.EncounterCharacter)
+admin.site.register(models.StatusEffect)
