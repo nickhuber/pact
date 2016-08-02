@@ -20,4 +20,7 @@ accesslog = '-'
 capture_output = True
 proc_name = 'Combat Tracker'
 worker_tmp_dir = '/opt/combat_tracker/.tmp'
-os.mkdir(worker_tmp_dir)
+try:
+    os.mkdir(worker_tmp_dir)
+except FileExistsError:
+    pass
