@@ -7,7 +7,9 @@ frontend/app
 # Backend
 *.pyc
 *.sqlite3
-.virtualenv
 .venv
 __pycache__
 backend/staticfiles
+
+# Generic
+.*

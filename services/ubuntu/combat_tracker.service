@@ -14,7 +14,7 @@ ExecStartPre=/bin/bash -c 'cd frontend && npm install'
 ExecStartPre=/bin/bash -c 'cd frontend && npm update'
 ExecStartPre=/bin/bash -c 'cd frontend && ./node_modules/.bin/bower install'
 ExecStartPre=/bin/bash -c 'cd frontend && npm run grunt'
-ExecStart=/opt/combat_tracker/.venv/bin/gunicorn --config /opt/combat_tracker/gunicorn_config.py combat_tracker.wsgi:application
+ExecStart=/opt/combat_tracker/.venv/bin/gunicorn --config /opt/combat_tracker/services/common/gunicorn_config.py combat_tracker.wsgi:application
 Restart=always
 
 [Install]
