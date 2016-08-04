@@ -105,8 +105,8 @@ class Encounter(ArchiveModel, UUIDPrimaryKeyModel):
 
 
 class EncounterCharacter(ArchiveModel, UUIDPrimaryKeyModel):
-    character = models.ForeignKey(Character)
-    encounter = models.ForeignKey(Encounter)
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    encounter = models.ForeignKey(Encounter, on_delete=models.CASCADE)
     initiative = models.IntegerField(null=True)
     max_hp = models.IntegerField(null=True)
     current_hp = models.IntegerField(null=True)
@@ -143,7 +143,7 @@ class EncounterCharacter(ArchiveModel, UUIDPrimaryKeyModel):
 class StatusEffect(UUIDPrimaryKeyModel):
     name = models.CharField(max_length=64)
     remaining_duration = models.IntegerField()
-    character = models.ForeignKey(EncounterCharacter)
+    character = models.ForeignKey(EncounterCharacter, on_delete=models.CASCADE)
 
     def __str__(self):
         return '{}: {}'.format(self.character.name, self.name)

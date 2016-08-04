@@ -41,7 +41,7 @@ urlpatterns = [
     ),
     url(
         r'^api/admin/?',
-        include(admin.site.urls)
+        admin.site.urls
     ),
     url(
         r'^api/auth/?$',

@@ -11,6 +11,7 @@ class CharacterSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Character
+        fields = '__all__'
 
     def validate(self, data):
         if not data.get('is_player') and not data.get('hit_dice'):
@@ -39,6 +40,7 @@ class StatusEffectSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.StatusEffect
+        fields = '__all__'
 
 
 class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
@@ -63,6 +65,7 @@ class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.EncounterCharacter
+        fields = '__all__'
 
 
 class EncounterSerializer(serializers.HyperlinkedModelSerializer):
@@ -75,4 +78,5 @@ class EncounterSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Encounter
+        fields = '__all__'
         depth = 1
