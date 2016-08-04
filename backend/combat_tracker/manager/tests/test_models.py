@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
@@ -5,8 +6,12 @@ from manager import models
 
 
 class CharacterTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='test')
+
     def test_create_npc_no_hitdice_fails(self):
         character = models.Character(
+            created_by=self.user,
             name='test',
             is_player=False,
             hit_dice=''
@@ -16,6 +21,7 @@ class CharacterTestCase(TestCase):
 
     def test_create_npc_with_hitdice_succeeds(self):
         character = models.Character(
+            created_by=self.user,
             name='test',
             is_player=False,
             hit_dice='1d6'
@@ -24,6 +30,7 @@ class CharacterTestCase(TestCase):
 
     def test_create_player_with_hitdice_fails(self):
         character = models.Character(
+            created_by=self.user,
             name='test',
             is_player=True,
             hit_dice='1d6'
@@ -33,6 +40,7 @@ class CharacterTestCase(TestCase):
 
     def test_create_player_no_hitdice_succeeds(self):
         character = models.Character(
+            created_by=self.user,
             name='test',
             is_player=True,
             hit_dice=''
@@ -42,9 +50,16 @@ class CharacterTestCase(TestCase):
 
 class CreateEncounterCharacterTestCase(TestCase):
     def setUp(self):
-        self.character = models.Character(name='test_character')
+        self.user = User.objects.create_user(username='test')
+        self.character = models.Character(
+            created_by=self.user,
+            name='test_character'
+        )
         self.character.save()
-        self.encounter = models.Encounter(name='test_encounter')
+        self.encounter = models.Encounter(
+            created_by=self.user,
+            name='test_encounter'
+        )
         self.encounter.save()
 
     def test_with_hit_dice_makes_max_hp(self):
@@ -71,10 +86,13 @@ class CreateEncounterCharacterTestCase(TestCase):
 
 def StatusEffectTestCase(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(username='test')
         self.encounter = models.Encounter.objects.create(
+            created_by=self.user,
             name='test_encounter'
         )
         self.character = models.Character.objects.create(
+            created_by=self.user,
             name='test',
             is_player=True
         )
@@ -103,22 +121,28 @@ def StatusEffectTestCase(TestCase):
 
 class AdvanceInitiativeTestCase(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(username='test')
         self.encounter = models.Encounter.objects.create(
+            created_by=self.user,
             name='test_encounter'
         )
         pending_character = models.Character.objects.create(
+            created_by=self.user,
             name='test0',
             is_player=True
         )
         character1 = models.Character.objects.create(
+            created_by=self.user,
             name='test1',
             is_player=True
         )
         character2 = models.Character.objects.create(
+            created_by=self.user,
             name='test2',
             is_player=True
         )
         character3 = models.Character.objects.create(
+            created_by=self.user,
             name='test3',
             is_player=True
         )

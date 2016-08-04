@@ -50,10 +50,12 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $lo
 
     $scope.addNewPlayerCharacter = function() {
         $scope.addPlayer = true;
+        $scope.newCharacter.url = players[0].url;
     }
 
     $scope.addNewNonPlayerCharacter = function() {
         $scope.addNPC = true;
+        $scope.newCharacter.url = npcs[0].url;
     }
 
     $scope.cancelAddCharacter = function() {

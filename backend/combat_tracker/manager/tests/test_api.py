@@ -22,6 +22,7 @@ class CharacterUUIDLookupTestCase(APITestCase):
     def setUp(self):
         super().setUp()
         self.character = models.Character.objects.create(
+            created_by=self.user,
             name='test',
             is_player=True
         )
@@ -38,6 +39,7 @@ class EncounterUUIDLookupTestCase(APITestCase):
     def setUp(self):
         super().setUp()
         self.encounter = models.Encounter.objects.create(
+            created_by=self.user,
             name='test',
         )
         self.login()
@@ -53,10 +55,12 @@ class EncounterCharacterUUIDLookupTestCase(APITestCase):
     def setUp(self):
         super().setUp()
         self.character = models.Character.objects.create(
+            created_by=self.user,
             name='test',
             is_player=True
         )
         self.encounter = models.Encounter.objects.create(
+            created_by=self.user,
             name='test',
         )
         self.encountercharacter = models.EncounterCharacter.objects.create(
@@ -77,10 +81,12 @@ class StatusEffectUUIDLookupTestCase(APITestCase):
     def setUp(self):
         super().setUp()
         self.character = models.Character.objects.create(
+            created_by=self.user,
             name='test',
             is_player=True
         )
         self.encounter = models.Encounter.objects.create(
+            created_by=self.user,
             name='test',
         )
         self.encountercharacter = models.EncounterCharacter.objects.create(

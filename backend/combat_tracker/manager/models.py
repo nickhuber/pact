@@ -1,3 +1,4 @@
+from django.contrib import auth
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -40,6 +41,7 @@ class Character(ArchiveModel, UUIDPrimaryKeyModel):
     description = models.TextField(max_length=8192, default='', blank=True)
     hit_dice = models.CharField(max_length=128, default='', blank=True)
     is_player = models.BooleanField(default=False, db_index=True)
+    created_by = models.ForeignKey(auth.models.User)
 
     def __str__(self):
         return self.name
@@ -67,6 +69,7 @@ class Encounter(ArchiveModel, UUIDPrimaryKeyModel):
     )
     current_initiative = models.IntegerField(null=True, blank=True)
     current_round = models.IntegerField(default=0)
+    created_by = models.ForeignKey(auth.models.User)
 
     def __str__(self):
         return self.name

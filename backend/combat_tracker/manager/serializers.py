@@ -11,7 +11,7 @@ class CharacterSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Character
-        fields = '__all__'
+        exclude = ('created_by',)
 
     def validate(self, data):
         if not data.get('is_player') and not data.get('hit_dice'):
@@ -78,5 +78,5 @@ class EncounterSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Encounter
-        fields = '__all__'
+        exclude = ('created_by',)
         depth = 1
