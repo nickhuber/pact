@@ -13,3 +13,5 @@ backend/staticfiles
 
 # Generic
 .*
+!.gitignore
+!.jshintrc

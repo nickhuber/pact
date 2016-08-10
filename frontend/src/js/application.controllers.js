@@ -2,6 +2,7 @@ var applicationControllers = angular.module('applicationControllers', []);
 
 
 applicationControllers.controller('ApplicationCtrl', function ($scope)  {
+    'use strict';
     $scope.show = true;
     $scope.action = 'Hide';
 

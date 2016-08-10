@@ -24,6 +24,7 @@ var app = angular.module('combatTracker', [
 
 
 app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+    'use strict';
     $httpProvider.interceptors.push('authenticationChecker');
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';

@@ -2,11 +2,13 @@ var encounterControllers = angular.module('encounterControllers', ['xeditable', 
 
 
 encounterControllers.run(function(editableOptions) {
+    'use strict';
     editableOptions.theme = 'bs3';
 });
 
 
 encounterControllers.controller('CharacterCreateCtrl', function ($scope, $location, Character) {
+    'use strict';
     $scope.character = new Character();
     $scope.errors = {};
 
@@ -21,11 +23,13 @@ encounterControllers.controller('CharacterCreateCtrl', function ($scope, $locati
 
 
 encounterControllers.controller('EncounterListCtrl', function($scope, encounters) {
+    'use strict';
     $scope.encounters = encounters;
 });
 
 
 encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $location, $uibModal, EncounterCharacter, StatusEffect, encounter, players, npcs) {
+    'use strict';
     $scope.encounter = encounter;
     $scope.players = players;
     $scope.npcs = npcs;
@@ -46,21 +50,21 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $lo
         $scope.newCharacter = {
             quantity: 1
         };
-    }
+    };
 
     $scope.addNewPlayerCharacter = function() {
         $scope.addPlayer = true;
         $scope.newCharacter.url = players[0].url;
-    }
+    };
 
     $scope.addNewNonPlayerCharacter = function() {
         $scope.addNPC = true;
         $scope.newCharacter.url = npcs[0].url;
-    }
+    };
 
     $scope.cancelAddCharacter = function() {
         $scope.resetNewCharacter();
-    }
+    };
 
     $scope.end = function() {
         $scope.encounter.$delete().then(function() {
@@ -74,6 +78,12 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $lo
 
     $scope.addCharacter = function() {
         var promises = [];
+        function handleSuccess(newEncounterCharacter) {
+            $scope.encounter.characters.push(newEncounterCharacter);
+        }
+        function handleError(errorResponse) {
+            $scope.newCharacterErrors = errorResponse.data;
+        }
         for (var i = 0; i < $scope.newCharacter.quantity; i++) {
             var ec = new EncounterCharacter();
             ec.encounter = $scope.encounter.url;
@@ -81,16 +91,12 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $lo
             ec.initiative = $scope.newCharacter.initiative;
             ec.notes = $scope.newCharacter.notes;
             promises.push(
-                ec.$save().then(function(newEncounterCharacter) {
-                    $scope.encounter.characters.push(newEncounterCharacter);
-                }).catch(function(errorResponse) {
-                    $scope.newCharacterErrors = errorResponse.data;
-                })
+                ec.$save().then(handleSuccess).catch(handleError)
             );
         }
         $q.all(promises).finally(function() {
             $scope.resetNewCharacter();
-        })
+        });
     };
 
     $scope.addToInitiative = function(character) {
@@ -101,19 +107,19 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $lo
         character.initiative = character._initiative;
         delete character._initiative;
         EncounterCharacter.update(character, character);
-    }
+    };
 
     $scope.pendingCharacters = function() {
         return _.filter($scope.encounter.characters, function(character) {
             return character.initiative === null;
         });
-    }
+    };
 
     $scope.activeCharacters = function() {
         return _.filter($scope.encounter.characters, function(character) {
             return character.initiative !== null;
         });
-    }
+    };
 
     $scope.removeCharacter = function(character) {
         EncounterCharacter.delete(character);
@@ -169,7 +175,7 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $lo
     };
 
     $scope.showAddStatusModal = function(character) {
-        status_effect = new StatusEffect();
+        var status_effect = new StatusEffect();
         status_effect.character = character.url;
         var modalInstance = $uibModal.open({
             templateUrl: 'addStatusEffect.html',
@@ -193,6 +199,7 @@ encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $lo
 
 
 encounterControllers.controller('CharacterInfoModalCtrl', function ($scope, $uibModalInstance, character) {
+    'use strict';
     $scope.character = character;
 
     $scope.ok = function () {
@@ -202,6 +209,7 @@ encounterControllers.controller('CharacterInfoModalCtrl', function ($scope, $uib
 
 
 encounterControllers.controller('addStatusEffectModalCtrl', function ($scope, $uibModalInstance, status_effect, character) {
+    'use strict';
     $scope.status_effect = status_effect;
     $scope.character = character;
 
@@ -213,11 +221,12 @@ encounterControllers.controller('addStatusEffectModalCtrl', function ($scope, $u
 
     $scope.cancel = function () {
         $uibModalInstance.dismiss();
-    }
+    };
 });
 
 
 encounterControllers.controller('EncounterCreateCtrl', function ($scope, $location, Encounter) {
+    'use strict';
     $scope.encounter = new Encounter();
     $scope.errors = {};
 

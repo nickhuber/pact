@@ -2,6 +2,7 @@ var userControllers = angular.module('userControllers', []);
 
 
 userControllers.controller('LoginCtrl', function ($scope, $location, $http) {
+    'use strict';
     $scope.username = '';
     $scope.password = '';
     $scope.error = '';
@@ -13,10 +14,10 @@ userControllers.controller('LoginCtrl', function ($scope, $location, $http) {
             }).catch(function(errorResponse) {
                 $scope.username = '';
                 $scope.password = '';
-                if (errorResponse.status == 400) {
-                    $scope.error = errorResponse.data['error'];
+                if (errorResponse.status === 400) {
+                    $scope.error = errorResponse.data.error;
                 } else {
-                    $scope.error = 'An unknown error occured'
+                    $scope.error = 'An unknown error occured';
                 }
             });
     };
@@ -24,6 +25,7 @@ userControllers.controller('LoginCtrl', function ($scope, $location, $http) {
 
 
 userControllers.controller('RegisterCtrl', function ($scope, $location, $http) {
+    'use strict';
     $scope.username = '';
     $scope.email = '';
     $scope.password = '';

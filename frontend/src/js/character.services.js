@@ -1,6 +1,7 @@
 var characterServices = angular.module('characterServices', ['ngResource']);
 
 characterServices.factory('Character', ['$resource', function($resource) {
+    'use strict';
     return $resource(
         'api/characters/:uuid/',
         {uuid: '@uuid'},
@@ -11,6 +12,7 @@ characterServices.factory('Character', ['$resource', function($resource) {
 }]);
 
 characterServices.factory('PlayerCharacter', ['$resource', function($resource) {
+    'use strict';
     return $resource(
         'api/characters/:uuid/?is_player=True',
         {uuid: '@uuid'},
@@ -21,6 +23,7 @@ characterServices.factory('PlayerCharacter', ['$resource', function($resource) {
 }]);
 
 characterServices.factory('NonPlayerCharacter', ['$resource', function($resource) {
+    'use strict';
     return $resource(
         'api/characters/:uuid/?is_player=False',
         {uuid: '@uuid'},

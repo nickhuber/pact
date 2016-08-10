@@ -2,6 +2,7 @@ var encounterServices = angular.module('encounterServices', ['ngResource']);
 
 
 encounterServices.factory('Encounter', ['$resource', function($resource) {
+    'use strict';
     return $resource(
         'api/encounters/:uuid/:action',
         {uuid: '@uuid'},
@@ -13,6 +14,7 @@ encounterServices.factory('Encounter', ['$resource', function($resource) {
 
 
 encounterServices.factory('EncounterCharacter', ['$resource', function($resource) {
+    'use strict';
     return $resource(
         'api/encounter_characters/:uuid/',
         {uuid: '@uuid'},
@@ -24,6 +26,7 @@ encounterServices.factory('EncounterCharacter', ['$resource', function($resource
 
 
 encounterServices.factory('StatusEffect', ['$resource', function($resource) {
+    'use strict';
     return $resource(
         'api/status_effects/:uuid/',
         {uuid: '@uuid'}

@@ -1,6 +1,7 @@
 var directives = angular.module('directives', ['ui.bootstrap']);
 
 directives.directive('nhConfirmClick', function($uibModal) {
+    'use strict';
     return {
         priority: -1,
         restrict: 'A',
@@ -23,10 +24,11 @@ directives.directive('nhConfirmClick', function($uibModal) {
                 });
             });
         }
-    }
+    };
 });
 
 directives.controller('ConfirmClickModalCtrl', function ($scope, $uibModalInstance, confirmFunction, message) {
+    'use strict';
     $scope.message = message;
 
     $scope.yes = function () {
@@ -36,5 +38,5 @@ directives.controller('ConfirmClickModalCtrl', function ($scope, $uibModalInstan
 
     $scope.no = function () {
         $uibModalInstance.dismiss();
-    }
+    };
 });

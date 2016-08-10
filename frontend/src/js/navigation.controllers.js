@@ -2,6 +2,7 @@ var navigationControllers = angular.module('navigationControllers', []);
 
 
 navigationControllers.controller('NavigationCtrl', function ($scope, $http, $location)  {
+    'use strict';
     $scope.rollQuery = '';
     $scope.rollResult = '';
 
