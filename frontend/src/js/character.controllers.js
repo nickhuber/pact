@@ -1,31 +1,32 @@
-var characterControllers = angular.module('characterControllers', ['hc.marked']);
-
-
-characterControllers.controller('CharacterListCtrl', function ($scope, players, npcs) {
+(function() {
     'use strict';
-    $scope.players = players;
-    $scope.npcs = npcs;
-});
+    var characterControllers = angular.module('characterControllers', ['hc.marked']);
 
 
-characterControllers.controller('CharacterDetailCtrl', function ($scope, $location, character) {
-    'use strict';
-    $scope.character = character;
-    $scope.errors = {};
+    characterControllers.controller('CharacterListCtrl', function ($scope, players, npcs) {
+        $scope.players = players;
+        $scope.npcs = npcs;
+    });
 
-    $scope.update = function() {
-        $scope.character.$update().then(function(response) {
-            $scope.errors = {};
-        }).catch(function(response) {
-            $scope.errors = response.data;
-        });
-    };
 
-    $scope.delete = function() {
-        $scope.character.$delete().then(function() {
-            $location.path('/characters/');
-        }).catch(function(response) {
-            // TODO: show delete error
-        });
-    };
-});
+    characterControllers.controller('CharacterDetailCtrl', function ($scope, $location, character) {
+        $scope.character = character;
+        $scope.errors = {};
+
+        $scope.update = function() {
+            $scope.character.$update().then(function(response) {
+                $scope.errors = {};
+            }).catch(function(response) {
+                $scope.errors = response.data;
+            });
+        };
+
+        $scope.delete = function() {
+            $scope.character.$delete().then(function() {
+                $location.path('/characters/');
+            }).catch(function(response) {
+                // TODO: show delete error
+            });
+        };
+    });
+})();
