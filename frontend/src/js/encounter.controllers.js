@@ -193,6 +193,11 @@
             });
         };
 
+        $scope.removeStatus = function(character, status) {
+            StatusEffect.delete(status);
+            character.status_effects = _.without(character.status_effects, status);
+        };
+
     });
 
 

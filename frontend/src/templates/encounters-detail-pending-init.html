@@ -13,7 +13,7 @@
         </thead>
         <tbody>
             <tr
-                ng-repeat="character in pendingCharacters() track by $index"
+                ng-repeat="character in pendingCharacters() track by character.url"
             >
                 <td>
                     <span ng-if="character.is_player || character.description.length == 0">

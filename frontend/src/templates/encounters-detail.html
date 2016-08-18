@@ -23,7 +23,7 @@
             <tr
                 class="animate-repeat"
                 ng-class="{info: character.initiative === encounter.current_initiative}"
-                ng-repeat="character in activeCharacters() | orderBy : '-initiative' track by $index"
+                ng-repeat="character in activeCharacters() | orderBy : '-initiative' track by character.url"
             >
                 <td>
                     <span ng-if="character.is_player || character.description.length == 0">
@@ -74,8 +74,11 @@
                 <td>
                     <button class="btn btn-default" ng-click="showAddStatusModal(character)">Add status effect</button>
                     <ul class="list-group status-effects" ng-show="character.status_effects.length > 0">
-                        <li  class="list-group-item status-effect" ng-repeat="status in character.status_effects">
-                            {{ status.name }}, {{ status.remaining_duration }} turns remaining <button class="btn btn-danger btn-sm" nh-confirm-click="removeStatus(status)"><i class=" glyphicon glyphicon-remove"></i></button>
+                        <li  class="list-group-item status-effect" ng-repeat="status in character.status_effects track by status.url">
+                            {{ status.name }}, {{ status.remaining_duration }} turns remaining
+                            <button class="btn btn-danger btn-sm" nh-confirm-click="removeStatus(character, status)">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </button>
                         </li>
                     </ul>
                 </td>
