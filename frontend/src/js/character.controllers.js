@@ -2,12 +2,25 @@
     'use strict';
     var characterControllers = angular.module('characterControllers', ['hc.marked']);
 
-    var pathfinderTemplate = "**AC** □,\ntouch □,\nflat-footed □" +
+    var pathfinderTemplate =
+        "**XP □**" +
+        "\n\n□" +
+        "\n\n**Init** □; **Senses** □; **Perception** □" +
+        "\n\nDefense" +
+        "\n  -------" +
+        "\n**AC** □,\ntouch □,\nflat-footed □" +
         "\n\n**Saves** Fort □,\nRef □,\nWill □" +
-        "\n\n**Speed** □ft." +
+        "\n\nOffense" +
+        "\n  -------" +
+        "\n**Speed** □ft." +
         "\n\n**Melee** □" +
         "\n\n**Ranged** □" +
-        "\n\n**Special Attacks** □";
+        "\n\n**Special Attacks** □" +
+        "\n\nStatistics" +
+        "\n  ----------" +
+        "\n**Base Atk** □; **CMB** □; **CMD** □" +
+        "\n\nSpecial Abilities" +
+        "\n  ----------";
 
 
     characterControllers.controller('CharacterListCtrl', function ($scope, players, npcs) {
