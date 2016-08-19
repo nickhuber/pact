@@ -16,6 +16,10 @@
             <label class="control-label" for="description">Description</label>
             <div class="help-block">
                 Format using markdown
+                <span ng-hide="character.description">
+                    | Template:
+                    <button class="btn btn-default btn-sm" type="button" ng-click="pathfinderTemplate()">Pathfinder</button>
+                </span>
             </div>
             <div class="row">
                 <div class="col-sm-6">

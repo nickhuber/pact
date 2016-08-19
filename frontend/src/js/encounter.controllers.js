@@ -8,20 +8,6 @@
     });
 
 
-    encounterControllers.controller('CharacterCreateCtrl', function ($scope, $location, Character) {
-        $scope.character = new Character();
-        $scope.errors = {};
-
-        $scope.create = function() {
-            $scope.character.$save().then(function(newCharacter) {
-                $location.path('/characters/' + newCharacter.uuid);
-            }).catch(function(errorResponse) {
-                $scope.errors = errorResponse.data;
-            });
-        };
-    });
-
-
     encounterControllers.controller('EncounterListCtrl', function($scope, encounters) {
         $scope.encounters = encounters;
     });
