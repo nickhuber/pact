@@ -73,7 +73,8 @@ class EncounterSerializer(serializers.HyperlinkedModelSerializer):
     characters = EncounterCharacterSerializer(
         source='encountercharacter_set',
         many=True,
-        required=False
+        required=False,
+        read_only=True,
     )
 
     class Meta:

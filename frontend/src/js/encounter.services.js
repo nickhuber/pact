@@ -7,7 +7,8 @@
             'api/encounters/:uuid/:action',
             {uuid: '@uuid'},
             {
-                advance_initiative: {method: 'POST', params: {action: 'advance_initiative'}}
+                advance_initiative: {method: 'POST', params: {action: 'advance_initiative'}},
+                update: {method: 'PATCH'}
             }
         );
     }]);

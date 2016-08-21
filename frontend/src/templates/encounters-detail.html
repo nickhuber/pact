@@ -1,4 +1,29 @@
-<h1>{{ encounter.name }}</h1>
+<form class="form-horizontal" role="form" ng-submit="updateEncounter()">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Encounter details
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-12 form-group" ng-class="{ 'has-error': errors.name }">
+            <label class="control-label" for="name">Name</label>
+            <input class="form-control" type="text" name="name" ng-model="encounter.name">
+            <div ng-repeat="error in errors.name">
+                <span class="help-block">{{ error }}</span>
+            </div>
+        </div>
+        <div class="col-sm-12 form-group" ng-class="{ 'has-error': errors.notes }">
+            <label class="control-label" for="notes">Notes</label>
+            <textarea class="form-control" name="notes" rows="4" ng-model="encounter.notes"></textarea>
+            <div ng-repeat="error in errors.notes">
+                <span class="help-block">{{ error }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <input class="btn btn-primary" type="submit" value="Update" />
+    </div>
+</div>
+</form>
 
 <ng-include src="'templates/encounters-detail-add.html'"></ng-include>
 <ng-include src="'templates/encounters-detail-pending-init.html'"></ng-include>

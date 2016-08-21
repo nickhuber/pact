@@ -26,6 +26,14 @@
             quantity: 1
         };
 
+        $scope.updateEncounter = function() {
+            $scope.encounter.$update().then(function(response) {
+                $scope.errors = {};
+            }).catch(function(response) {
+                $scope.errors = response.data;
+            });
+        };
+
         $scope.resetNewCharacter = function() {
             $scope.addPlayer = false;
             $scope.addNPC = false;

@@ -67,6 +67,7 @@ class Encounter(ArchiveModel, UUIDPrimaryKeyModel):
         Character,
         through='EncounterCharacter'
     )
+    notes = models.TextField(max_length=8192, blank=True, default='')
     current_initiative = models.IntegerField(null=True, blank=True)
     current_round = models.IntegerField(default=0)
     created_by = models.ForeignKey(auth.models.User)
