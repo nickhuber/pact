@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12 col-md-6">
         <div class="form-group" ng-class="{ 'has-error': errors.name }">
             <label class="control-label" for="name">Name</label>
             <input class="form-control" type="text" required name="name" ng-model="character.name">
@@ -11,7 +11,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12 col-md-6">
         <div class="form-group" ng-class="{ 'has-error': errors.description }">
             <label class="control-label" for="description">Description</label>
             <div class="help-block">
@@ -37,7 +37,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12 col-md-6">
         <fieldset class="form-group" ng-class="{ 'has-error': errors.hit_dice }">
             <label class="control-label" for="hit_dice">Hit dice</label>
             <input class="form-control" name="hit_dice" ng-model="character.hit_dice">
@@ -50,7 +50,7 @@
 
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12 col-md-6">
         <fieldset class="form-group" ng-class="{ 'has-error': errors.is_player }">
             <label>
                 <input type="checkbox" ng-model="character.is_player">
