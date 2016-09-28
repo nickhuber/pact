@@ -14,6 +14,6 @@ pushd frontend
 	npm run grunt -- watch > /dev/null 2> /dev/null &
 	trap cleanup SIGINT SIGTERM
 	npm install http-server
-	echo "Starting webserver dev web server"
-	./node_modules/.bin/http-server  -P http://localhost:8000 app
+	echo "Starting development web server"
+	./node_modules/.bin/http-server -P http://localhost:8000 app
 popd

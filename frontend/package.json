@@ -1,12 +1,16 @@
 {
-  "name": "combat_tracker",
+  "name": "pact",
   "version": "1.0.0",
-  "description": "",
+  "description": "Create and manage encounters for various tabletop systems",
+  "repository": {
+    "type": "git",
+    "url": "git://bitbucket.org/nhuber/combat_tracker.git"
+  },
   "main": "index.html",
   "scripts": {
     "grunt": "grunt"
   },
-  "author": "",
+  "author": "Nick Huber",
   "license": "ISC",
   "devDependencies": {
     "bower": "^1.4.1",
