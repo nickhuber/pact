@@ -1,5 +1,5 @@
 {
-  "name": "combat_tracker",
+  "name": "pact",
   "version": "0.0.0",
   "authors": [
     "Nick Huber <nicholashuber@gmail.com>"
@@ -7,7 +7,7 @@
   "description": "Track d20 based combat encounters",
   "main": "index.html",
   "license": "Commercial",
-  "homepage": "nickhuber.ca/combat_tracker",
+  "homepage": "pact.nickhuber.ca",
   "ignore": [
     "**/.*",
     "node_modules",

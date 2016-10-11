@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from rest_framework.routers import SimpleRouter
 
-from combat_tracker import views as combat_tracker_views
+from pact import views as pact_views
 from manager import views as manager_views
 from roll import views as roll_views
 
@@ -27,7 +27,7 @@ router.register(
 )
 router.register(
     r'users/?',
-    combat_tracker_views.UserViewSet
+    pact_views.UserViewSet
 )
 
 
@@ -45,11 +45,11 @@ urlpatterns = [
     ),
     url(
         r'^api/auth/?$',
-        combat_tracker_views.LoginView.as_view(), name='authenticate'
+        pact_views.LoginView.as_view(), name='authenticate'
     ),
     url(
         r'^api/register/?$',
-        combat_tracker_views.RegisterView.as_view(), name='register'
+        pact_views.RegisterView.as_view(), name='register'
     ),
     url(
         r'^api/roll/?$',

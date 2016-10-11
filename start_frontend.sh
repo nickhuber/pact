@@ -17,5 +17,5 @@ pushd frontend
 	trap cleanup SIGINT SIGTERM
 	npm install http-server
 	echo "Starting development web server"
-	./node_modules/.bin/http-server -P http://localhost:8000 app
+	./node_modules/.bin/http-server -P http://localhost:8000 app -p 8081
 popd

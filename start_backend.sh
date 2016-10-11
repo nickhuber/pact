@@ -9,6 +9,6 @@ source .venv/bin/activate
 echo "Updating python dependencies"
 pip3 install --upgrade -r backend/requirements.txt
 echo "Updating database"
-backend/combat_tracker/manage.py migrate
+backend/pact/manage.py migrate
 echo "Starting app server"
-backend/combat_tracker/manage.py runserver 0.0.0.0:8000
+backend/pact/manage.py runserver 0.0.0.0:8000

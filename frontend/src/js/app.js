@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    var app = angular.module('combatTracker', [
+    var app = angular.module('PACT', [
         'ngAnimate',
         'ngRoute',
         'ngResource',

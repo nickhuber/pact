@@ -10,16 +10,16 @@ for g in grp.getgrall():
         www_group = g.gr_name
         break
 
-bind = 'unix:/opt/combat_tracker/.gunicorn.socket'
+bind = 'unix:/opt/pact/.gunicorn.socket'
 workers = multiprocessing.cpu_count() * 2 + 1
 worker_class = 'gaiohttp'
-chdir = '/opt/combat_tracker/backend/combat_tracker'
-user = 'combat_tracker'
+chdir = '/opt/pact/backend/pact'
+user = 'pact'
 group = www_group
 accesslog = '-'
 capture_output = True
-proc_name = 'Combat Tracker'
-worker_tmp_dir = '/opt/combat_tracker/.tmp'
+proc_name = 'PACT'
+worker_tmp_dir = '/opt/pact/.tmp'
 try:
     os.mkdir(worker_tmp_dir)
 except FileExistsError:

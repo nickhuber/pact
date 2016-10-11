@@ -1,5 +1,5 @@
 [Unit]
-Description=Combat tracker
+Description=Platform Agnostic Combat Tracker (PACT)
 After=nginx.service
 
 [Service]

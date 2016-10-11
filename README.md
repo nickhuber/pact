@@ -1,4 +1,4 @@
-Combat Tracker
+Platform Agnostic Combat Tracker (PACT)
 ==============
 
 A simple web application for preparing and running various d20 combat systems.

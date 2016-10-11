@@ -6,7 +6,7 @@ from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
-from combat_tracker import serializers
+from pact import serializers
 
 
 class UserViewSet(viewsets.ModelViewSet):

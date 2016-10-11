@@ -48,13 +48,13 @@ module.exports = function(grunt) {
                     'src/js/*.js',
                     'build/js/templates.js',
                 ],
-                dest: 'app/js/combat_tracker.js',
+                dest: 'app/js/pact.js',
             },
         },
         cssmin: {
             target: {
                 files: {
-                    'app/css/combat_tracker.css': ['build/css/*.css']
+                    'app/css/pact.css': ['build/css/*.css']
                 }
             }
         },
@@ -63,19 +63,19 @@ module.exports = function(grunt) {
             fonts: {src: ['bower_components/bootstrap/fonts/*'], dest: 'app/fonts/', flatten: true, expand: true}
         },
         ngtemplates: {
-            combatTracker: {
+            PACT: {
                 cwd: 'src',
                 src: 'templates/*.html',
                 dest: 'build/js/templates.js'
             }
         },
         clean: {
-            js: ['app/js/*.js', '!app/js/combat_tracker.js'],
-            css: ['app/css/*.css', '!app/css/combat_tracker.css']
+            js: ['app/js/*.js', '!app/js/pact.js'],
+            css: ['app/css/*.css', '!app/css/pact.css']
         },
         cacheBust: {
             options: {
-                assets: ['css/combat_tracker.css', 'js/combat_tracker.js'],
+                assets: ['css/pact.css', 'js/pact.js'],
                 baseDir: 'app/'
             },
             main: {

@@ -4,7 +4,7 @@
   "description": "Create and manage encounters for various tabletop systems",
   "repository": {
     "type": "git",
-    "url": "git://bitbucket.org/nhuber/combat_tracker.git"
+    "url": "git://bitbucket.org/nhuber/pact.git"
   },
   "main": "index.html",
   "scripts": {
