@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 echo "Ensuring virtualenv exists"
 python3 -m venv .venv
 echo "Activating virtualenv"
