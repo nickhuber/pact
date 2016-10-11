@@ -4,17 +4,17 @@ After=nginx.service
 
 [Service]
 Type=simple
-User=combat_tracker
+User=pact
 Group=www-data
-WorkingDirectory=/opt/combat_tracker
-ExecStartPre=/opt/combat_tracker/.venv/bin/pip install -r /opt/combat_tracker/backend/requirements.txt --upgrade
-ExecStartPre=/opt/combat_tracker/.venv/bin/python /opt/combat_tracker/backend/combat_tracker/manage.py migrate
-ExecStartPre=/opt/combat_tracker/.venv/bin/python /opt/combat_tracker/backend/combat_tracker/manage.py collectstatic --clear --noinput
+WorkingDirectory=/opt/pact
+ExecStartPre=/opt/pact/.venv/bin/pip install -r /opt/pact/backend/requirements.txt --upgrade
+ExecStartPre=/opt/pact/.venv/bin/python /opt/pact/backend/pact/manage.py migrate
+ExecStartPre=/opt/pact/.venv/bin/python /opt/pact/backend/pact/manage.py collectstatic --clear --noinput
 ExecStartPre=/bin/bash -c 'cd frontend && npm install'
 ExecStartPre=/bin/bash -c 'cd frontend && npm update'
 ExecStartPre=/bin/bash -c 'cd frontend && ./node_modules/.bin/bower install'
 ExecStartPre=/bin/bash -c 'cd frontend && npm run grunt'
-ExecStart=/opt/combat_tracker/.venv/bin/gunicorn --config /opt/combat_tracker/services/common/gunicorn_config.py combat_tracker.wsgi:application
+ExecStart=/opt/pact/.venv/bin/gunicorn --config /opt/pact/services/common/gunicorn_config.py pact.wsgi:application
 Restart=always
 
 [Install]
