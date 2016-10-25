@@ -8,8 +8,14 @@ A simple web application for preparing and running various d20 combat systems.
 
 Developing
 ----------
-You can get started by running 2 programs: `start_backend.sh` and `start_frontend.sh`, both in the root directory.
+You need python3 (3.4 or greater) and nodejs/npm to get going. These can likely be installed for you with `setup_dev.sh`
+
+You can then get started by running 2 programs: `start_backend.sh` and `start_frontend.sh`, both in the root directory.
 The output should tell you which port to connect your browser to to get started.
+
+It should be at `localhost:8081`
+
+There will be a default user with *admin* as the username and *pass* as the password
 
 Deployment
 ----------
