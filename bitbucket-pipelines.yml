@@ -1,0 +1,9 @@
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: python:3.5.1
+
+pipelines:
+  default:
+    - step:
+        script:
+          - pip install -r backend/requirements.txt
+          - cd backend/pact/ && ./manage.py test
