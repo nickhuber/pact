@@ -1,34 +1,27 @@
-@import "../../bower_components/bootstrap/less/bootstrap.less";
-
-@import "../../bower_components/bootswatch/sandstone/bootswatch.less";
-@import "../../bower_components/bootswatch/sandstone/variables.less";
-
-
 div.title {
-    .text-center();
-    .jumbotron;
+    @extend .text-center;
+    @extend .jumbotron;
 }
 
 
 div.main {
-    .make-row();
+    @include make-row();
 
     .sidebar {
-        .make-sm-column(2);
+        @include make-sm-column(2);
     }
-
     .main-content {
-        .make-sm-column(10);
+        @include make-sm-column(10);
     }
 
     .full-content {
-        .make-sm-column(12);
+        @include make-sm-column(12);
     }
 }
 
 
 .roll-result {
-    .text-center();
+    @extend .text-center;
 }
 
 
@@ -81,7 +74,7 @@ input[type=number]::-webkit-inner-spin-button {
   other selectors that are more specific or come later and might alter display.
  */
 [ng\:cloak], [ng-cloak], .ng-cloak {
-  display: none !important;
+    display: none !important;
 }
 
 td, td > * {

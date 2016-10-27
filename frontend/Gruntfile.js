@@ -13,19 +13,25 @@ module.exports = function(grunt) {
                 files: ['src/index.html'],
                 tasks: ['copy:main', 'clean:js', 'copy', 'cacheBust',]
             },
-            less: {
-                files: ['src/less/*.less'],
-                tasks: ['less', 'cssmin', 'clean:css', 'copy', 'cacheBust']
+            sass: {
+                files: ['src/stylesheets/**.scss'],
+                tasks: ['sass', 'cssmin', 'clean:css', 'copy', 'cacheBust']
             },
         },
-        less: {
-            development: {
-                files: {
-                    'build/css/standard.css': 'src/less/*.less',
-                    'build/css/xeditable.css': 'bower_components/angular-xeditable/dist/css/xeditable.css',
-                    'build/css/loading-bar.css': 'bower_components/angular-loading-bar/build/loading-bar.css',
+        sass: {
+            dist: {
+                files: [{
+                    expand: true,
+                    src: [
+                        'src/stylesheets/pact.scss',
+                        'bower_components/font-awesome/scss/font-awesome.scss',
+                        'bower_components/angular-xeditable/dist/css/xeditable.css',
+                        'bower_components/angular-loading-bar/build/loading-bar.css',
+                    ],
+                    dest: 'build/css/',
+                    ext: '.css'
+                }]
                 }
-            }
         },
         concat: {
             js: {
@@ -54,13 +60,13 @@ module.exports = function(grunt) {
         cssmin: {
             target: {
                 files: {
-                    'app/css/pact.css': ['build/css/*.css']
+                    'app/css/pact.css': ['build/css/**/*.css']
                 }
             }
         },
         copy: {
             main: {src: ['src/index.html'], dest: 'app/index.html'},
-            fonts: {src: ['bower_components/bootstrap/fonts/*'], dest: 'app/fonts/', flatten: true, expand: true}
+            fonts: {src: ['bower_components/font-awesome/fonts/*'], dest: 'app/fonts/', flatten: true, expand: true}
         },
         ngtemplates: {
             PACT: {
@@ -89,7 +95,7 @@ module.exports = function(grunt) {
     });
 
     // Load plugins here
-    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -100,7 +106,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', [
         'ngtemplates',
-        'less',
+        'sass',
         'cssmin',
         'concat',
         'copy',

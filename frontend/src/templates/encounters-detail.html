@@ -66,8 +66,8 @@
                 <td>
                     {{ character.initiative }}
                     <div class="pull-right">
-                        <button class="btn btn-default btn-xs" ng-click="increaseInitiative(character)"><i class="glyphicon glyphicon-arrow-up"></i></button>
-                        <button class="btn btn-default btn-xs" ng-click="decreaseInitiative(character)"><i class="glyphicon glyphicon-arrow-down"></i></button>
+                        <button class="btn btn-default btn-xs" ng-click="increaseInitiative(character)"><i class="fa fa-arrow-up"></i></button>
+                        <button class="btn btn-default btn-xs" ng-click="decreaseInitiative(character)"><i class="fa fa-arrow-down"></i></button>
                     </div>
                 </td>
                 <td>
@@ -102,7 +102,7 @@
                         <li  class="list-group-item status-effect" ng-repeat="status in character.status_effects track by status.url">
                             {{ status.name }}, {{ status.remaining_duration }} turns remaining
                             <button class="btn btn-danger btn-sm" nh-confirm-click="removeStatus(character, status)">
-                                <i class="glyphicon glyphicon-remove"></i>
+                                <i class="fa fa-times"></i>
                             </button>
                         </li>
                     </ul>
