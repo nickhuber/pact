@@ -13,7 +13,8 @@ function handle_macos() {
         exit 1
     fi
     brew update
-    brew install python3 node npm ||:
+    brew install python3 node npm ruby ||:
+    gem install sass ||:
 }
 
 
