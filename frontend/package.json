@@ -14,7 +14,6 @@
   "license": "ISC",
   "devDependencies": {
     "bower": "1.7.9",
-    "grunt": "1.0.1",
     "grunt-angular-templates": "^1.1.0",
     "grunt-cache-bust": "1.4.1",
     "grunt-cli": "^1.2.0",
@@ -22,7 +21,8 @@
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-cssmin": "^1.0.2",
-    "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-watch": "^1.0.0"
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-sass": "^1.2.1",
+    "grunt": "1.0.1"
   }
 }
