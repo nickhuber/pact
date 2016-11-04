@@ -1,7 +1,7 @@
 aiohttp
-dice==1.0.2
+dice==1.1.0
 django-extensions
-django-filter
+django-filter>=0.15.3
 django<1.11
-djangorestframework<3.5
+djangorestframework<3.6
 gunicorn

@@ -27,6 +27,7 @@ class ArchiveModelManager(models.Manager):
 class ArchiveModel(models.Model):
     archived = models.BooleanField(default=False, db_index=True)
     objects = ArchiveModelManager()
+    archived_objects = models.Manager()
 
     class Meta:
         abstract = True
@@ -41,7 +42,7 @@ class Character(ArchiveModel, UUIDPrimaryKeyModel):
     description = models.TextField(max_length=8192, default='', blank=True)
     hit_dice = models.CharField(max_length=128, default='', blank=True)
     is_player = models.BooleanField(default=False, db_index=True)
-    created_by = models.ForeignKey(auth.models.User)
+    created_by = models.ForeignKey(auth.models.User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -70,7 +71,7 @@ class Encounter(ArchiveModel, UUIDPrimaryKeyModel):
     notes = models.TextField(max_length=8192, blank=True, default='')
     current_initiative = models.IntegerField(null=True, blank=True)
     current_round = models.IntegerField(default=0)
-    created_by = models.ForeignKey(auth.models.User)
+    created_by = models.ForeignKey(auth.models.User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

@@ -1,3 +1,4 @@
+import django_filters.rest_framework
 from rest_framework import filters
 from rest_framework import viewsets, mixins
 from rest_framework.decorators import detail_route
@@ -19,7 +20,10 @@ class NoListModelViewSet(
 class CharacterViewSet(viewsets.ModelViewSet):
     queryset = models.Character.objects.all()
     serializer_class = serializers.CharacterSerializer
-    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
+    filter_backends = (
+        django_filters.rest_framework.DjangoFilterBackend,
+        filters.OrderingFilter,
+    )
     filter_fields = ('is_player', )
     ordering_fields = ('name', )
     ordering = ('name', )
