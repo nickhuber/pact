@@ -28,7 +28,7 @@
 <ng-include src="'templates/encounters-detail-add.html'"></ng-include>
 <ng-include src="'templates/encounters-detail-pending-init.html'"></ng-include>
 
-<div class="panel panel-default" ng-show="activeCharacters().length > 0">
+<div class="panel panel-default" ng-show="charactersInInitiative().length > 0">
     <div class="panel-heading">
         <button ng-click="advanceInit()" class="btn btn-info btn-sm">Advance initiative</button>
         round {{ encounter.current_round }}
@@ -47,8 +47,8 @@
         <tbody>
             <tr
                 class="animate-repeat"
-                ng-class="{info: character.initiative === encounter.current_initiative}"
-                ng-repeat="character in activeCharacters() | orderBy : '-initiative' track by character.url"
+                ng-class="{info: isActiveCharacter(character)}"
+                ng-repeat="character in charactersInInitiative() | orderBy : ['-initiative', '-speed_stat'] track by character.url"
             >
                 <td>
                     <span ng-if="character.is_player || character.description.length == 0">
@@ -65,6 +65,9 @@
                 </td>
                 <td>
                     {{ character.initiative }}
+                    <span ng-show="character.speed_stat">
+                        <small>({{ character.speed_stat }})</small>
+                    </span>
                     <div class="pull-right">
                         <button class="btn btn-default btn-xs" ng-click="increaseInitiative(character)"><i class="fa fa-arrow-up"></i></button>
                         <button class="btn btn-default btn-xs" ng-click="decreaseInitiative(character)"><i class="fa fa-arrow-down"></i></button>

@@ -216,3 +216,69 @@ class AdvanceInitiativeTestCase(TestCase):
         self.assertFalse(
             models.StatusEffect.objects.filter(uuid=status.uuid).exists()
         )
+
+    def test_choose_highest_speed_stat_on_tie(self):
+        self.ec1.character.speed_stat = 10
+        self.ec1.character.save()
+        self.ec2.character.speed_stat = 20
+        self.ec2.character.save()
+        self.ec1.initiative = self.ec2.initiative = 10
+        self.ec1.save()
+        self.ec2.save()
+        self.encounter.advance_initiative()
+        # should end up being ec1's turn'
+        self.assertEqual(
+            self.encounter.current_initiative,
+            self.ec2.initiative
+        )
+        self.assertEqual(
+            self.encounter.current_speed_stat,
+            self.ec2.character.speed_stat
+        )
+
+    def test_choose_next_highest_speed_stat_after_tie(self):
+        self.ec1.character.speed_stat = 10
+        self.ec1.character.save()
+        self.ec2.character.speed_stat = 20
+        self.ec2.character.save()
+        self.ec1.initiative = self.ec2.initiative = 10
+        self.ec1.save()
+        self.ec2.save()
+        self.encounter.current_initiative = self.ec2.initiative
+        self.encounter.current_speed_stat = self.ec2.character.speed_stat
+        self.encounter.advance_initiative()
+        # should go between the speed stats so its ec1 after ec2
+        self.assertEqual(
+            self.encounter.current_initiative,
+            self.ec1.initiative
+        )
+        self.assertEqual(
+            self.encounter.current_speed_stat,
+            self.ec1.character.speed_stat
+        )
+
+    def test_doesnt_use_speed_stat_if_one_is_null(self):
+        self.ec1.character.speed_stat = 10
+        self.ec1.character.save()
+        self.ec1.initiative = self.ec2.initiative = 10
+        self.ec1.save()
+        self.ec2.save()
+        self.encounter.advance_initiative()
+        self.assertEqual(
+            self.encounter.current_initiative,
+            self.ec1.initiative
+        )
+        self.assertEqual(
+            self.encounter.current_speed_stat,
+            None
+        )
+        self.encounter.advance_initiative()
+        # Should treat ec1 and ec2 as the same turn, then go to ec3
+        self.assertEqual(
+            self.encounter.current_initiative,
+            self.ec3.initiative
+        )
+        self.assertEqual(
+            self.encounter.current_speed_stat,
+            self.ec3.character.speed_stat
+        )

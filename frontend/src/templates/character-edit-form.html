@@ -51,6 +51,22 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-6">
+        <fieldset class="form-group" ng-class="{ 'has-error': errors.speed_stat }">
+            <label class="control-label" for="speed_stat">Speed stat</label>
+            <input class="form-control" type="number" ng-model="character.speed_stat"> 
+            <div class="help-block">
+                For automatically breaking ties in initiative, highest value wins
+            </div>
+            <div ng-repeat="error in errors.speed_stat">
+                <span class="help-block">{{ error }}</span>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12 col-md-6">
         <fieldset class="form-group" ng-class="{ 'has-error': errors.is_player }">
             <label>
                 <input type="checkbox" ng-model="character.is_player">
