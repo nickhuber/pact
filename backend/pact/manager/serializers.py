@@ -53,6 +53,10 @@ class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
         source='character.description',
         read_only=True
     )
+    speed_stat = serializers.IntegerField(
+        source='character.speed_stat',
+        read_only=True
+    )
     is_player = serializers.BooleanField(
         source='character.is_player',
         read_only=True
@@ -70,14 +74,18 @@ class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
 
 class EncounterSerializer(serializers.HyperlinkedModelSerializer):
     uuid = serializers.UUIDField(read_only=True)
+
     characters = EncounterCharacterSerializer(
         source='encountercharacter_set',
         many=True,
         required=False,
         read_only=True,
     )
+    active_character_uuids = serializers.ListField(
+        read_only=True,
+    )
 
     class Meta:
         model = models.Encounter
-        exclude = ('created_by',)
+        exclude = ('created_by', 'current_initiative', 'current_speed_stat',)
         depth = 1

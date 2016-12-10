@@ -13,7 +13,7 @@
     });
 
 
-    encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $location, $uibModal, EncounterCharacter, StatusEffect, encounter, players, npcs) {
+    encounterControllers.controller('EncounterDetailCtrl', function ($scope, $q, $location, $uibModal, Encounter, EncounterCharacter, StatusEffect, encounter, players, npcs) {
         $scope.encounter = encounter;
         $scope.players = players;
         $scope.npcs = npcs;
@@ -68,10 +68,18 @@
             $scope.encounter.$advance_initiative();
         };
 
+        $scope.isActiveCharacter = function(character) {
+            return _.contains($scope.encounter.active_character_uuids, character.uuid);
+        }
+
         $scope.addCharacter = function() {
             var promises = [];
             function handleSuccess(newEncounterCharacter) {
                 $scope.encounter.characters.push(newEncounterCharacter);
+                // Refresh the encounter object
+                Encounter.get($scope.encounter.uuid).then(function(encounter) {
+                    $scope.encounter = encounter;
+                });
             }
             function handleError(errorResponse) {
                 $scope.newCharacterErrors = errorResponse.data;
@@ -107,7 +115,7 @@
             });
         };
 
-        $scope.activeCharacters = function() {
+        $scope.charactersInInitiative = function() {
             return _.filter($scope.encounter.characters, function(character) {
                 return character.initiative !== null;
             });
