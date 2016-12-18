@@ -17,5 +17,9 @@ pushd frontend
 	trap cleanup SIGINT SIGTERM
 	npm install http-server
 	echo "Starting development web server"
-	./node_modules/.bin/http-server -P http://localhost:8000 app -p 8081
+	# Don't quit if this fails, http-server is braindead and dies if a proxy request fails
+	set +e
+	while true ; do
+		./node_modules/.bin/http-server -P http://localhost:8000 app -p 8081
+	done
 popd
