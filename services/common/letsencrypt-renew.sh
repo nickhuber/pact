@@ -1,5 +1,5 @@
 #!/bin/bash
 
-letsencrypt --renew --config /opt/combat_tracker/services/common/letsencrypt.conf certonly
+letsencrypt --renew --config /opt/pact/services/common/letsencrypt.conf certonly
 
 systemctl restart nginx

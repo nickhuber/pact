@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-cd /opt/combat_tracker
-pw useradd -n combat_tracker -s /bin/false
-pw group mod www -m combat_tracker
+cd /opt/pact
+pw useradd -n pact -s /bin/false
+pw group mod www -m pact
 yes | pkg install $(cat freebsd.depends)
 python3.5 -m venv .venv
 # cp nginx.conf /etc/nginx/conf.d/d20.conf

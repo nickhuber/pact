@@ -1,8 +1,6 @@
 
 CLEANCSS_CMD = ./node_modules/.bin/cleancss
-# TODO: this is different on Ubuntu
-MD5_CMD = md5 -q
-
+MD5_CMD = ./md5.sh
 
 BUILD_DIR = build
 JS_BUILD_DIR = $(BUILD_DIR)/js
