@@ -1,12 +1,12 @@
 <h1>Characters</h1>
-<a href="/#/characters/create">Create</a> a new Character.
+<a href="/#!/characters/create">Create</a> a new Character.
 
 <h2>Players</h2>
 <div class="list-group">
-    <a ng-repeat="player in players" class="list-group-item" ng-href="/#/characters/{{ player.uuid }}">{{ player.name }} </a>
+    <a ng-repeat="player in players" class="list-group-item" ng-href="/#!/characters/{{ player.uuid }}">{{ player.name }} </a>
 </div>
 
 <h2>NPCs</h2>
 <div class="list-group">
-    <a ng-repeat="npc in npcs" class="list-group-item" ng-href="/#/characters/{{ npc.uuid }}">{{ npc.name }} </a>
+    <a ng-repeat="npc in npcs" class="list-group-item" ng-href="/#!/characters/{{ npc.uuid }}">{{ npc.name }} </a>
 </div>

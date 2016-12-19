@@ -16,26 +16,26 @@ source_js_files := $(wildcard src/js/*.js)
 
 angular_templates = $(patsubst src/templates/%.html,$(BUILD_DIR)/js/templates.%.js,$(wildcard src/templates/*.html))
 
-fonts = $(wildcard bower_components/font-awesome/fonts/*)
-moved_fonts = $(patsubst bower_components/font-awesome/fonts/%,$(DIST_DIR)/fonts/%,$(wildcard bower_components/font-awesome/fonts/*))
+fonts = $(wildcard node_modules/font-awesome/fonts/*)
+moved_fonts = $(patsubst node_modules/font-awesome/fonts/%,$(DIST_DIR)/fonts/%,$(wildcard node_modules/font-awesome/fonts/*))
 
-extern_js_libraries := bower_components/jquery/dist/jquery.min.js \
-	bower_components/marked/marked.min.js \
-	bower_components/bootstrap/dist/js/bootstrap.min.js \
-	bower_components/underscore/underscore-min.js \
-	bower_components/angular/angular.min.js \
-	bower_components/angular-resource/angular-resource.min.js \
-	bower_components/angular-route/angular-route.min.js \
-	bower_components/angular-animate/angular-animate.min.js \
-	bower_components/angular-xeditable/dist/js/xeditable.min.js \
-	bower_components/angular-loading-bar/build/loading-bar.min.js \
-	bower_components/angular-marked/dist/angular-marked.min.js \
-	bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js
+extern_js_libraries := node_modules/jquery/dist/jquery.min.js \
+	node_modules/marked/marked.min.js \
+	node_modules/bootstrap/dist/js/bootstrap.min.js \
+	node_modules/underscore/underscore-min.js \
+	node_modules/angular/angular.min.js \
+	node_modules/angular-resource/angular-resource.min.js \
+	node_modules/angular-route/angular-route.min.js \
+	node_modules/angular-animate/angular-animate.min.js \
+	node_modules/angular-xeditable/dist/js/xeditable.min.js \
+	node_modules/angular-loading-bar/build/loading-bar.min.js \
+	node_modules/angular-marked/dist/angular-marked.min.js \
+	node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js
 
 
-external_css_libraries := bower_components/font-awesome/css/font-awesome.min.css \
-	bower_components/angular-xeditable/dist/css/xeditable.css \
-	bower_components/angular-loading-bar/build/loading-bar.css
+external_css_libraries := node_modules/font-awesome/css/font-awesome.min.css \
+	node_modules/angular-xeditable/dist/css/xeditable.css \
+	node_modules/angular-loading-bar/build/loading-bar.css
 
 .PHONY: all clean cachebust-js cachebust-css
 
@@ -73,7 +73,7 @@ cachebust-css: $(BUILD_DIR)/css/pact.css $(CSS_DIST_DIR)/.d
 
 
 # Fonts
-$(DIST_DIR)/fonts/%: bower_components/font-awesome/fonts/% $(FONTS_DIR)/.d
+$(DIST_DIR)/fonts/%: node_modules/font-awesome/fonts/% $(FONTS_DIR)/.d
 	cp $< $@
 
 

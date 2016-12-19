@@ -13,7 +13,6 @@ pushd frontend
     echo "Updating JavaScript dependencies"
     npm install
     npm update
-    ./node_modules/.bin/bower install
     echo "Compiling everything together"
     make
     echo "Watching for changes, will recompile if necessary"
