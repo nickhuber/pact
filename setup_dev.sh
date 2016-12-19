@@ -13,8 +13,8 @@ function handle_macos() {
         exit 1
     fi
     brew update
-    brew install python3 node npm ||:
-    brew link python3 node npm ||:
+    brew install python3 node npm sassc fswatch ||:
+    brew link python3 node npm sassc fswatch ||:
 }
 
 
@@ -41,10 +41,10 @@ function handle_ubuntu() {
         echo "Ubuntu $release too old, 14.04 is the minimum supported version, but 16.04 or newer is recommended"
     elif [[ "$release" < "16.04" ]] ; then
         apt-get update
-        apt-get install python3 python3-pip nodejs npm
+        apt-get install python3 python3-pip nodejs npm sassc fswatch
     else
         apt-get update
-        apt-get install python3 python3-venv python3-pip nodejs npm
+        apt-get install python3 python3-venv python3-pip nodejs npm sassc fswatch
     fi
 }
 
