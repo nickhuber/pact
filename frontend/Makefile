@@ -79,9 +79,13 @@ $(DIST_DIR)/fonts/%: node_modules/font-awesome/fonts/% $(FONTS_DIR)/.d
 # TODO: make this not run every time
 $(DIST_DIR)/index.html: src/index.html $(DIST_DIR)/.d cachebust-css cachebust-js
 	cp $< $@
+ifeq ($(shell uname),Darwin)
 	sed -i '' 's/pact.js/pact.$(shell $(MD5_CMD) $(BUILD_DIR)/js/pact.js).js/' $@
 	sed -i '' 's/pact.css/pact.$(shell $(MD5_CMD) $(BUILD_DIR)/css/pact.css).css/' $@
-
+else
+	sed -i 's/pact.js/pact.$(shell $(MD5_CMD) $(BUILD_DIR)/js/pact.js).js/' $@
+	sed -i 's/pact.css/pact.$(shell $(MD5_CMD) $(BUILD_DIR)/css/pact.css).css/' $@
+endif
 
 # Helper things
 clean:
