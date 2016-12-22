@@ -16,7 +16,7 @@ pushd frontend
     echo "Compiling everything together"
     make
     echo "Watching for changes, will recompile if necessary"
-    fswatch -o ./src make &
+    fswatch -o src | xargs -n1 -I{} make &
     echo "Setting up cleanup handler"
     trap cleanup SIGINT SIGTERM
     echo "Installing dev http server"
