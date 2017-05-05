@@ -215,10 +215,13 @@
     encounterControllers.controller('addStatusEffectModalCtrl', function ($scope, $uibModalInstance, status_effect, character) {
         $scope.status_effect = status_effect;
         $scope.character = character;
+        $scope.errors = {};
 
         $scope.add = function () {
             status_effect.$save().then(function(newStatusEffect) {
                 $uibModalInstance.close(newStatusEffect);
+            }).catch(function(errorResponse) {
+                $scope.errors = errorResponse.data;
             });
         };
 

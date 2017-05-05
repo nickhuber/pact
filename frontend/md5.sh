@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sum_cmd=$(which md5)
+hash md5 2> /dev/null
 if [ $? -eq 0 ]  ; then
     md5 -q $1
 else

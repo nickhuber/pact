@@ -148,11 +148,21 @@
     </div>
     <div class="modal-body">
         <form class="form" role="form" ng-submit="add()">
-            <label class="control-label" for="name">Name</label>
-            <input class="form-control" type="text" name="name" ng-model="status_effect.name">
+            <div class="col-sm-12 form-group" ng-class="{ 'has-error': errors.name }">
+                <label class="control-label" for="name">Name</label>
+                <input class="form-control" type="text" name="name" ng-model="status_effect.name">
+                <div ng-repeat="error in errors.name">
+                    <span class="help-block">{{ error }}</span>
+                </div>
+            </div>
 
-            <label class="control-label" for="duration">Duration</label>
-            <input class="form-control" type="text" name="duration" ng-model="status_effect.remaining_duration">
+            <div class="col-sm-12 form-group" ng-class="{ 'has-error': errors.remaining_duration }">
+                <label class="control-label" for="duration">Duration</label>
+                <input class="form-control" type="text" name="duration" ng-model="status_effect.remaining_duration">
+                <div ng-repeat="error in errors.remaining_duration">
+                    <span class="help-block">{{ error }}</span>
+                </div>
+            </div>
         </form>
     </div>
     <div class="modal-footer">

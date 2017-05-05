@@ -19,7 +19,7 @@ moved_fonts = $(patsubst node_modules/font-awesome/fonts/%,$(DIST_DIR)/fonts/%,$
 
 extern_js_libraries := node_modules/jquery/dist/jquery.min.js \
 	node_modules/marked/marked.min.js \
-	node_modules/bootstrap/dist/js/bootstrap.min.js \
+	node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js \
 	node_modules/underscore/underscore-min.js \
 	node_modules/angular/angular.min.js \
 	node_modules/angular-resource/angular-resource.min.js \

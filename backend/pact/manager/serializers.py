@@ -64,7 +64,8 @@ class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
     status_effects = StatusEffectSerializer(
         source='statuseffect_set',
         many=True,
-        required=False
+        required=False,
+        read_only=True,
     )
 
     class Meta:
