@@ -31,6 +31,8 @@ function handle_linux() {
         handle_ubuntu "${release}"
     elif [[ "$distro" = "Fedora" ]] ; then
         handle_fedora "${release}"
+    elif [[ "$distro" = "openSUSE project" ]] ; then
+        handle_opensuse "${release}"
     else
         echo "Unsupported distribution $distro."
     fi
@@ -38,11 +40,20 @@ function handle_linux() {
 
 
 function handle_fedora() {
+    release=$1
     if [[ "${release}" -lt "25" ]] ; then
         echo "Fedora ${release} is untested, attempting anyways"
     fi
     wget "http://download.opensuse.org/repositories/home:/nickhuber/Fedora_${release}/home:nickhuber.repo" -q -O /etc/yum.repos.d/home:nickhuber.repo
     dnf install python3 python3-pip nodejs npm sassc fswatch
+}
+
+
+function handle_opensuse() {
+    release=$1
+    zypper addrepo "https://download.opensuse.org/repositories/devel:/libraries:/c_c++/openSUSE_Leap_${release}/devel:libraries:c_c++.repo"
+    zypper addrepo "http://download.opensuse.org/repositories/home:/nickhuber/openSUSE_Leap_${release}/home:nickhuber.repo"
+    zypper install python3 python3-pip nodejs npm sassc fswatch
 }
 
 
