@@ -7,7 +7,8 @@ python3 -m venv .venv
 echo "Activating virtualenv"
 source .venv/bin/activate
 echo "Updating python dependencies"
-pip3 install --upgrade -r backend/requirements.txt
+python3 -m pip install wheel
+python3 -m pip install --upgrade -r backend/requirements.txt
 echo "Updating database"
 backend/pact/manage.py migrate
 echo "Ensuring default user exists"

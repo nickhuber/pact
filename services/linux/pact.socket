@@ -1,0 +1,8 @@
+[Unit]
+Description=PACT gunicorn socket
+
+[Socket]
+ListenStream=/run/pact-gunicorn.socket
+
+[Install]
+WantedBy=sockets.target

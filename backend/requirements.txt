@@ -1,7 +1,6 @@
-aiohttp
 dice<2.2
 django-extensions
 django-filter
-django<2.1
+django<2.2
 djangorestframework<3.8
 gunicorn
