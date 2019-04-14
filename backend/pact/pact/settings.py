@@ -19,7 +19,7 @@ DEBUG = False
 
 import sys
 if 'runserver' in sys.argv or 'runserver_plus' in sys.argv:
-    DEBUG = True
+    DEBUG = True    
 
 ALLOWED_HOSTS = ['*']
 
@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'django_extensions',
+    'django_filters',
     'rest_framework',
 
     'roll',

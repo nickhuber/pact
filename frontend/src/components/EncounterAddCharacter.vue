@@ -1,0 +1,119 @@
+<template>
+    <div id="encounter-add-character">
+        <button class="button is-outlined is-primary" @click="addCharacter">
+            <span>
+                Add to encounter
+            <font-awesome-icon icon="plus-square"></font-awesome-icon>
+            </span>
+        </button>
+        <form>
+            <div class="field">
+                <label class="field-label is-normal" for="character">Character</label>
+                <div class="field-body">
+                    <div class="select" :class="{'is-danger': errors.initiative}">
+                        <select v-model="selectedCharacter">
+                        <option v-for="character in characters" :value="character.url" :key="character.uuid">
+                            {{ character.name }}
+                        </option>
+                        </select>
+                    </div>
+                </div>
+                <p
+                    class="help is-danger"
+                    v-for="error in errors.character"
+                    :key="error"
+                >
+                    {{ error }}
+                </p>
+            </div>
+            <div class="field">
+                <label class="field-label is-normal" for="initiative">Initiative</label>
+                <div class="field-body">
+                    <input class="input" id="initiative" type="text" v-model="initiative" :class=" {'is-danger': errors.initiative}">
+                </div>
+                <p
+                    class="help is-danger"
+                    v-for="error in errors.initiative"
+                    :key="error"
+                >
+                    {{ error }}
+                </p>
+            </div>
+            <div class="field">
+                <label class="field-label is-normal" for="notes">Notes</label>
+                <div class="field-body">
+                    <input class="input" id="notes" type="text" v-model="notes" :class=" {'is-danger': errors.notes}">
+                </div>
+                <p
+                    class="help is-danger"
+                    v-for="error in errors.notes"
+                    :key="error"
+                >
+                    {{ error }}
+                </p>
+            </div>
+        </form>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'EncounterAddCharacter',
+    props: ['encounter'],
+    data() {
+        return {
+            characters: [],
+            players: [],
+            npcs: [],
+            selectedCharacter: null,
+            initiative: null,
+            notes: '',
+            errors: {},
+        }
+    },
+    created () {
+        this.fetchData()
+    },
+    methods : {
+        fetchData() {
+            let vm = this;
+            this.characters = null;
+            this.loading = true;
+            this.$http.get('/api/characters/').then((response) => {
+                vm.characters = response.data;
+                vm.players = [];
+                vm.npcs = [];
+                vm.characters.forEach((character) => {
+                    if (character.is_player) {
+                        vm.players.push(character);
+                    } else {
+                        vm.npcs.push(character);
+                    }
+                })
+                vm.loading = false;
+            });
+        },
+        addCharacter(e) {
+            let vm = this;
+            let postData = {
+                'encounter': vm.encounter.url,
+                'character': vm.selectedCharacter,
+                'initiative': vm.initiative,
+                'notes': vm.notes,
+            }
+            this.$http.post(
+                '/api/encounter_characters/',
+                postData
+            ).then((response) => {
+                vm.errors = {};
+                this.$emit('encounter-character-added');
+            }).catch((error) => {
+                vm.errors = error.response.data;
+            });
+        }
+    }
+}
+</script>
+
+<style scoped>
+</style>

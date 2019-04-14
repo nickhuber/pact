@@ -53,10 +53,6 @@ class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
         source='character.description',
         read_only=True
     )
-    speed_stat = serializers.IntegerField(
-        source='character.speed_stat',
-        read_only=True
-    )
     is_player = serializers.BooleanField(
         source='character.is_player',
         read_only=True
@@ -67,6 +63,11 @@ class EncounterCharacterSerializer(serializers.HyperlinkedModelSerializer):
         required=False,
         read_only=True,
     )
+
+    def validate(self, data):
+        if 'current_hp' in data:
+            data['current_hp'] = min(data['current_hp'], self.instance.max_hp)
+        return data
 
     class Meta:
         model = models.EncounterCharacter
@@ -82,11 +83,18 @@ class EncounterSerializer(serializers.HyperlinkedModelSerializer):
         required=False,
         read_only=True,
     )
-    active_character_uuids = serializers.ListField(
+    active_character_uuids = serializers.SerializerMethodField(
         read_only=True,
     )
 
     class Meta:
         model = models.Encounter
-        exclude = ('created_by', 'current_initiative', 'current_speed_stat',)
+        exclude = ('created_by', )
         depth = 1
+
+    def get_active_character_uuids(self, encounter):
+        if encounter.current_initiative is None:
+            return []
+        characters_query = encounter.encountercharacter_set\
+            .filter(initiative=encounter.current_initiative)
+        return [c.uuid for c in characters_query]

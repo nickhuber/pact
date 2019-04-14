@@ -1,6 +1,6 @@
-dice<2.2
-django-extensions
-django-filter
-django<2.2
-djangorestframework<3.8
+dice<2.5
+django-extensions<2.2
+django-filter<2.2
+django<2.3
+djangorestframework<3.10
 gunicorn

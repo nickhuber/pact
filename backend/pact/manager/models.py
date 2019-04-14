@@ -43,7 +43,6 @@ class Character(ArchiveModel, UUIDPrimaryKeyModel):
     hit_dice = models.CharField(max_length=128, default='', blank=True)
     is_player = models.BooleanField(default=False, db_index=True)
     created_by = models.ForeignKey(auth.models.User, on_delete=models.CASCADE)
-    speed_stat = models.IntegerField(null=True, default=None, blank=True)
 
     def __str__(self):
         return self.name
@@ -71,44 +70,13 @@ class Encounter(ArchiveModel, UUIDPrimaryKeyModel):
     )
     notes = models.TextField(max_length=8192, blank=True, default='')
     current_initiative = models.IntegerField(null=True, blank=True)
-    current_speed_stat = models.IntegerField(null=True, blank=True)
     current_round = models.IntegerField(default=0)
     created_by = models.ForeignKey(auth.models.User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
-    # TODO: move this to the serializer
-    @property
-    def active_character_uuids(self):
-        if self.current_initiative is None:
-            return []
-        characters_query = self.encountercharacter_set\
-            .filter(initiative=self.current_initiative)
-        if self._use_speed_stat:
-            characters_query = characters_query\
-                .filter(character__speed_stat=self.current_speed_stat)
-        return [c.uuid for c in characters_query]
-
-    @property
-    def _use_speed_stat(self):
-        return not self.encountercharacter_set\
-            .filter(initiative=self.current_initiative)\
-            .filter(character__speed_stat=None)\
-            .exists()
-
-    @property
-    def _next_speed_stat(self):
-        speed_stat_query = self.encountercharacter_set\
-            .filter(initiative=self.current_initiative)\
-            .order_by('-character__speed_stat')
-        if self.current_speed_stat is not None:
-            speed_stat_query = speed_stat_query\
-                .filter(character__speed_stat__lt=self.current_speed_stat)
-        return speed_stat_query.first().character.speed_stat
-
-    @property
-    def _next_initiative(self):
+    def get_next_initiative(self):
         initiative_query = self.encountercharacter_set\
             .exclude(initiative=None)
         if self.current_initiative is not None:
@@ -122,47 +90,25 @@ class Encounter(ArchiveModel, UUIDPrimaryKeyModel):
 
         if self.current_initiative is None:
             # Initiative hasn't started yet, so just grab the first character
-            self.current_initiative = self._next_initiative
-            if self._use_speed_stat:
-                self.current_speed_stat = self._next_speed_stat
+            self.current_initiative = self.get_next_initiative()
         else:
             # Find the next Character
             try:
-                if self._use_speed_stat:
-                    try:
-                        self.current_speed_stat = self._next_speed_stat
-                    except (AttributeError, EncounterCharacter.DoesNotExist):
-                        # No more speed stats at this level, next initiative
-                        self.current_speed_stat = None
-                        self.current_initiative = self._next_initiative
-                        if self._use_speed_stat:
-                            self.current_speed_stat = self._next_speed_stat
-                else:
-                    self.current_speed_stat = None
-                    self.current_initiative = self._next_initiative
-                    if self._use_speed_stat:
-                        self.current_speed_stat = self._next_speed_stat
+                self.current_initiative = self.get_next_initiative()
             except (AttributeError, EncounterCharacter.DoesNotExist):
                 # No more initatitives, roll over
                 self.current_initiative = None
-                self.current_speed_stat = None
-                self.current_initiative = self._next_initiative
-                if self._use_speed_stat:
-                    self.current_speed_stat = self._next_speed_stat
+                self.current_initiative = self.get_next_initiative()
                 self.current_round += 1
 
         self.save()
         self.handle_initiative_changed()
 
-    # TODO: make this a post-save signal that does things if init or speed_stat change
+    # TODO: make this a post-save signal that does things if init changes
     def handle_initiative_changed(self):
         encounter_characters = self.encountercharacter_set.filter(
             initiative=self.current_initiative,
         )
-        if self._use_speed_stat:
-            encounter_characters.filter(
-                character__speed_stat=self.current_speed_stat,
-            )
         for ec in encounter_characters:
             for status in ec.statuseffect_set.all():
                 status.reduce()
