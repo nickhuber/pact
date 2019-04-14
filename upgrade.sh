@@ -7,5 +7,5 @@
 pushd /opt/pact/frontend/
     npm install
     npm update
-    make
+    npm run build
 popd

@@ -13,8 +13,8 @@ function handle_macos() {
         exit 1
     fi
     brew update
-    brew install python3 node npm sassc fswatch ||:
-    brew link python3 node npm sassc fswatch ||:
+    brew install python3 node npm sassc ||:
+    brew link python3 node npm sassc ||:
 }
 
 
@@ -44,16 +44,14 @@ function handle_fedora() {
     if [[ "${release}" -lt "25" ]] ; then
         echo "Fedora ${release} is untested, attempting anyways"
     fi
-    wget "http://download.opensuse.org/repositories/home:/nickhuber/Fedora_${release}/home:nickhuber.repo" -q -O /etc/yum.repos.d/home:nickhuber.repo
-    dnf install python3 python3-pip nodejs npm sassc fswatch
+    dnf install python3 python3-pip nodejs npm sassc
 }
 
 
 function handle_opensuse() {
     release=$1
     zypper addrepo "https://download.opensuse.org/repositories/devel:/libraries:/c_c++/openSUSE_Leap_${release}/devel:libraries:c_c++.repo"
-    zypper addrepo "http://download.opensuse.org/repositories/home:/nickhuber/openSUSE_Leap_${release}/home:nickhuber.repo"
-    zypper install python3 python3-pip nodejs npm sassc fswatch
+    zypper install python3 python3-pip nodejs npm sassc
 }
 
 
@@ -63,10 +61,10 @@ function handle_ubuntu() {
         echo "Ubuntu ${release} too old, 14.04 is the minimum supported version, but 16.04 or newer is recommended"
     elif [[ $(bc <<< "${release} < 16.04") -eq 1 ]] ; then
         apt-get update
-        apt-get install python3 python3-pip nodejs npm sassc fswatch
+        apt-get install python3 python3-pip nodejs npm sassc
     else
         apt-get update
-        apt-get install python3 python3-venv python3-pip nodejs npm sassc fswatch
+        apt-get install python3 python3-venv python3-pip nodejs npm sassc
     fi
 }
 
