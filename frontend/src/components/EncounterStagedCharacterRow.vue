@@ -1,7 +1,14 @@
 <template>
     <tr>
         <td>
-            {{ character.name }}
+            <span v-if="!character.is_player">
+                <span @click="showDescription">
+                    <a href="javascript://">{{ character.name }}</a>
+                </span>
+            </span>
+            <span v-if="character.is_player">
+                {{ character.name }}
+            </span>
         </td>
         <td>
             {{ character.notes }}
@@ -17,6 +24,8 @@
 </template>
 
 <script>
+import Modal from './Modal.vue';
+
 export default {
     name: 'EncounterStagedCharacterRow',
     props: ['character', 'formsDisabled'],
@@ -44,6 +53,14 @@ export default {
                 this.$emit('encounter-character-updated');
             });
         },
+        showDescription() {
+            this.$modal.show(Modal, {
+                text: this.character.description,
+            }, {
+                width: "80%",
+                height: "80%",
+            });
+        }
     }
 }
 </script>

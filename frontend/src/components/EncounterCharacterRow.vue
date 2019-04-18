@@ -1,8 +1,13 @@
 <template>
     <tr>
         <td>
-            <span @click="showDescription">
-                <a href="javascript://">{{ character.name }}</a>
+            <span v-if="!character.is_player">
+                <span @click="showDescription">
+                    <a href="javascript://">{{ character.name }}</a>
+                </span>
+            </span>
+            <span v-if="character.is_player">
+                {{ character.name }}
             </span>
         </td>
         <td>
