@@ -13,8 +13,8 @@
                     {{ character.initiative }}
                 </div>
                 <div class="level-item">
-                    <button class="button is-small" @click="increaseInitiative(character)" :disabled="formsDisabled"><font-awesome-icon icon="arrow-up"></font-awesome-icon></button>
-                    <button class="button is-small" @click="decreaseInitiative(character)" :disabled="formsDisabled"><font-awesome-icon icon="arrow-down"></font-awesome-icon></button>
+                    <button class="button is-small" @click="increaseInitiative" :disabled="formsDisabled"><font-awesome-icon icon="arrow-up"></font-awesome-icon></button>
+                    <button class="button is-small" @click="decreaseInitiative" :disabled="formsDisabled"><font-awesome-icon icon="arrow-down"></font-awesome-icon></button>
                 </div>
             </div>
         </td>
@@ -98,7 +98,7 @@ export default {
                 this.$emit('encounter-character-updated');
             });
         },
-        decreaseInitiative(character) {
+        decreaseInitiative() {
             this.$http.patch(
                 '/api/encounter_characters/' + this.character.uuid,
                 {

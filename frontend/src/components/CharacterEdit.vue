@@ -42,7 +42,7 @@
                 <div class="field">
                     <label class="field-label is-normal" for="description">Description</label>
                     <div class="field-body">
-                        <textarea class="textarea" id="description" v-model="character.description":class="{'is-danger': errors.description}"></textarea>
+                        <textarea class="textarea" id="description" v-model="character.description" :class="{'is-danger': errors.description}"></textarea>
                     </div>
                     <p
                         class="help is-danger"

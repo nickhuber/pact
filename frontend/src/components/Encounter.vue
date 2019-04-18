@@ -118,7 +118,7 @@ export default {
                 return 0;
             }
             if (this.encounter) {
-                return this.encounter.characters.concat().sort(compare).filter((character) => {
+                return [...this.encounter.characters].sort(compare).filter((character) => {
                     return character.initiative === null;
                 });
             } else {
@@ -136,7 +136,7 @@ export default {
                 return 0;
             }
             if (this.encounter) {
-                return this.encounter.characters.concat().sort(compare).filter((character) => {
+                return [...this.encounter.characters].sort(compare).filter((character) => {
                     return character.initiative !== null;
                 });
             } else {

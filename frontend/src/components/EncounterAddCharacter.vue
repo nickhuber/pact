@@ -12,7 +12,12 @@
                 <div class="field-body">
                     <div class="select" :class="{'is-danger': errors.initiative}">
                         <select v-model="selectedCharacter">
-                        <option v-for="character in characters" :value="character.url" :key="character.uuid">
+                        <option>-- Player Characters --</option>
+                        <option v-for="character in players" :value="character.url" :key="character.uuid">
+                            {{ character.name }}
+                        </option>
+                        <option>-- Non-Player Characters --</option>
+                        <option v-for="character in npcs" :value="character.url" :key="character.uuid">
                             {{ character.name }}
                         </option>
                         </select>
@@ -76,6 +81,15 @@ export default {
     },
     methods : {
         fetchData() {
+            function sortByName(a, b) {
+                if (a.name.toLowerCase() < b.name.toLowerCase()) {
+                    return -1;
+                }
+                if (a.name.toLowerCase() > b.name.toLowerCase()) {
+                    return 1;
+                }
+                return 0;
+            }
             let vm = this;
             this.characters = null;
             this.loading = true;
@@ -90,10 +104,12 @@ export default {
                         vm.npcs.push(character);
                     }
                 })
+                vm.players.sort(sortByName);
+                vm.npcs.sort(sortByName);
                 vm.loading = false;
             });
         },
-        addCharacter(e) {
+        addCharacter() {
             let vm = this;
             let postData = {
                 'encounter': vm.encounter.url,
