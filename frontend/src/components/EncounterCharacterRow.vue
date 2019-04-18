@@ -1,8 +1,8 @@
 <template>
     <tr>
         <td>
-            <span>
-                {{ character.name }}
+            <span @click="showDescription">
+                <a href="javascript://">{{ character.name }}</a>
             </span>
         </td>
         <td>
@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import Modal from './Modal.vue';
+
 export default {
     name: 'EncounterCharacterRow',
     props: ['character', 'formsDisabled'],
@@ -116,6 +118,14 @@ export default {
                 this.$emit('encounter-character-updated');
             });
         },
+        showDescription() {
+            this.$modal.show(Modal, {
+                text: this.character.description,
+            }, {
+                width: "80%",
+                height: "80%",
+            });
+        }
     }
 }
 </script>

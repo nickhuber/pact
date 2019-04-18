@@ -4,6 +4,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 
 import VueRouter from 'vue-router';
+import VModal from 'vue-js-modal'
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes, faEdit, faSave, faPlusSquare, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
@@ -89,6 +90,9 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title
     next()
 });
+
+// Modal stuff
+Vue.use(VModal, { dynamic: true, injectModalsContainer: true })
 
 // Axios stuff
 Vue.use(VueAxios, axios)
