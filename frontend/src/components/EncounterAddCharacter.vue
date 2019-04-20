@@ -12,11 +12,11 @@
                 <div class="field-body">
                     <div class="select" :class="{'is-danger': errors.initiative}">
                         <select v-model="selectedCharacter">
-                        <option>-- Player Characters --</option>
+                        <option disabled value="">-- Player Characters --</option>
                         <option v-for="character in players" :value="character.url" :key="character.uuid">
                             {{ character.name }}
                         </option>
-                        <option>-- Non-Player Characters --</option>
+                        <option disabled value="">-- Non-Player Characters --</option>
                         <option v-for="character in npcs" :value="character.url" :key="character.uuid">
                             {{ character.name }}
                         </option>
@@ -34,7 +34,7 @@
             <div class="field">
                 <label class="field-label is-normal" for="initiative">Initiative</label>
                 <div class="field-body">
-                    <input class="input" id="initiative" type="text" v-model="initiative" :class=" {'is-danger': errors.initiative}">
+                    <input class="input" id="initiative" type="number" v-model.number="initiative" :class=" {'is-danger': errors.initiative}">
                 </div>
                 <p
                     class="help is-danger"
@@ -114,7 +114,7 @@ export default {
             let postData = {
                 'encounter': vm.encounter.url,
                 'character': vm.selectedCharacter,
-                'initiative': vm.initiative,
+                'initiative': vm.initiative == '' ? null : vm.initiative,
                 'notes': vm.notes,
             }
             this.$http.post(
