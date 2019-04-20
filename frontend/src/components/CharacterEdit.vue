@@ -4,13 +4,17 @@
             Loading...
         </div>
         <div v-if="character">
-                <button class="button is-outlined is-primary" @click="handleSave">
-                    <span>
-                        Save
-                    <font-awesome-icon icon="save"></font-awesome-icon>
-                    </span>
-                </button>
-            <form>
+            <form @submit="handleSave">
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-outlined is-primary">
+                            <span>
+                                Save
+                            <font-awesome-icon icon="save"></font-awesome-icon>
+                            </span>
+                        </button>
+                    </div>
+                </div>
                 <div class="field">
                     <label class="field-label is-normal" for="name">Name</label>
                     <div class="field-body">
@@ -73,7 +77,7 @@ export default {
             let vm = this;
             e.preventDefault();
             this.$http.patch(
-                '/api/characters/' + vm.$route.params.uuid,
+                `/api/characters/${vm.$route.params.uuid}`,
                 this.character
             ).then((response) => {
                 if (response.status != 200) {

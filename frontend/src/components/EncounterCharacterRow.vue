@@ -40,28 +40,40 @@
                         </div>
                     </div>
                     <div class="level-item">
-                        <button class="button is-fullwidth is-warning" @click="hurt()" :disabled="formsDisabled">Hurt</button>
+                        <button class="button is-fullwidth is-warning" @click="hurt" :disabled="formsDisabled">Hurt</button>
                     </div>
                     <div class="level-item is-two-fifths">
                         <input class="input" type="number" v-model.number="hp_change_value" :disabled="formsDisabled">
                     </div>
                     <div class="level-item">
-                        <button class="button is-fullwidth is-success" @click="heal()" :disabled="formsDisabled">Heal</button>
+                        <button class="button is-fullwidth is-success" @click="heal" :disabled="formsDisabled">Heal</button>
                     </div>
                 </div>
             </span>
         </td>
         <td>
-            <!-- TOOD: status effects -->
+            <div class="list" v-if="character.status_effects.length > 0">
+                <div class="list-item" v-for="status in character.status_effects" :key="status.url">
+                    <span>
+                        <a @click="changeStatusEffect(status)">{{ status.name }}</a> - {{ status.remaining_duration }} turn<span v-if="status.remaining_duration > 1">s</span>
+                    </span>
+                    <a class="is-pulled-right" @click="removeStatusEffect(status)">
+                        <font-awesome-icon icon="times"></font-awesome-icon>
+                    </a>
+                </div>
+            </div>
         </td>
         <td>
             <button class="button is-danger" @click="remove" :disabled="formsDisabled">Remove</button>
+            <button class="button is-info" @click="addStatusEffect" :disabled="formsDisabled">Add status effect</button>
         </td>
     </tr>
 </template>
 
 <script>
 import Modal from './Modal.vue';
+import AddStatusModal from './AddStatusModal.vue';
+import ChangeStatusModal from './ChangeStatusModal.vue';
 
 export default {
     name: 'EncounterCharacterRow',
@@ -74,29 +86,31 @@ export default {
     methods: {
         hurt() {
             this.$http.patch(
-                '/api/encounter_characters/' + this.character.uuid,
+                `/api/encounter_characters/${this.character.uuid}`,
                 {
                     current_hp: this.character.current_hp - this.hp_change_value
                 }
             ).then((response) => { 
                 this.character.current_hp = response.data.current_hp;
                 this.$emit('encounter-character-updated');
+                this.hp_change_value = null;
             });
         },
         heal() {
             this.$http.patch(
-                '/api/encounter_characters/' + this.character.uuid,
+                `/api/encounter_characters/${this.character.uuid}`,
                 {
                     current_hp: this.character.current_hp + this.hp_change_value
                 }
             ).then((response) => { 
                 this.character.current_hp = response.data.current_hp;
                 this.$emit('encounter-character-updated');
+                this.hp_change_value = null;
             });
         },
         increaseInitiative() {
             this.$http.patch(
-                '/api/encounter_characters/' + this.character.uuid,
+                `/api/encounter_characters/${this.character.uuid}`,
                 {
                     initiative: this.character.initiative + 1
                 }
@@ -107,7 +121,7 @@ export default {
         },
         decreaseInitiative() {
             this.$http.patch(
-                '/api/encounter_characters/' + this.character.uuid,
+                `/api/encounter_characters/${this.character.uuid}`,
                 {
                     initiative: this.character.initiative - 1
                 }
@@ -118,7 +132,7 @@ export default {
         },
         remove() {
             this.$http.delete(
-                '/api/encounter_characters/' + this.character.uuid
+                `/api/encounter_characters/${this.character.uuid}`
             ).then((response) => { 
                 this.$emit('encounter-character-updated');
             });
@@ -130,7 +144,36 @@ export default {
                 width: "80%",
                 height: "80%",
             });
-        }
+        },
+        addStatusEffect() {
+            this.$modal.show(AddStatusModal, {
+                encounterCharacter: this.character,
+            }, {
+                width: "80%",
+                height: "80%",
+            }, {
+                // This might not be the perfect way of doing this, but it keeps the encounter in sync
+                'closed': (event) => { this.$emit('encounter-character-updated'); }
+            });
+        },
+        changeStatusEffect(status) {
+            this.$modal.show(ChangeStatusModal, {
+                statusEffect: status,
+            }, {
+                width: "80%",
+                height: "80%",
+            }, {
+                // This might not be the perfect way of doing this, but it keeps the encounter in sync
+                'closed': (event) => { this.$emit('encounter-character-updated'); }
+            });
+        },
+        removeStatusEffect(status) {
+            this.$http.delete(
+                `/api/status_effects/${status.uuid}`
+            ).then((response) => {
+                this.$emit('encounter-character-updated');
+            });
+        },
     }
 }
 </script>

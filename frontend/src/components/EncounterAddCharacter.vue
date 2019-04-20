@@ -1,12 +1,16 @@
 <template>
     <div id="encounter-add-character">
-        <button class="button is-outlined is-primary" @click="addCharacter">
-            <span>
-                Add to encounter
-            <font-awesome-icon icon="plus-square"></font-awesome-icon>
-            </span>
-        </button>
-        <form>
+        <form @submit="addCharacter">
+            <div class="field">
+                <div class="control">
+                    <button class="button is-outlined is-primary">
+                        <span>
+                            Add to encounter
+                        <font-awesome-icon icon="plus-square"></font-awesome-icon>
+                        </span>
+                    </button>
+                </div>
+            </div>
             <div class="field">
                 <label class="field-label is-normal" for="character">Character</label>
                 <div class="field-body">
@@ -122,6 +126,8 @@ export default {
                 postData
             ).then((response) => {
                 vm.errors = {};
+                vm.initiative = null;
+                vm.notes = '';
                 this.$emit('encounter-character-added');
             }).catch((error) => {
                 vm.errors = error.response.data;

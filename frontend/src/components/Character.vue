@@ -63,14 +63,14 @@ export default {
             let vm = this;
             this.error = this.character = null;
             this.loading = true;
-            this.$http.get('/api/characters/' + vm.$route.params.uuid).then((response) => {
+            this.$http.get(`/api/characters/${vm.$route.params.uuid}`).then((response) => {
                 vm.loading = false;
                 vm.character = response.data;
             });
         },
         handleDelete() {
             let vm = this;
-            this.$http.delete('/api/characters/' + vm.$route.params.uuid).then((response) => {
+            this.$http.delete(`/api/characters/${vm.$route.params.uuid}`).then((response) => {
                 if (response.status != 204) {
                     vm.delete_error = response.data;
                     return;

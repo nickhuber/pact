@@ -37,7 +37,7 @@ export default {
     methods: {
         add() {
             this.$http.patch(
-                '/api/encounter_characters/' + this.character.uuid,
+                `/api/encounter_characters/${this.character.uuid}`,
                 {
                     initiative: this.initiative
                 }
@@ -48,7 +48,7 @@ export default {
         },
         remove() {
             this.$http.delete(
-                '/api/encounter_characters/' + this.character.uuid
+                `/api/encounter_characters/${this.character.uuid}`
             ).then((response) => { 
                 this.$emit('encounter-character-updated');
             });

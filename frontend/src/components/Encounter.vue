@@ -25,7 +25,7 @@
         <div v-if="stagedCharacters.length > 0">
             <h2>Staged characters</h2>
             <section class="section">
-                <table class="table is-striped">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -56,7 +56,7 @@
                     round {{ encounter.current_round }}
                     <span v-if="encounter.current_initiative !== null">| initiative {{ encounter.current_initiative }}</span>
                 </div>
-                <table class="table is-striped">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -69,7 +69,7 @@
                     </thead>
                     <tbody>
                         <EncounterCharacterRow
-                            :class="{'is-selected': isActiveCharacter(character)}"
+                            :class="{'is-active-character': isActiveCharacter(character)}"
                             v-for="character in encounterCharacters"
                             :key="character.uuid"
                             :character="character"
@@ -152,7 +152,7 @@ export default {
             let vm = this;
             this.error;
             this.loading = true;
-            this.$http.get('/api/encounters/' + vm.$route.params.uuid).then((response) => {
+            this.$http.get(`/api/encounters/${vm.$route.params.uuid}`).then((response) => {
                 vm.loading = false;
                 vm.has_had_data = true;
                 vm.encounter = response.data;
@@ -160,13 +160,13 @@ export default {
         },
         deleteEncounter() {
             let vm = this;
-            this.$http.delete('/api/encounters/' + vm.$route.params.uuid).then((response) => {
+            this.$http.delete(`/api/encounters/${vm.$route.params.uuid}`).then((response) => {
                 vm.$router.push({name: 'encounters'});
             });
         },
         advanceInit() {
             let vm = this;
-            this.$http.post('/api/encounters/' + vm.$route.params.uuid + '/advance_initiative').then((response) => {
+            this.$http.post(`/api/encounters/${vm.$route.params.uuid}/advance_initiative`).then((response) => {
                 vm.encounter = response.data;
             });
         },
@@ -186,4 +186,7 @@ export default {
 </script>
 
 <style scoped>
+tr.is-active-character {
+    background-color: lightblue;
+}
 </style>

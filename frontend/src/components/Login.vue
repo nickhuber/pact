@@ -1,7 +1,7 @@
 <template>
     <div>
         <h4 class="title">Login</h4>
-        <form>
+        <form @submit="handleSubmit">
             <div class="field">
                 <label class="control" for="username">Username</label>
                 <div class="control">
@@ -16,7 +16,7 @@
             </div>
             <div class="field">
                 <div class="control">
-                    <button class="button is-link" type="submit" @click="handleSubmit">Login</button>
+                    <button class="button is-link" type="submit">Login</button>
                 </div>
             </div>
         </form>

@@ -1,13 +1,17 @@
 <template>
     <div id="character-create">
         <div>
-            <button class="button is-outlined is-primary" @click="handleSave">
-                <span>
-                    Create
-                <font-awesome-icon icon="plus-square"></font-awesome-icon>
-                </span>
-            </button>
-            <form>
+            <form @submit="handleSave">
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-outlined is-primary">
+                            <span>
+                                Create
+                            <font-awesome-icon icon="plus-square"></font-awesome-icon>
+                            </span>
+                        </button>
+                    </div>
+                </div>
                 <div class="field">
                     <label for="is_player" class="checkbox">
                         Player
