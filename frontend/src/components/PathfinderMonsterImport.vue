@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Autocomplete from 'vue2-autocomplete-js'
+const Autocomplete = () => ('vue2-autocomplete-js');
 
 export default {
     name: "PathfinderMonsterImport",

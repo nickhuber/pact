@@ -86,8 +86,8 @@
 </template>
 
 <script>
-import PathfinderMonsterImport from './PathfinderMonsterImport.vue';
-import VueMarkdown from 'vue-markdown'
+const PathfinderMonsterImport = () => import('./PathfinderMonsterImport.vue');
+const VueMarkdown = () => import('vue-markdown');
 
 export default {
     name: 'CharacterCreate',

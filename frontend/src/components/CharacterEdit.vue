@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import Character from './Character.vue';
+const Character = () => import('./Character.vue');
 
 export default {
     name: 'CharacterEdit',

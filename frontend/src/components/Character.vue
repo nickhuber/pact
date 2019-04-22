@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import VueMarkdown from 'vue-markdown'
+const VueMarkdown = () => import('vue-markdown');
 export default {
     name: 'Character',
     components: { VueMarkdown },

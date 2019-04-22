@@ -18,8 +18,6 @@ import './../node_modules/vue2-autocomplete-js/dist/style/vue2-autocomplete.css'
 
 import App from './App.vue';
 
-Vue.config.productionTip = false;
-
 // Fontawesome stuff
 library.add(faTimes);
 library.add(faEdit);
@@ -35,50 +33,54 @@ Vue.use(VueRouter);
 
 const routes = [
     {
+        path: '/',
+        redirect: {name: 'characters'},
+    },
+    {
         path: '/login',
-        component: require('./components/Login.vue').default,
+        component: () => import('./components/Login.vue'),
         name: 'login',
         meta: {title: 'PACT | Login'},
     },
     {
         path: '/characters',
-        component: require('./components/Characters.vue').default,
+        component: () => import('./components/Characters.vue'),
         name: 'characters',
         meta: {title: 'PACT | characters'},
     },
     {
         path: '/characters/create',
-        component: require('./components/CharacterCreate.vue').default,
+        component: () => import('./components/CharacterCreate.vue'),
         name: 'character-create',
         meta: {title: 'PACT | character create'},
     },
     {
         path: '/characters/:uuid',
-        component: require('./components/Character.vue').default,
+        component: () => import('./components/Character.vue'),
         name: 'character',
         meta: {title: 'PACT | character'},
     },
     {
         path: '/characters/:uuid/edit',
-        component: require('./components/CharacterEdit.vue').default,
+        component: () => import('./components/CharacterEdit.vue'),
         name: 'character-edit',
         meta: {title: 'PACT | character edit'},
     },
     {
         path: '/encounters',
-        component: require('./components/Encounters.vue').default,
+        component: () => import('./components/Encounters.vue'),
         name: 'encounters',
         meta: {title: 'PACT | encounters'},
     },
     {
         path: '/encounters/:uuid',
-        component: require('./components/Encounter.vue').default,
+        component: () => import('./components/Encounter.vue'),
         name: 'encounter',
         meta: {title: 'PACT | encounter'},
     },
     {
         path: '/encounters/create',
-        component: require('./components/EncounterCreate.vue').default,
+        component: () => import('./components/EncounterCreate.vue'),
         name: 'encounter-create',
         meta: {title: 'PACT | encounter create'},
     },

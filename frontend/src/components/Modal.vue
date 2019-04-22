@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import VueMarkdown from 'vue-markdown'
+const VueMarkdown = () => import('vue-markdown');
 export default {
     name: 'Modal',
     props: ['text'],
