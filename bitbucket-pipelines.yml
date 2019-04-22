@@ -1,11 +1,11 @@
-image: python:3.5.1
+image: python:3.7.2
 
 pipelines:
   default:
     - step:
         script:
           - pip install -r backend/requirements.txt
-          - cd backend/pact/ && ./manage.py test
+          - cd backend/pact/ && ./manage.py test --keepdb
         services:
           - postgres
 
@@ -14,6 +14,6 @@ definitions:
     postgres:
       image: postgres
       variables: 
-        POSTGRES_DB: 'pact' 
+        POSTGRES_DB: 'test_pact' 
         POSTGRES_USER: 'pact'
         POSTGRES_PASSWORD: 'pact'

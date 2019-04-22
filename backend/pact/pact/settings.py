@@ -69,13 +69,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pact.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pact',
-        'PORT': '',
+import os
+# This is set when running bitbucket pipelines
+if 'BITBUCKET_COMMIT' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'HOST': '127.0.0.1',
+            'NAME': 'pact',
+            'USER': 'pact',
+            'PASSWORD': 'pact',
+        },
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'pact',
+        },
+    }
 
 LANGUAGE_CODE = 'en-us'
 
@@ -99,7 +111,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework_filters.backends.RestFrameworkFilterBackend',
         'rest_framework.filters.OrderingFilter',
     ),
 }
