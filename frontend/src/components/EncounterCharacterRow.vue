@@ -41,7 +41,9 @@
         <div class="vertical-center">
             <div class="level">
                 <div class="level-item">
-                    {{ character.initiative }}
+                    <span class="initiative">
+                        {{ character.initiative }}
+                    </span>
                 </div>
                 <div class="level-item">
                     <button class="button is-small" @click="increaseInitiative" :disabled="formsDisabled"><font-awesome-icon icon="arrow-up"></font-awesome-icon></button>
@@ -263,6 +265,10 @@ export default {
     span.fraction-bar {
         display: none;
     }
+}
+
+.initiative {
+    padding-right: 1em;
 }
 
 .status-list {
