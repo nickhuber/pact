@@ -38,14 +38,12 @@
         </div>
     </td>
     <td>
-        <div class="vertical-center">
-            <div class="level">
-                <div class="level-item">
-                    <span class="initiative">
-                        {{ character.initiative }}
-                    </span>
-                </div>
-                <div class="level-item">
+        <div class="columns vertical-center">
+            <div class="column is-narrow">
+                {{ character.initiative }}
+            </div>
+            <div class="column">
+                <div class="is-pulled-right">
                     <button class="button is-small" @click="increaseInitiative" :disabled="formsDisabled"><font-awesome-icon icon="arrow-up"></font-awesome-icon></button>
                     <button class="button is-small" @click="decreaseInitiative" :disabled="formsDisabled"><font-awesome-icon icon="arrow-down"></font-awesome-icon></button>
                 </div>
@@ -250,6 +248,7 @@ export default {
     margin-bottom: 0px;
 }
 .fraction {
+    margin-top: 1em;
     display: inline-block;
     position: relative;
     vertical-align: middle;
@@ -267,10 +266,6 @@ export default {
     }
 }
 
-.initiative {
-    padding-right: 1em;
-}
-
 .status-list {
     margin: 0px;
     list-style: none;
@@ -278,13 +273,20 @@ export default {
 }
 
 // Vertical center the things in the table cells
-td div {
+.level {
+    margin-top: 0.5em !important;
+}
+td>div, .level {
     height: 100%;
     margin: 0;
     padding:0;
 }
 tr, td {
     height: 100%;
+}
+
+.columns {
+    width: 100%;
 }
 
 .vertical-center {
