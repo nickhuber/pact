@@ -78,7 +78,6 @@
                         ></EncounterCharacterRow>
                     </tbody>
                 </table>
-                <button @click="advanceInit()" class="button is-small">Advance initiative</button>
             </section>
         </div>
     </div>

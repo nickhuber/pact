@@ -20,3 +20,21 @@ There will be a default user with *admin* as the username and *pass* as the pass
 Deployment
 ----------
 Deployment is pretty simple, and supports Fedora and sort of supports FreeBSD. See the services directory for more details
+
+Install postgresql-server and then run
+
+sudo systemctl enable postgresql
+sudo systemctl restart postgresql.service
+
+sudo su - postgres
+psql
+CREATE DATABASE pact;
+CREATE USER pact;
+
+ALTER ROLE pact SET client_encoding TO 'utf8';
+ALTER ROLE pact SET default_transaction_isolation TO 'read committed';
+ALTER ROLE pact SET timezone TO 'UTC';
+
+GRANT ALL PRIVILEGES ON DATABASE pact TO pact;
+\q
+exit

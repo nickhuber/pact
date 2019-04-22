@@ -1,42 +1,42 @@
 <template>
-    <div id="character">
-        <div class="loading" v-if="loading">
-            Loading...
-        </div>
-        <div v-if="character" class="content">
-            <p class="title">{{ character.name }}</p>
-            <p class="subtitle">
-                <span v-if="character.is_player">Player</span>
-                <span v-if="!character.is_player">Non-player</span>
-                character
-            </p>
-            <div class="navbar">
-                <div class="navbar-item">
-                    <router-link class="button is-outlined is-link" :to="{name: 'character-edit', params: {uuid: character.uuid}}">
-                        <span>
-                            Edit
-                            <font-awesome-icon icon="edit"></font-awesome-icon>
-                        </span>
-                    </router-link>
-                </div>
-                <div class="navbar-item">
-                    <button class="button is-outlined is-danger" @click="handleDelete">
-                        <span>
-                            Delete
-                            <font-awesome-icon icon="times"></font-awesome-icon>
-                        </span>
-                    </button>
-                </div>
-            </div>
-            <dl>
-                <dt v-if="!character.is_player">Hit Dice</dt>
-                <dd v-if="!character.is_player">{{ character.hit_dice }}</dd>
-
-                <dt>Description</dt>
-                <dd><vue-markdown>{{ character.description }}</vue-markdown></dd>
-            </dl>
-        </div>
+<div id="character">
+    <div class="loading" v-if="loading">
+        Loading...
     </div>
+    <div v-if="character" class="content">
+        <p class="title">{{ character.name }}</p>
+        <p class="subtitle">
+            <span v-if="character.is_player">Player</span>
+            <span v-if="!character.is_player">Non-player</span>
+            character
+        </p>
+        <div class="navbar">
+            <div class="navbar-item">
+                <router-link class="button is-outlined is-link" :to="{name: 'character-edit', params: {uuid: character.uuid}}">
+                    <span>
+                        Edit
+                        <font-awesome-icon icon="edit"></font-awesome-icon>
+                    </span>
+                </router-link>
+            </div>
+            <div class="navbar-item">
+                <button class="button is-outlined is-danger" @click="handleDelete">
+                    <span>
+                        Delete
+                        <font-awesome-icon icon="times"></font-awesome-icon>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <dl>
+            <dt v-if="!character.is_player">Hit Dice</dt>
+            <dd v-if="!character.is_player">{{ character.hit_dice }}</dd>
+
+            <dt>Description</dt>
+            <dd><vue-markdown>{{ character.description }}</vue-markdown></dd>
+        </dl>
+    </div>
+</div>
 </template>
 
 <script>

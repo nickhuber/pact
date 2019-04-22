@@ -20,10 +20,6 @@ class NoListModelViewSet(
 class CharacterViewSet(viewsets.ModelViewSet):
     queryset = models.Character.objects.all()
     serializer_class = serializers.CharacterSerializer
-    filter_backends = (
-        django_filters.rest_framework.DjangoFilterBackend,
-        filters.OrderingFilter,
-    )
     filter_fields = ('is_player', )
     ordering_fields = ('name', )
     ordering = ('name', )
@@ -76,3 +72,20 @@ class StatusEffectViewSet(NoListModelViewSet):
         return qs.filter(
             character__encounter__created_by=self.request.user
         )
+
+
+class PathfinderMonsterViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.PathfinderMonster.objects.all()
+    serializer_class = serializers.PathfinderMonsterSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        name_search_term = self.request.query_params.get('name_search_term', '')
+        # Avoid hitting the database hard and returning huge queries
+        if len(name_search_term) < 3:
+            return models.PathfinderMonster.objects.none()
+
+        return super().get_queryset().filter(name__icontains=name_search_term)

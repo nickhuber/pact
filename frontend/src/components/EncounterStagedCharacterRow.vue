@@ -1,26 +1,26 @@
 <template>
-    <tr>
-        <td>
-            <span v-if="!character.is_player">
-                <span @click="showDescription">
-                    <a href="javascript://">{{ character.name }}</a>
-                </span>
+<tr>
+    <td>
+        <span v-if="!character.is_player">
+            <span @click="showDescription">
+                <a href="javascript://">{{ character.name }}</a>
             </span>
-            <span v-if="character.is_player">
-                {{ character.name }}
-            </span>
-        </td>
-        <td>
-            {{ character.notes }}
-        </td>
-        <td>
-            <input class="input" type="number" v-model.number="initiative" :disabled="formsDisabled">
-        </td>
-        <td>
-            <button class="button is-primary" @click="add" :disabled="formsDisabled">Add</button>
-            <button class="button is-danger" @click="remove" :disabled="formsDisabled">Remove</button>
-        </td>
-    </tr>
+        </span>
+        <span v-if="character.is_player">
+            {{ character.name }}
+        </span>
+    </td>
+    <td>
+        {{ character.notes }}
+    </td>
+    <td>
+        <input class="input" type="number" v-model.number="initiative" :disabled="formsDisabled">
+    </td>
+    <td>
+        <button class="button is-primary" @click="add" :disabled="formsDisabled">Add</button>
+        <button class="button is-danger" @click="remove" :disabled="formsDisabled">Remove</button>
+    </td>
+</tr>
 </template>
 
 <script>

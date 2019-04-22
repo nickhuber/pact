@@ -98,3 +98,26 @@ class EncounterSerializer(serializers.HyperlinkedModelSerializer):
         characters_query = encounter.encountercharacter_set\
             .filter(initiative=encounter.current_initiative)
         return [c.uuid for c in characters_query]
+
+
+class PathfinderMonsterSerializer(serializers.HyperlinkedModelSerializer):
+    uuid = serializers.UUIDField(read_only=True)
+    initiative = serializers.SerializerMethodField()
+    perception = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.PathfinderMonster
+        fields = '__all__'
+
+    def get_initiative(self, monster):
+        initiative = (monster.dexterity // 2) - 5
+        if 'Improved Initiative' in monster.feats:
+            initiative += 4
+        return initiative
+
+    def get_perception(self, monster):
+        perception = (monster.wisdom // 2) - 5
+        if 'Perception' in monster.skills:
+            # This might be something like "+37 *+49 vs. traps" but we only care about the bas here
+            perception += int(monster.skills['Perception'][1:].split(' ')[0])
+        return perception

@@ -1,73 +1,73 @@
 <template>
-    <tr>
-        <td>
-            <span v-if="!character.is_player">
-                <span @click="showDescription">
-                    <a href="javascript://">{{ character.name }}</a>
-                </span>
+<tr>
+    <td>
+        <span v-if="!character.is_player">
+            <span @click="showDescription">
+                <a href="javascript://">{{ character.name }}</a>
             </span>
-            <span v-if="character.is_player">
-                {{ character.name }}
-            </span>
-        </td>
-        <td>
-        </td>
-        <td>
+        </span>
+        <span v-if="character.is_player">
+            {{ character.name }}
+        </span>
+    </td>
+    <td>
+    </td>
+    <td>
+        <div class="level">
+            <div class="level-item">
+                {{ character.initiative }}
+            </div>
+            <div class="level-item">
+                <button class="button is-small" @click="increaseInitiative" :disabled="formsDisabled"><font-awesome-icon icon="arrow-up"></font-awesome-icon></button>
+                <button class="button is-small" @click="decreaseInitiative" :disabled="formsDisabled"><font-awesome-icon icon="arrow-down"></font-awesome-icon></button>
+            </div>
+        </div>
+    </td>
+    <td>
+        <span v-if="!character.is_player">
             <div class="level">
                 <div class="level-item">
-                    {{ character.initiative }}
+                    <div class="fraction">
+                        <span class="fraction-numerator">
+                            {{ character.current_hp }}
+                        </span>
+                        <span class="fraction-bar">
+                            /
+                        </span>
+                        <span class="fraction-denominator">
+                            {{ character.max_hp }}
+                        </span>
+                    </div>
                 </div>
                 <div class="level-item">
-                    <button class="button is-small" @click="increaseInitiative" :disabled="formsDisabled"><font-awesome-icon icon="arrow-up"></font-awesome-icon></button>
-                    <button class="button is-small" @click="decreaseInitiative" :disabled="formsDisabled"><font-awesome-icon icon="arrow-down"></font-awesome-icon></button>
+                    <button class="button is-fullwidth is-warning" @click="hurt" :disabled="formsDisabled">Hurt</button>
+                </div>
+                <div class="level-item is-two-fifths">
+                    <input class="input" type="number" v-model.number="hp_change_value" :disabled="formsDisabled">
+                </div>
+                <div class="level-item">
+                    <button class="button is-fullwidth is-success" @click="heal" :disabled="formsDisabled">Heal</button>
                 </div>
             </div>
-        </td>
-        <td>
-            <span v-if="!character.is_player">
-                <div class="level">
-                    <div class="level-item">
-                        <div class="fraction">
-                            <span class="fraction-numerator">
-                                {{ character.current_hp }}
-                            </span>
-                            <span class="fraction-bar">
-                                /
-                            </span>
-                            <span class="fraction-denominator">
-                                {{ character.max_hp }}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="level-item">
-                        <button class="button is-fullwidth is-warning" @click="hurt" :disabled="formsDisabled">Hurt</button>
-                    </div>
-                    <div class="level-item is-two-fifths">
-                        <input class="input" type="number" v-model.number="hp_change_value" :disabled="formsDisabled">
-                    </div>
-                    <div class="level-item">
-                        <button class="button is-fullwidth is-success" @click="heal" :disabled="formsDisabled">Heal</button>
-                    </div>
-                </div>
-            </span>
-        </td>
-        <td>
-            <div class="list" v-if="character.status_effects.length > 0">
-                <div class="list-item" v-for="status in character.status_effects" :key="status.url">
-                    <span>
-                        <a @click="changeStatusEffect(status)">{{ status.name }}</a> - {{ status.remaining_duration }} turn<span v-if="status.remaining_duration > 1">s</span>
-                    </span>
-                    <a class="is-pulled-right" @click="removeStatusEffect(status)">
-                        <font-awesome-icon icon="times"></font-awesome-icon>
-                    </a>
-                </div>
+        </span>
+    </td>
+    <td>
+        <div class="list" v-if="character.status_effects.length > 0">
+            <div class="list-item" v-for="status in character.status_effects" :key="status.url">
+                <span>
+                    <a @click="changeStatusEffect(status)">{{ status.name }}</a> - {{ status.remaining_duration }} turn<span v-if="status.remaining_duration > 1">s</span>
+                </span>
+                <a class="is-pulled-right" @click="removeStatusEffect(status)">
+                    <font-awesome-icon icon="times"></font-awesome-icon>
+                </a>
             </div>
-        </td>
-        <td>
-            <button class="button is-danger" @click="remove" :disabled="formsDisabled">Remove</button>
-            <button class="button is-info" @click="addStatusEffect" :disabled="formsDisabled">Add status effect</button>
-        </td>
-    </tr>
+        </div>
+    </td>
+    <td>
+        <button class="button is-danger" @click="remove" :disabled="formsDisabled">Remove</button>
+        <button class="button is-info" @click="addStatusEffect" :disabled="formsDisabled">Add status effect</button>
+    </td>
+</tr>
 </template>
 
 <script>

@@ -29,6 +29,10 @@ router.register(
     r'users/?',
     pact_views.UserViewSet
 )
+router.register(
+    r'pathfinder_monsters/?',
+    manager_views.PathfinderMonsterViewSet
+)
 
 
 admin.autodiscover()

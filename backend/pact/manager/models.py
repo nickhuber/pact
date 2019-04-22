@@ -1,6 +1,7 @@
 from django.contrib import auth
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.contrib.postgres.fields import ArrayField, JSONField
 
 import dice
 
@@ -164,3 +165,71 @@ class StatusEffect(UUIDPrimaryKeyModel):
             self.delete()
         else:
             self.save()
+
+
+class PathfinderMonster(UUIDPrimaryKeyModel):
+    name = models.CharField(max_length=256, unique=True)
+    cr = models.FloatField(null=True, blank=True)
+    xp = models.IntegerField(null=True, blank=True)
+    race = models.CharField(max_length=64, null=True, blank=True)
+    classes = JSONField(default=list)
+    alignment = models.TextField(max_length=2, null=True, blank=True)
+    size = models.CharField(max_length=64, null=True, blank=True)
+    type = models.CharField(max_length=64, null=True, blank=True)
+    subtypes = ArrayField(models.CharField(max_length=128), default=list)
+    ac = models.IntegerField(null=True, blank=True)
+    ac_touch = models.IntegerField(null=True, blank=True)
+    ac_flat_footed = models.IntegerField(null=True, blank=True)
+    hp = models.IntegerField(null=True, blank=True)
+    hit_dice = models.CharField(max_length=128, null=True, blank=True)
+    fortitude_save = models.TextField(null=True, blank=True)
+    reflex_save = models.TextField(null=True, blank=True)
+    will_save = models.TextField(null=True, blank=True)
+    melee_attack = models.TextField(null=True, blank=True)
+    ranged_attack = models.TextField(null=True, blank=True)
+    reach = models.TextField(null=True, blank=True)
+    strength = models.IntegerField(null=True, blank=True)
+    dexterity = models.IntegerField(null=True, blank=True)
+    constitution = models.IntegerField(null=True, blank=True)
+    intelligence = models.IntegerField(null=True, blank=True)
+    wisdom = models.IntegerField(null=True, blank=True)
+    charisma = models.IntegerField(null=True, blank=True)
+    feats = ArrayField(models.CharField(max_length=128), default=list)
+    skills = JSONField(null=True, blank=True)
+    racial_mods = models.TextField(null=True, blank=True)
+    languages = models.TextField(null=True, blank=True)
+    special_qualities = models.TextField(null=True, blank=True)
+    environment = models.TextField(null=True, blank=True)
+    organization = models.TextField(null=True, blank=True)
+    treasure = models.TextField(null=True, blank=True)
+    group = models.TextField(null=True, blank=True)
+    gear = models.TextField(null=True, blank=True)
+    other_gear = models.TextField(null=True, blank=True)
+    is_character = models.BooleanField(null=True, blank=True)
+    is_companion = models.BooleanField(null=True, blank=True)
+    speed = models.TextField(null=True, blank=True)
+    base_speed = models.TextField(null=True, blank=True)
+    fly_speed = models.TextField(null=True, blank=True)
+    maneuverability = models.TextField(null=True, blank=True)
+    climb_speed = models.TextField(null=True, blank=True)
+    swim_speed = models.TextField(null=True, blank=True)
+    burrow_speed = models.TextField(null=True, blank=True)
+    speed_special = models.TextField(null=True, blank=True, help_text="Any other special movement rules not covered by the basics")
+    can_walk = models.BooleanField(null=True, blank=True)
+    can_fly = models.BooleanField(null=True, blank=True)
+    can_climb = models.BooleanField(null=True, blank=True)
+    can_burrow = models.BooleanField(null=True, blank=True)
+    can_swim = models.BooleanField(null=True, blank=True)
+    variant_parent = models.TextField(null=True, blank=True, help_text="What kind of creature is this based on")
+    class_archetypes = models.TextField(null=True, blank=True)
+    companion_familiar_link = models.TextField(null=True, blank=True)
+    alternate_name_form = models.TextField(null=True, blank=True, help_text="For a shapershifter, what is the name of the other form")
+    original_id = models.IntegerField(null=True, blank=True)
+    is_unique_monster = models.BooleanField(null=True, blank=True)
+    mythic_rank = models.IntegerField(null=True, blank=True)
+    is_mythic = models.BooleanField(null=True, blank=True)
+    mythic_tier = models.IntegerField(null=True, blank=True)
+    source_book = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name

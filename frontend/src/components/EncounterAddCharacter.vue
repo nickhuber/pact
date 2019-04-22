@@ -1,68 +1,68 @@
 <template>
-    <div id="encounter-add-character">
-        <form @submit="addCharacter">
-            <div class="field">
-                <div class="control">
-                    <button class="button is-outlined is-primary">
-                        <span>
-                            Add to encounter
-                        <font-awesome-icon icon="plus-square"></font-awesome-icon>
-                        </span>
-                    </button>
+<div id="encounter-add-character">
+    <form @submit="addCharacter">
+        <div class="field">
+            <div class="control">
+                <button class="button is-outlined is-primary">
+                    <span>
+                        Add to encounter
+                    <font-awesome-icon icon="plus-square"></font-awesome-icon>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="field">
+            <label class="field-label is-normal" for="character">Character</label>
+            <div class="field-body">
+                <div class="select" :class="{'is-danger': errors.initiative}">
+                    <select v-model="selectedCharacter">
+                    <option disabled value="">-- Player Characters --</option>
+                    <option v-for="character in players" :value="character.url" :key="character.uuid">
+                        {{ character.name }}
+                    </option>
+                    <option disabled value="">-- Non-Player Characters --</option>
+                    <option v-for="character in npcs" :value="character.url" :key="character.uuid">
+                        {{ character.name }}
+                    </option>
+                    </select>
                 </div>
             </div>
-            <div class="field">
-                <label class="field-label is-normal" for="character">Character</label>
-                <div class="field-body">
-                    <div class="select" :class="{'is-danger': errors.initiative}">
-                        <select v-model="selectedCharacter">
-                        <option disabled value="">-- Player Characters --</option>
-                        <option v-for="character in players" :value="character.url" :key="character.uuid">
-                            {{ character.name }}
-                        </option>
-                        <option disabled value="">-- Non-Player Characters --</option>
-                        <option v-for="character in npcs" :value="character.url" :key="character.uuid">
-                            {{ character.name }}
-                        </option>
-                        </select>
-                    </div>
-                </div>
-                <p
-                    class="help is-danger"
-                    v-for="error in errors.character"
-                    :key="error"
-                >
-                    {{ error }}
-                </p>
+            <p
+                class="help is-danger"
+                v-for="error in errors.character"
+                :key="error"
+            >
+                {{ error }}
+            </p>
+        </div>
+        <div class="field">
+            <label class="field-label is-normal" for="initiative">Initiative</label>
+            <div class="field-body">
+                <input class="input" id="initiative" type="number" v-model.number="initiative" :class=" {'is-danger': errors.initiative}">
             </div>
-            <div class="field">
-                <label class="field-label is-normal" for="initiative">Initiative</label>
-                <div class="field-body">
-                    <input class="input" id="initiative" type="number" v-model.number="initiative" :class=" {'is-danger': errors.initiative}">
-                </div>
-                <p
-                    class="help is-danger"
-                    v-for="error in errors.initiative"
-                    :key="error"
-                >
-                    {{ error }}
-                </p>
+            <p
+                class="help is-danger"
+                v-for="error in errors.initiative"
+                :key="error"
+            >
+                {{ error }}
+            </p>
+        </div>
+        <div class="field">
+            <label class="field-label is-normal" for="notes">Notes</label>
+            <div class="field-body">
+                <input class="input" id="notes" type="text" v-model="notes" :class=" {'is-danger': errors.notes}">
             </div>
-            <div class="field">
-                <label class="field-label is-normal" for="notes">Notes</label>
-                <div class="field-body">
-                    <input class="input" id="notes" type="text" v-model="notes" :class=" {'is-danger': errors.notes}">
-                </div>
-                <p
-                    class="help is-danger"
-                    v-for="error in errors.notes"
-                    :key="error"
-                >
-                    {{ error }}
-                </p>
-            </div>
-        </form>
-    </div>
+            <p
+                class="help is-danger"
+                v-for="error in errors.notes"
+                :key="error"
+            >
+                {{ error }}
+            </p>
+        </div>
+    </form>
+</div>
 </template>
 
 <script>
