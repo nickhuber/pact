@@ -6,7 +6,7 @@
         anchor="title"
         label="writer"
         placeholder="Search for an existing template"
-        debound="200"
+        :debounce="200"
         :on-select="getData"
         :onShouldRenderChild="renderChild"
         :classes="{ wrapper: 'control', input: 'input', list: 'list', item: 'is-active' }"
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-const Autocomplete = () => ('vue2-autocomplete-js');
+import Autocomplete from 'vue2-autocomplete-js';
 
 export default {
     name: "PathfinderMonsterImport",
