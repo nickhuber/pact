@@ -33,7 +33,10 @@ router.register(
     r'pathfinder_monsters/?',
     manager_views.PathfinderMonsterViewSet
 )
-
+router.register(
+    r'5e_monsters/?',
+    manager_views.FifthEditionMonsterViewSet
+)
 
 admin.autodiscover()
 

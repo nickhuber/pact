@@ -167,6 +167,34 @@ class StatusEffect(UUIDPrimaryKeyModel):
             self.save()
 
 
+class FifthEditionMonster(UUIDPrimaryKeyModel):
+    name = models.CharField(max_length=256, unique=True)
+    description = models.TextField()
+    tags = ArrayField(models.CharField(max_length=256), default=list)
+    cr = models.CharField(max_length=256, null=True, blank=True)
+    strength = models.IntegerField(null=True, blank=True)
+    dexterity = models.IntegerField(null=True, blank=True)
+    constitution = models.IntegerField(null=True, blank=True)
+    intelligence = models.IntegerField(null=True, blank=True)
+    wisdom = models.IntegerField(null=True, blank=True)
+    charisma = models.IntegerField(null=True, blank=True)
+    size = models.CharField(max_length=256, null=True, blank=True)
+    alignment = models.CharField(max_length=256, null=True, blank=True)
+    challenge = models.CharField(max_length=256, null=True, blank=True)
+    languages = models.CharField(max_length=256, null=True, blank=True)
+    senses = models.CharField(max_length=256, null=True, blank=True)
+    skills = models.CharField(max_length=256, null=True, blank=True)
+    damage_immunities = models.CharField(max_length=256, null=True, blank=True)
+    saving_throws = models.CharField(max_length=256, null=True, blank=True)
+    speed = models.CharField(max_length=256, null=True, blank=True)
+    hit_points_avg = models.IntegerField(null=True, blank=True)
+    hit_dice = models.CharField(max_length=256, null=True, blank=True)
+    armor_class = models.CharField(max_length=256, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class PathfinderMonster(UUIDPrimaryKeyModel):
     name = models.CharField(max_length=256, unique=True)
     cr = models.FloatField(null=True, blank=True)

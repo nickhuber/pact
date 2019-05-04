@@ -54,10 +54,22 @@
                 </div>
             </div>
             <div class="column">
-                <h2 class="subtitle">Load template</h2>
-                <PathfinderMonsterImport
-                    @pathfinder-monster-chosen="onPathfinderMonsterChosen"
-                ></PathfinderMonsterImport>
+                <h2 class="title">Load template</h2>
+                <div class="columns">
+                    <div class="column">
+                        <h3 class="subtitle">Pathfinder creature</h3>
+                        <PathfinderMonsterImport
+                            @pathfinder-monster-chosen="onPathfinderMonsterChosen"
+                        ></PathfinderMonsterImport>
+                    </div>
+                    <div class="column">
+                        <h3 class="subtitle">Fifth edition creature</h3>
+                        <FifthEditionMonsterImport
+                            @fifth-edition-monster-chosen="onFifthEditionMonsterChosen"
+                        ></FifthEditionMonsterImport>
+                    </div>
+
+                </div>
             </div>
         </div>
         <div class="columns">
@@ -87,11 +99,12 @@
 
 <script>
 const PathfinderMonsterImport = () => import('./PathfinderMonsterImport.vue');
+const FifthEditionMonsterImport = () => import('./FifthEditionMonsterImport.vue');
 const VueMarkdown = () => import('vue-markdown');
 
 export default {
     name: 'CharacterCreate',
-    components: { PathfinderMonsterImport, VueMarkdown },
+    components: { PathfinderMonsterImport, FifthEditionMonsterImport, VueMarkdown },
     data() {
         return {
             character: {
@@ -126,8 +139,40 @@ export default {
                 vm.errors = error.response.data;
             });
         },
+        onFifthEditionMonsterChosen(event) {
+            this.character.name = event.name;
+            this.character.hit_dice = event.hit_dice;
+            this.character.description =
+`
+# ${event.name}
+${event.size}, ${event.alignment}
+
+---
+
+**Armor Class** ${event.armor_class}
+**Hit Points** ${event.hit_points_avg} (${event.hit_dice})
+**Speed** ${event.speed}
+
+---
+
+**STR** | **DEX** | **CON** | **INT** | **WIS** | **CHA**|
+--------|----------|--------|---------|---------|--------|
+${event.strength} (${event.str_mod})|${event.dexterity} (${event.dex_mod})|${event.constitution} (${event.con_mod})|${event.intelligence} (${event.int_mod})|${event.wisdom} (${event.wis_mod})|${event.charisma} (${event.cha_mod})|
+
+---
+**Saving Throws** ${event.saving_throws}
+**Senses** ${event.senses}
+**Skills** ${event.skills}
+**Languages** ${event.languages}
+**Challenge** ${event.challenge}
+
+---
+
+${event.description}
+`;
+        },
         onPathfinderMonsterChosen(event) {
-            let subtypes = '' 
+            let subtypes = ''
             if (event.subtypes.length > 0) {
                 subtypes = `(${event.subtypes.join(', ')})`;
             }
@@ -147,7 +192,7 @@ export default {
             this.character.is_player = false;
             this.character.name = event.name;
             this.character.hit_dice = event.hit_dice;
-            this.character.description = 
+            this.character.description =
 `**CR** ${event.cr} | **XP** ${event.xp}
 ${event.alignment} ${event.size} ${event.type} ${subtypes}
 **Init** ${event.initiative}; **Senses** ???

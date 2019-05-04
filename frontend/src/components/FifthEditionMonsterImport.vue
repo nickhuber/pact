@@ -1,11 +1,11 @@
 <template>
 <section>
     <Autocomplete
-        url="/api/pathfinder_monsters"
+        url="/api/5e_monsters"
         param="name_search_term"
         anchor="title"
         label="writer"
-        placeholder="Search for a pathfinder creature template"
+        placeholder="Search for a fifth edition template"
         :debounce="200"
         :on-select="getData"
         :onShouldRenderChild="renderChild"
@@ -19,7 +19,7 @@
 import Autocomplete from 'vue2-autocomplete-js';
 
 export default {
-    name: "PathfinderMonsterImport",
+    name: "FifthEditionMonsterImport",
     components: { Autocomplete },
     data() {
         return {
@@ -28,11 +28,11 @@ export default {
     },
     methods: {
         getData(obj){
-            this.$emit('pathfinder-monster-chosen', obj);
+            this.$emit('fifth-edition-monster-chosen', obj);
         },
         renderChild(data) {
             return `
-                <span>${data.name} - CR ${data.cr}</span>
+                <span>${data.name} - ${data.cr}</span>
             `
         },
     }

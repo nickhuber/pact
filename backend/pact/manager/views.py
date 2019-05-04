@@ -79,13 +79,22 @@ class PathfinderMonsterViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.PathfinderMonsterSerializer
 
     def get_queryset(self):
-        """
-        This view should return a list of all the purchases for
-        the user as determined by the username portion of the URL.
-        """
         name_search_term = self.request.query_params.get('name_search_term', '')
         # Avoid hitting the database hard and returning huge queries
         if len(name_search_term) < 3:
             return models.PathfinderMonster.objects.none()
+
+        return super().get_queryset().filter(name__icontains=name_search_term)
+
+
+class FifthEditionMonsterViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.FifthEditionMonster.objects.all()
+    serializer_class = serializers.FifthEditionMonsterSerializer
+
+    def get_queryset(self):
+        name_search_term = self.request.query_params.get('name_search_term', '')
+        # Avoid hitting the database hard and returning huge queries
+        if len(name_search_term) < 3:
+            return models.FifthEditionMonster.objects.none()
 
         return super().get_queryset().filter(name__icontains=name_search_term)

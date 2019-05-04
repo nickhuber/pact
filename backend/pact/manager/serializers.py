@@ -1,3 +1,5 @@
+import math
+
 from rest_framework import serializers
 
 import dice
@@ -121,3 +123,53 @@ class PathfinderMonsterSerializer(serializers.HyperlinkedModelSerializer):
             # This might be something like "+37 *+49 vs. traps" but we only care about the bas here
             perception += int(monster.skills['Perception'][1:].split(' ')[0])
         return perception
+
+
+class FifthEditionMonsterSerializer(serializers.HyperlinkedModelSerializer):
+    uuid = serializers.UUIDField(read_only=True)
+    str_mod = serializers.SerializerMethodField()
+    dex_mod = serializers.SerializerMethodField()
+    con_mod = serializers.SerializerMethodField()
+    int_mod = serializers.SerializerMethodField()
+    wis_mod = serializers.SerializerMethodField()
+    cha_mod = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.FifthEditionMonster
+        fields = '__all__'
+
+    def get_str_mod(self, monster):
+        if monster.strength > 10:
+            return f'+{int((monster.strength - 10) / 2)}'
+        else:
+            return f'-{math.ceil((10 - monster.strength) / 2)}'
+
+    def get_dex_mod(self, monster):
+        if monster.dexterity > 10:
+            return f'+{int((monster.dexterity - 10) / 2)}'
+        else:
+            return f'-{math.ceil((10 - monster.dexterity) / 2)}'
+
+    def get_con_mod(self, monster):
+        if monster.constitution > 10:
+            return f'+{int((monster.constitution - 10) / 2)}'
+        else:
+            return f'-{math.ceil((10 - monster.constitution) / 2)}'
+
+    def get_int_mod(self, monster):
+        if monster.intelligence > 10:
+            return f'+{int((monster.intelligence - 10) / 2)}'
+        else:
+            return f'-{math.ceil((10 - monster.intelligence) / 2)}'
+
+    def get_wis_mod(self, monster):
+        if monster.wisdom > 10:
+            return f'+{int((monster.wisdom - 10) / 2)}'
+        else:
+            return f'-{math.ceil((10 - monster.wisdom) / 2)}'
+
+    def get_cha_mod(self, monster):
+        if monster.charisma > 10:
+            return f'+{int((monster.charisma - 10) / 2)}'
+        else:
+            return f'-{math.ceil((10 - monster.charisma) / 2)}'
