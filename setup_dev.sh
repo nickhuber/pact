@@ -27,8 +27,10 @@ function handle_linux() {
     fi
     distro=$(lsb_release --short --id)
     release=$(lsb_release --short --release)
-    elif [[ "$distro" = "Fedora" ]] ; then
+    if [[ "$distro" = "Fedora" ]] ; then
         handle_fedora "${release}"
+    elif [[ "$distro" = "openSUSE" ]] ; then
+        handle_opensuse "${release}"
     else
         echo "Unsupported distribution $distro."
     fi
@@ -41,6 +43,11 @@ function handle_fedora() {
         echo "Fedora ${release} is untested, attempting anyways"
     fi
     dnf install python3 python3-pip nodejs npm sassc postgresql-server postgresql-contrib
+}
+
+
+function handle_opensuse() {
+    zypper install python3 python3-pip nodejs npm sassc postgresql-server postgresql-contrib
 }
 
 

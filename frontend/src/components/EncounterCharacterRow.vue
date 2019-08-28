@@ -107,9 +107,9 @@
 </template>
 
 <script>
-const Modal = () => import('./Modal.vue');
-const AddStatusModal = () => import('./AddStatusModal.vue');
-const ChangeStatusModal = () => import('./ChangeStatusModal.vue');
+import Modal from './Modal.vue';
+import AddStatusModal from './AddStatusModal.vue';
+import ChangeStatusModal from './ChangeStatusModal.vue';
 
 export default {
     name: 'EncounterCharacterRow',

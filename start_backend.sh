@@ -2,6 +2,11 @@
 
 set -e
 
+if [ "$(whoami)" != "pact" ]; then
+    echo "Script must be run as user: pact"
+    exit -1
+fi
+
 echo "Ensuring virtualenv exists"
 python3 -m venv .venv
 echo "Activating virtualenv"
