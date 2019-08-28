@@ -24,7 +24,7 @@
 </template>
 
 <script>
-const Modal = () => import('./Modal.vue');
+import Modal from './Modal.vue';
 
 export default {
     name: 'EncounterStagedCharacterRow',

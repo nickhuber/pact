@@ -6,6 +6,5 @@ sudo -u pact /opt/pact/.venv/bin/python /opt/pact/backend/pact/manage.py migrate
 
 pushd /opt/pact/frontend/
     npm install
-    npm update
     npm run build
 popd
