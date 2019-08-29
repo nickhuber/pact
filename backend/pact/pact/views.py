@@ -1,4 +1,4 @@
-from django.contrib.auth import models, authenticate, login
+from django.contrib.auth import models, authenticate, login, logout
 
 from rest_framework import status
 from rest_framework import views
@@ -16,6 +16,16 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(id=self.request.user.id)
+
+
+class LogoutView(views.APIView):
+    authentication_classes = ()
+    permission_classes = ()
+    serializer_class = serializers.UserSerializer
+
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return Response()
 
 
 class LoginView(views.APIView):

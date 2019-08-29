@@ -44,7 +44,8 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api/admin/?', admin.site.urls),
-    url(r'^api/auth/?$', pact_views.LoginView.as_view(), name='authenticate'),
+    url(r'^api/auth/login/?$', pact_views.LoginView.as_view(), name='login'),
+    url(r'^api/auth/logout/?$', pact_views.LogoutView.as_view(), name='logout'),
     url(r'^api/register/?$', pact_views.RegisterView.as_view(), name='register'),
     url(r'^api/roll/?$', roll_views.roll),
 ]

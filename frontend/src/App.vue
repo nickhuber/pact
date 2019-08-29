@@ -17,6 +17,11 @@
                     Encounters
                 </router-link>
             </div>
+            <div class="navbar-item">
+                <a href="javascript://" @click="logout">
+                    Logout
+                </a>
+            </div>
         </div>
         <div class="section">
             <div class="container">
@@ -30,6 +35,17 @@
 </template>
 
 <script>
+export default {
+    methods: {
+        logout() {
+            this.$http.post('/api/auth/logout').then(
+                (response) => {
+                    this.$router.push({name: 'login'});
+                }
+            )
+        }
+    }
+}
 </script>
 
 <style>
