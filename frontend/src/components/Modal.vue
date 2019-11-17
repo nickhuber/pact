@@ -14,4 +14,8 @@ export default {
 </script>
 
 <style>
+.section {
+    overflow: auto;
+    height: 100%;
+}
 </style>
