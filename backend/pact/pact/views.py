@@ -74,6 +74,6 @@ class RegisterView(views.APIView):
             request.data['username'],
             request.data['email'],
             request.data['password'],
-            is_active=False,
+            is_active=True,
         )
         return Response(self.serializer_class(user).data)

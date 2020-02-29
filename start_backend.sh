@@ -8,16 +8,17 @@ if [ "$(whoami)" != "pact" ]; then
 fi
 
 echo "Ensuring virtualenv exists"
-python3 -m venv .venv
-echo "Activating virtualenv"
-source .venv/bin/activate
+test ! -d .venv && python3 -m venv .venv
+
 echo "Updating python dependencies"
-python3 -m pip install wheel
-python3 -m pip install --upgrade -r backend/requirements.txt
+.venv/bin/pip3 install wheel
+.venv/bin/pip3 install --upgrade -r backend/requirements.txt
+
 echo "Updating database"
-backend/pact/manage.py migrate
+.venv/bin/python3 backend/pact/manage.py migrate
+
 echo "Ensuring default user exists"
-cat << EOF | backend/pact/manage.py shell
+cat << EOF | .venv/bin/python3 backend/pact/manage.py shell
 from django.contrib.auth.models import User
 
 try:
@@ -29,4 +30,4 @@ except Exception:
 EOF
 
 echo "Starting app server"
-backend/pact/manage.py runserver 0.0.0.0:8000
+.venv/bin/python3 backend/pact/manage.py runserver 0.0.0.0:8000

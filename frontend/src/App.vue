@@ -4,7 +4,9 @@
         <div class="navbar">
             <div class="navbar-brand">
                 <div class="navbar-item">
-                    PACT
+                    <router-link :to="{name: 'overview'}">
+                        PACT
+                    </router-link>
                 </div>
             </div>
             <div class="navbar-item">
@@ -40,7 +42,7 @@ export default {
         logout() {
             this.$http.post('/api/auth/logout').then(
                 (response) => {
-                    this.$router.push({name: 'login'});
+                    this.$router.push({name: 'overview'});
                 }
             )
         }

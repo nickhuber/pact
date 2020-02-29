@@ -34,7 +34,15 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: '/',
-        redirect: {name: 'characters'},
+        component: () => import('./components/Overview.vue'),
+        name: 'overview',
+        meta: {title: 'PACT'}
+    },
+    {
+        path: '/register',
+        component: () => import('./components/Register.vue'),
+        name: 'register',
+        meta: {title: 'PACT | Sign up'}
     },
     {
         path: '/login',

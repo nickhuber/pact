@@ -1,7 +1,7 @@
 import django_filters.rest_framework
 from rest_framework import filters
 from rest_framework import viewsets, mixins
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from manager import models
@@ -43,7 +43,7 @@ class EncounterViewSet(viewsets.ModelViewSet):
         qs = super().get_queryset()
         return qs.filter(created_by=self.request.user)
 
-    @detail_route(methods=['post'])
+    @action(methods=['post'], detail=True)
     def advance_initiative(self, request, pk=None):
         encounter = self.get_object()
         encounter.advance_initiative()

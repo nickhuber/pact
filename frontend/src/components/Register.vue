@@ -1,6 +1,6 @@
 <template>
 <div>
-    <h4 class="title">Login</h4>
+    <h4 class="title">Register</h4>
     <div class="notification is-danger" v-if="error">
         {{ error }}
     </div>
@@ -12,6 +12,12 @@
             </div>
         </div>
         <div class="field">
+            <label class="control" for="username">Email</label>
+            <div class="control">
+                <input class="input" id="email" type="text" v-model="email" required autofocus :class="{'is-danger': error}">
+            </div>
+        </div>
+        <div class="field">
             <label class="control" for="password">Password</label>
             <div class="control">
                 <input class="input" id="password" type="password" v-model="password" required :class="{'is-danger': error}">
@@ -19,7 +25,7 @@
         </div>
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">Login</button>
+                <button class="button is-link" type="submit">Sign up</button>
             </div>
         </div>
     </form>
@@ -32,6 +38,7 @@ export default {
     data(){
         return {
             username : "",
+            email : "",
             password : "",
             error: null,
         }
@@ -40,9 +47,10 @@ export default {
         handleSubmit(e){
             e.preventDefault();
             this.$http.post(
-                '/api/auth/login/',
+                '/api/auth/register/',
                 {
                     username: this.username,
+                    email: this.email,
                     password: this.password
                 }
             ).then((response) => {
@@ -50,11 +58,7 @@ export default {
                     this.error = response.data;
                     return;
                 }
-                if (this.$route.params.nextUrl != null) {
-                    this.$router.push(this.$route.params.nextUrl);
-                } else {
-                    this.$router.push({name: 'characters'});
-                }
+                this.$router.push({name: 'login'});
             }).catch(error => {
                 this.error = error.response.data.error;
             });
