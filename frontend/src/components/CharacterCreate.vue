@@ -98,9 +98,9 @@
 </template>
 
 <script>
-const PathfinderMonsterImport = () => import('./PathfinderMonsterImport.vue');
-const FifthEditionMonsterImport = () => import('./FifthEditionMonsterImport.vue');
-const VueMarkdown = () => import('vue-markdown');
+import PathfinderMonsterImport from './PathfinderMonsterImport.vue';
+import FifthEditionMonsterImport from './FifthEditionMonsterImport.vue';
+import VueMarkdown from 'vue-markdown';
 
 export default {
     name: 'CharacterCreate',

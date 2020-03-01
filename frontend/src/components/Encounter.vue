@@ -85,9 +85,10 @@
 </template>
 
 <script>
-const EncounterAddCharacter = () => import('./EncounterAddCharacter.vue');
-const EncounterCharacterRow = () => import('./EncounterCharacterRow.vue');
-const EncounterStagedCharacterRow = () => import('./EncounterStagedCharacterRow.vue');
+import EncounterAddCharacter from './EncounterAddCharacter.vue';
+import EncounterCharacterRow from './EncounterCharacterRow.vue';
+import EncounterStagedCharacterRow from './EncounterStagedCharacterRow.vue';
+
 export default {
     name: 'Encounter',
     components: { EncounterAddCharacter, EncounterCharacterRow, EncounterStagedCharacterRow },
