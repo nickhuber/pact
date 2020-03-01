@@ -7,6 +7,8 @@ import VueRouter from 'vue-router';
 import VModal from 'vue-js-modal'
 import VueAutosize from 'vue-autosize';
 
+import FlashMessage from '@smartweb/vue-flash-message';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes, faEdit, faSave, faPlusSquare, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -111,6 +113,9 @@ Vue.use(VueAutosize);
 
 // Axios stuff
 Vue.use(VueAxios, axios)
+
+// Flash message stuff
+Vue.use(FlashMessage);
 
 Vue.axios.interceptors.response.use((response) => {
     return response

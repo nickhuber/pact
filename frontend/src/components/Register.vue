@@ -58,6 +58,7 @@ export default {
                     this.error = response.data;
                     return;
                 }
+                this.flashMessage.success({title: 'Account created', message: 'Now you can log in.'});
                 this.$router.push({name: 'login'});
             }).catch(error => {
                 this.error = error.response.data.error;

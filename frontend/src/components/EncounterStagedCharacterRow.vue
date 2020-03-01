@@ -11,7 +11,29 @@
         </span>
     </td>
     <td>
-        {{ character.notes }}
+        <div class="vertical-center">
+            <div v-if="!notesEditing">
+                <div class="level">
+                    <div class="level-item">
+                        <span>{{ character.notes }}</span>
+                    </div>
+                    <div class="level-item">
+                        <button class="button is-small" @click="enableEditing">Edit</button>
+                    </div>
+                </div>
+            </div>
+            <div v-if="notesEditing" class="level">
+                <div class="level-item">
+                    <input v-model="newNotes" class="input is-small"/>
+                </div>
+                <div class="level-item">
+                    <button class="button is-small" @click="disableEditing">Cancel</button>
+                </div>
+                <div class="level-item">
+                    <button class="button is-small" @click="saveEdit">Save</button>
+                </div>
+            </div>
+        </div>
     </td>
     <td>
         <input class="input" type="number" v-model.number="initiative" :disabled="formsDisabled">
@@ -32,6 +54,8 @@ export default {
     data() {
         return {
             initiative: null,
+            notesEditing: false,
+            newNotes: '',
         }
     },
     methods: {
@@ -60,6 +84,27 @@ export default {
                 width: "80%",
                 height: "80%",
             });
+        },
+        enableEditing: function(){
+            this.newNotes = this.character.notes;
+            this.notesEditing = true;
+        },
+        disableEditing: function(){
+            this.newNotes = null;
+            this.notesEditing = false;
+        },
+        saveEdit: function(){
+            this.$http.patch(
+                `/api/encounter_characters/${this.character.uuid}`,
+                {
+                    notes: this.newNotes
+                }
+            ).then((response) => {
+                this.character.notes = response.data.notes;
+                this.$emit('encounter-character-updated');
+                this.hp_change_value = null;
+            });
+            this.disableEditing();
         }
     }
 }

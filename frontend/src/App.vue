@@ -1,5 +1,6 @@
 <template>
 <div id="app" class="section">
+    <FlashMessage :position="'right top'"/>
     <div class="container">
         <div class="navbar">
             <div class="navbar-brand">
@@ -42,6 +43,7 @@ export default {
         logout() {
             this.$http.post('/api/auth/logout').then(
                 (response) => {
+                    this.flashMessage.success({title: 'Logged out'});
                     this.$router.push({name: 'overview'});
                 }
             )
@@ -50,5 +52,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+._vue-flash-msg-body {
+    z-index: 1000;
+}
 </style>
