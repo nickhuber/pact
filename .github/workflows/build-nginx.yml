@@ -2,7 +2,7 @@ name: Build nginx container
 
 on:
   push:
-    branches: [ test-actions ]
+    branches: [ master ]
 
 jobs:
   docker:
