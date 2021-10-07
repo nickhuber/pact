@@ -34,9 +34,7 @@ RUN cd frontend \
 
 FROM nginx:1.21.3-alpine
 
-ARG build_mode=localdev
-
 COPY --from=build /app/staticfiles /app/staticfiles
-COPY frontend/nginx.${build_mode}.conf /app/nginx.conf
+COPY frontend/nginx.conf /app/nginx.conf
 
 CMD ["nginx", "-c", "/app/nginx.conf"]
