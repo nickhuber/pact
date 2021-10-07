@@ -1,15 +1,17 @@
 version: "3.9"
 services:
   backend:
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile.backend
     container_name: pact-backend
-    restart: unless-stopped
+    volumes:
+      - ./backend:/app
     command: >
       bash -c 'while !</dev/tcp/database/5432; do sleep 1; done
-      && .venv/bin/python3 pact/manage.py migrate
-      && .venv/bin/python3 -m gunicorn --config /app/gunicorn_config.py pact.wsgi:application'
+      && pipenv run manage migrate
+      && pipenv run manage runserver 0.0.0.0:8000'
     environment:
       - DATABASE_NAME=postgres
       - DATABASE_USER=postgres
@@ -17,15 +19,22 @@ services:
       - DATABASE_HOST=database
       - DATABASE_PORT=5432
       - SECRET_KEY="not-a-very-secret-key"
+    ports:
+      - "8081:8000"
     expose:
       - 8000
 
-  web-server:
+  vue:
+    restart: unless-stopped
     build:
       context: .
-      dockerfile: Dockerfile.web-server
+      dockerfile: Dockerfile.vuejs-dev
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/vue.config.js:/app/vue.config.js
+      - ./frontend/babel.config.js:/app/babel.config.js
     ports:
-      - "8080:80"
+      - "8080:8080"
 
   database:
     image: postgres:14

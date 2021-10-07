@@ -1,7 +1,0 @@
-dice<2.5
-django-extensions<3.2
-django-filter<22
-django<3.3
-djangorestframework<3.13
-gunicorn
-psycopg2-binary<2.10

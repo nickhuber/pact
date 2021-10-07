@@ -2,7 +2,7 @@ FROM alpine as build
 
 WORKDIR  /app
 
-RUN apk add --no-cache npm py3-pip
+RUN apk add --no-cache npm py3
 
 # We need to do `collectstatic` for the Django side of things, mainly for the admin interface styles
 ENV PYTHONUNBUFFERED=1
@@ -16,8 +16,9 @@ RUN apk add --no-cache bash postgresql-libs \
         python3-dev \
         musl-dev \
         postgresql-dev \
-    && /app/.venv/bin/python3 -m pip install --no-cache-dir -r /app/backend/requirements.txt \
-    && /app/.venv/bin/python3 backend/pact/manage.py collectstatic \
+    && python3 -m pip install --no-cache-dir pipenv \
+    && pipenv sync \
+    && cd backend && pipenv run manage collectstatic \
     && cp -a /app/backend/pact/staticfiles /app/staticfiles/ \
     && apk del --no-cache .build-deps \
     && rm -r /app/.venv /app/backend
@@ -38,5 +39,4 @@ ARG build_mode=localdev
 COPY --from=build /app/staticfiles /app/staticfiles
 COPY frontend/nginx.${build_mode}.conf /app/nginx.conf
 
-expose 8080
 CMD ["nginx", "-c", "/app/nginx.conf"]
