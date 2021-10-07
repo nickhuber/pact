@@ -80,7 +80,6 @@ DATABASES = {
         'PORT': os.getenv("DATABASE_PORT"),
     },
 }
-print(DATABASES)
 
 LANGUAGE_CODE = 'en-us'
 
