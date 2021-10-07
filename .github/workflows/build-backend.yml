@@ -2,9 +2,9 @@ name: containers
 
 on:
   push:
-    branches: [ master ]
+    branches: [ test-actions ]
   pull_request:
-    branches: [ master ]
+    branches: [ test-actions ]
 
 
 jobs:
