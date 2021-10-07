@@ -19,3 +19,4 @@ python_version = "3.9"
 
 [scripts]
 manage = "python3 pact/manage.py"
+gunicorn = "python3 -m gunicorn --config gunicorn_config.py pact.wsgi:application"
