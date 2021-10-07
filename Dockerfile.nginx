@@ -2,7 +2,7 @@ FROM alpine as build
 
 WORKDIR  /app
 
-RUN apk add --no-cache npm py3
+RUN apk add --no-cache npm python3
 
 # We need to do `collectstatic` for the Django side of things, mainly for the admin interface styles
 ENV PYTHONUNBUFFERED=1
