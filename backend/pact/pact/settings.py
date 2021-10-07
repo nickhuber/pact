@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APPEND_SLASH = False
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4^cbt37u-*^%j3&mqu4^p*_5c_b5)ubkv@yo&543^jrdj@vwy-'
+SECRET_KEY = os.getenv("SECRET_KEY") or "not-a-very-secret-key"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -69,25 +69,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pact.wsgi.application'
 
-import os
-# This is set when running bitbucket pipelines
-if 'BITBUCKET_COMMIT' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'HOST': '127.0.0.1',
-            'NAME': 'pact',
-            'USER': 'pact',
-            'PASSWORD': 'pact',
-        },
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'pact',
-        },
-    }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv("DATABASE_NAME"),
+        'USER': os.getenv("DATABASE_USER"),
+        'PASSWORD': os.getenv("DATABASE_PASSWORD"),
+        'HOST': os.getenv("DATABASE_HOST"),
+        'PORT': os.getenv("DATABASE_PORT"),
+    },
+}
+print(DATABASES)
 
 LANGUAGE_CODE = 'en-us'
 
@@ -101,7 +94,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/opt/pact/backend/staticfiles/static'
+STATIC_ROOT = BASE_DIR + '/staticfiles'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

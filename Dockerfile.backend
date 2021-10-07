@@ -1,0 +1,17 @@
+FROM python:3.10-alpine
+ENV PYTHONUNBUFFERED=1
+WORKDIR  /app
+
+COPY backend /app/
+
+RUN apk add --no-cache bash postgresql-libs \
+    && apk add --no-cache --virtual .build-deps \
+        gcc \
+        python3-dev \
+        musl-dev \
+        postgresql-dev \
+    && python3 -m pip install --no-cache-dir pipenv \
+    && pipenv sync \
+    && apk del --no-cache .build-deps
+
+CMD ["python3", "-m", "gunicorn", "/app/gunicorn_config.py", "pact.wsgi:application"]

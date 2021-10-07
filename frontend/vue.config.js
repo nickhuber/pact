@@ -2,9 +2,13 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                target: 'http://localhost:8000/',
+                target: 'http://pact-backend:8000/',
                 changeOrigin: true
             }
+        },
+        hot: true,
+        watchOptions: {
+            poll: 100
         }
     },
     configureWebpack: {

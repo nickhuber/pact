@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import Cookies from 'js-cookie';
 
-import './../node_modules/bulma/css/bulma.css';
+require('@/main.scss');
 import './../node_modules/vue2-autocomplete-js/dist/style/vue2-autocomplete.css';
 
 import App from './App.vue';
