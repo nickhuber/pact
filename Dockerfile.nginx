@@ -17,8 +17,9 @@ RUN apk add --no-cache bash postgresql-libs \
         musl-dev \
         postgresql-dev \
     && python3 -m pip install --no-cache-dir pipenv \
+    && cd backend \
     && pipenv sync \
-    && cd backend && pipenv run manage collectstatic \
+    && pipenv run manage collectstatic \
     && cp -a /app/backend/pact/staticfiles /app/staticfiles/ \
     && apk del --no-cache .build-deps \
     && rm -r /app/.venv /app/backend
