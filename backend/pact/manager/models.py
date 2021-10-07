@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.contrib.postgres.fields import ArrayField, JSONField
+from django.contrib.postgres.fields import ArrayField
 
 import dice
 
@@ -200,7 +200,7 @@ class PathfinderMonster(UUIDPrimaryKeyModel):
     cr = models.FloatField(null=True, blank=True)
     xp = models.IntegerField(null=True, blank=True)
     race = models.CharField(max_length=64, null=True, blank=True)
-    classes = JSONField(default=list)
+    classes = models.JSONField(default=list)
     alignment = models.TextField(max_length=2, null=True, blank=True)
     size = models.CharField(max_length=64, null=True, blank=True)
     type = models.CharField(max_length=64, null=True, blank=True)
@@ -223,7 +223,7 @@ class PathfinderMonster(UUIDPrimaryKeyModel):
     wisdom = models.IntegerField(null=True, blank=True)
     charisma = models.IntegerField(null=True, blank=True)
     feats = ArrayField(models.CharField(max_length=128), default=list)
-    skills = JSONField(null=True, blank=True)
+    skills = models.JSONField(null=True, blank=True)
     racial_mods = models.TextField(null=True, blank=True)
     languages = models.TextField(null=True, blank=True)
     special_qualities = models.TextField(null=True, blank=True)

@@ -247,6 +247,7 @@ export default {
 .columns {
     margin-bottom: 0px;
 }
+
 .fraction {
     margin-top: 1em;
     display: inline-block;
@@ -276,11 +277,13 @@ export default {
 .level {
     margin-top: 0.5em !important;
 }
+
 td>div, .level {
     height: 100%;
     margin: 0;
     padding:0;
 }
+
 tr, td {
     height: 100%;
 }
