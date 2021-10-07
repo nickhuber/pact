@@ -10,6 +10,20 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+
     strategy:
       max-parallel: 4
       matrix:
@@ -27,7 +41,16 @@ jobs:
       run: |
         python -m pip install pipenv
         pipenv sync
+    - uses: harmon758/postgresql-action@v1
+      with:
+        postgresql version: '11'
     - name: Run Tests
       working-directory: backend
+      env:
+        DATABASE_NAME: "postgres"
+        DATABASE_USER: "postgres"
+        DATABASE_PASSWORD: "postgres"
+        DATABASE_HOST: "127.0.0.1"
+        DATABASE_PORT: "5432"
       run: |
         pipenv run manage test
